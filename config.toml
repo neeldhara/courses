@@ -1,6 +1,6 @@
 ######################## default configuration ####################
 baseURL = ""
-title = "Hugo documentation theme"
+title = "Courses at IITGN"
 theme = "godocs-1"
 # google analytics
 googleAnalytics = "" # example : UA-123-45
@@ -55,7 +55,7 @@ link = "plugins/search/search-page.js"
 # site variables
 [params.variables]
 # Color Variables
-primary_color = "#FF0043"
+primary_color = "#3aa5ff"
 text_color = "#333"
 text_color_dark = "#222"
 text_color_light = "#999"
