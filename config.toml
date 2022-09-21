@@ -87,38 +87,9 @@ contact_form_action = "#" # contact form works with https://formspree.io
 enable = false
 preloader = "" # use jpg, png, svg or gif format.
 
-# Navigation button
-[[params.nav_button]]
-style = "outline"   # available style: solid, outline
-label = "changelog"
-link = "changelog/"
-
-[[params.nav_button]]
-style = "solid"   # available style: solid, outline
-label = "Contact"
-link = "contact/"
-
 
 ############################# social site ########################
-[[params.social]]
-title = "facebook"
-icon = "fab fa-facebook" # fontawesome icon : https://fontawesome.com/icons
-link = "#"
 
-[[params.social]]
-title = "twitter"
-icon = "fab fa-twitter" # fontawesome icon : https://fontawesome.com/icons
-link = "#"
-
-[[params.social]]
-title = "github"
-icon = "fab fa-github" # fontawesome icon : https://fontawesome.com/icons
-link = "#"
-
-[[params.social]]
-title = "linkedin"
-icon = "fab fa-linkedin" # fontawesome icon : https://fontawesome.com/icons
-link = "#"
 
 
 ################################### English language #####################################
@@ -127,39 +98,17 @@ languageName = "En"
 languageCode = "en-us"
 weight = 1
 # copyright
-copyright = "Designed by [Themefisher](https://themefisher.com) & Developed by [Gethugothemes](https://gethugothemes.com)"
+copyright = "Neeldhara Misra ⸱ Creative Commons <a href=\"https://creativecommons.org/licenses/by/4.0/\">Attribution 4.0 International (CC BY 4.0)</a>"
 
 
 
 # banner
+[Languages.en.banner]
+title = "Courses"
+subtitle = "This website documents the courses I have taught or been involved in coordinating over the years. <br> <br> <a href=\"www.google.com\">IITGN</a> ⸱ NPTEL ⸱ Short Courses ⸱ Other"
 
 ############## English navigation ###############
 # main menu
-[[Languages.en.menu.main]]
-name = "Home"
-url = ""
-weight = 1
-
-[[Languages.en.menu.main]]
-name = "Github"
-url = "https://github.com/themefisher/"
-weight = 2
 
 
 # footer menu
-[[Languages.en.menu.footer]]
-name = "Changelog"
-url = "changelog/"
-weight = 1
-
-[[Languages.en.menu.footer]]
-name = "Contact"
-url = "contact/"
-weight = 2
-
-[[Languages.en.menu.footer]]
-name = "Github"
-url = "https://github.com/themefisher/"
-weight = 3
-
-
