@@ -1,8 +1,8 @@
 ---
-title: "Discrete Math"
+title: "Parameterized Algorithms"
 date: 2018-12-28T11:02:05+06:00
 icon: "fas fa-tools" # fontawesome icon : https://fontawesome.com/icons
-description: "Mathematics for computer science: proofs and more."
+description: "An introduction to parameterized algorithms."
 # type dont remove or customize
 type : "docs"
 ---
