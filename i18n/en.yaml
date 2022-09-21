@@ -4,9 +4,6 @@
 - id: search_placeholder
   translation: Search Here...
 
-- id: topics
-  translation: Browse Your Topics
-
 - id: first_name
   translation: First Name
 
