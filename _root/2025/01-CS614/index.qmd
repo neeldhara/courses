@@ -99,7 +99,7 @@ This is a theoretical course that will require mathematical maturity (in particu
 Grading (First Half - 50%): 12 Worksheets (40%) + Take-Home Exam (10%)
 :::
 
-Note: the videos here are unedited livestream recordings, mostly shared here for the record: pursue them at your own risk. Apologies for the choppy audio in a few of them. 
+Note: the videos here are unedited livestream recordings, mostly shared here for the record: pursue them at your own risk. Apologies for the choppy audio in a few of them!
 
 :::{#lectures-listing}
 :::
