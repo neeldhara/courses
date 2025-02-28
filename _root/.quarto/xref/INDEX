@@ -1,0 +1,623 @@
+{
+  "nptel.qmd": {
+    "nptel.html": "86db4804"
+  },
+  "short.qmd": {
+    "short.html": "bc7dca96"
+  },
+  "informal.qmd": {
+    "informal.html": "09760832"
+  },
+  "index.qmd": {
+    "index.html": "f59bf0c6"
+  },
+  "iitgn.qmd": {
+    "iitgn.html": "52a0c81b"
+  },
+  "2022/03-DPBC/index.qmd": {
+    "index.html": "6838c2ce"
+  },
+  "2022/03-noc22-cs82/index.qmd": {
+    "index.html": "92a88483"
+  },
+  "2022/visualscicomm.qmd": {
+    "visualscicomm.html": "23ab0256"
+  },
+  "2022/scicomm.qmd": {
+    "scicomm.html": "28cf8ebf"
+  },
+  "2022/03-SC312/index.qmd": {
+    "index.html": "a15aa972"
+  },
+  "2022/03-SC302/index.qmd": {
+    "index.html": "9f623f75"
+  },
+  "2022/03-noc22-cs81/index.qmd": {
+    "index.html": "a60c6aed"
+  },
+  "2022/cp.qmd": {
+    "cp.html": "aabf9b5d"
+  },
+  "2022/03-ES242/labs/lab-w02.qmd": {
+    "lab-w02.html": "d17b233f"
+  },
+  "2022/03-ES242/labs/lab-w01.qmd": {
+    "lab-w01.html": "5796af9a"
+  },
+  "2022/03-ES242/index.qmd": {
+    "index.html": "3602b838"
+  },
+  "2022/03-ES242/labquiz2.qmd": {
+    "labquiz2.html": "c503bd95"
+  },
+  "2022/03-ES242/midsem-questions.qmd": {
+    "midsem-questions.html": "5ea7e04f"
+  },
+  "2022/01-noc22-cs59/index.qmd": {
+    "index.html": "d26309f3"
+  },
+  "2022/csresearch.qmd": {
+    "csresearch.html": "94655782"
+  },
+  "2022/userbase/index.qmd": {
+    "index.html": "875082c5"
+  },
+  "2022/03-SC310/index.qmd": {
+    "index.html": "09335c50"
+  },
+  "2022/04-GIAN/index.qmd": {
+    "index.html": "a960132a"
+  },
+  "2022/04-GIAN/notes/D4L1/index.qmd": {
+    "index.html": "8064047f"
+  },
+  "2022/04-GIAN/notes/D2L2/index.qmd": {
+    "index.html": "95b691fa"
+  },
+  "2022/04-GIAN/notes/D1L2/index.qmd": {
+    "index.html": "20ed9757"
+  },
+  "2022/04-GIAN/notes/D3L1/index.qmd": {
+    "index.html": "09ab8dbf"
+  },
+  "2022/04-GIAN/notes/D4L2/index.qmd": {
+    "index.html": "7ff25811"
+  },
+  "2022/04-GIAN/notes/D2L1/index.qmd": {
+    "index.html": "f1f68ffb"
+  },
+  "2022/04-GIAN/notes/D5L1/index.qmd": {
+    "index.html": "0f5e84d7"
+  },
+  "2022/04-GIAN/notes/D1L1/index.qmd": {
+    "index.html": "0f5f2961"
+  },
+  "2022/04-GIAN/notes/D3L2/index.qmd": {
+    "index.html": "b7af75cd"
+  },
+  "2022/04-GIAN/tutorials/D2Q/index.qmd": {
+    "index.html": "a4e86033"
+  },
+  "2022/04-GIAN/tutorials/D1Q/index.qmd": {
+    "index.html": "390a0ced"
+  },
+  "2022/04-GIAN/tutorials/D5Q/index.qmd": {
+    "index.html": "9f7a4b2f"
+  },
+  "2022/04-GIAN/tutorials/D4Q/index.qmd": {
+    "index.html": "b5c4a6ca"
+  },
+  "2022/04-GIAN/tutorials/D3Q/index.qmd": {
+    "index.html": "9e17da1b"
+  },
+  "2024/01-WEBSITE/index.qmd": {
+    "index.html": "b4388369"
+  },
+  "2024/01-CS607/worksheets/Q01.qmd": {
+    "Q01.html": "788089fa"
+  },
+  "2024/01-CS607/index.qmd": {
+    "index.html": "12d2c978"
+  },
+  "2024/01-MG/03/index.qmd": {
+    "index.html": "0a4832f0"
+  },
+  "2024/01-MG/04/index.qmd": {
+    "index.html": "90761811"
+  },
+  "2024/01-MG/05/index.qmd": {
+    "index.html": "31a6ce27"
+  },
+  "2024/01-MG/02/index.qmd": {
+    "index.html": "b62a802b"
+  },
+  "2024/01-MG/20/index.qmd": {
+    "index.html": "4db2656e"
+  },
+  "2024/01-MG/18/index.qmd": {
+    "index.html": "0e4fec4f"
+  },
+  "2024/01-MG/11/index.qmd": {
+    "index.html": "5e576d10"
+  },
+  "2024/01-MG/16/index.qmd": {
+    "index.html": "88323c3a"
+  },
+  "2024/01-MG/17/index.qmd": {
+    "index.html": "ac6beba2"
+  },
+  "2024/01-MG/10/index.qmd": {
+    "index.html": "647d869b"
+  },
+  "2024/01-MG/19/index.qmd": {
+    "index.html": "32dbdc1f"
+  },
+  "2024/01-MG/index.qmd": {
+    "index.html": "41f5484f"
+  },
+  "2024/01-MG/07/index.qmd": {
+    "index.html": "08f1a632"
+  },
+  "2024/01-MG/09/index.qmd": {
+    "index.html": "a0c47192"
+  },
+  "2024/01-MG/08/index.qmd": {
+    "index.html": "33bef0ed"
+  },
+  "2024/01-MG/01/index.qmd": {
+    "index.html": "d27d8c65"
+  },
+  "2024/01-MG/06/index.qmd": {
+    "index.html": "36ad79ee"
+  },
+  "2024/01-MG/15/index.qmd": {
+    "index.html": "71a98928"
+  },
+  "2024/01-MG/12/index.qmd": {
+    "index.html": "ebc127bc"
+  },
+  "2024/01-MG/13/index.qmd": {
+    "index.html": "1724b174"
+  },
+  "2024/01-MG/14/index.qmd": {
+    "index.html": "81037333"
+  },
+  "2024/01-noc24-cs29/index.qmd": {
+    "index.html": "fe95873c"
+  },
+  "2024/01-ST699/index.qmd": {
+    "index.html": "e168428e"
+  },
+  "2024/02-LINALG/index.qmd": {
+    "index.html": "b5a2b7c4"
+  },
+  "2023/01-noc23-cs30/index.qmd": {
+    "index.html": "134e4ff7"
+  },
+  "2023/01-CS30.bak/index.qmd": {
+    "index.html": "b60448d6"
+  },
+  "2023/01-CS614/index.qmd": {
+    "index.html": "28e7d350"
+  },
+  "2023/01-CS614/exams/E02.qmd": {
+    "E02.html": "0e97639b"
+  },
+  "2023/01-CS614/exams/E03.qmd": {
+    "E03.html": "a9089c20"
+  },
+  "2023/01-CS614/exams/E01.qmd": {
+    "E01.html": "26b59e62"
+  },
+  "2023/01-CS614/quizzes/L14.qmd": {
+    "L14.html": "21f6c31a"
+  },
+  "2023/01-CS614/quizzes/L02.qmd": {
+    "L02.html": "00412a93"
+  },
+  "2023/01-CS614/quizzes/L03.qmd": {
+    "L03.html": "8ce77603"
+  },
+  "2023/01-CS614/quizzes/L07.qmd": {
+    "L07.html": "6bdda380"
+  },
+  "2023/01-CS614/quizzes/L13.qmd": {
+    "L13.html": "eba991f1"
+  },
+  "2023/01-CS614/quizzes/L12.qmd": {
+    "L12.html": "e96c0b21"
+  },
+  "2023/01-CS614/quizzes/L06.qmd": {
+    "L06.html": "acc8cd9c"
+  },
+  "2023/01-CS614/quizzes/L10.qmd": {
+    "L10.html": "b1c6126e"
+  },
+  "2023/01-CS614/quizzes/L04.qmd": {
+    "L04.html": "44899fb8"
+  },
+  "2023/01-CS614/quizzes/L05.qmd": {
+    "L05.html": "3c661572"
+  },
+  "2023/01-CS614/quizzes/A06.qmd": {
+    "A06.html": "cffe0bfb"
+  },
+  "2023/01-CS614/quizzes/A07.qmd": {
+    "A07.html": "8cebd364"
+  },
+  "2023/01-CS614/quizzes/A05.qmd": {
+    "A05.html": "0576171c"
+  },
+  "2023/01-CS614/quizzes/A04.qmd": {
+    "A04.html": "847ce17e"
+  },
+  "2023/01-CS614/quizzes/A03.qmd": {
+    "A03.html": "4566a358"
+  },
+  "2023/01-CS614/quizzes/A02.qmd": {
+    "A02.html": "0be98468"
+  },
+  "2023/01-CS614/quizzes/L20.qmd": {
+    "L20.html": "e846c422"
+  },
+  "2023/01-CS614/quizzes/L08.qmd": {
+    "L08.html": "f5b1eb71"
+  },
+  "2023/01-CS614/quizzes/L09.qmd": {
+    "L09.html": "df44c957"
+  },
+  "2023/01-CS614/quizzes/L22.qmd": {
+    "L22.html": "803af2bb"
+  },
+  "2023/01-CS614/quizzes/L19.qmd": {
+    "L19.html": "452954b6"
+  },
+  "2023/01-CS614/quizzes/L18.qmd": {
+    "L18.html": "080d2b99"
+  },
+  "2023/03-ES214/index.qmd": {
+    "index.html": "d873f354"
+  },
+  "2023/03-ES214/tutorials/T01.qmd": {
+    "T01.html": "d3c6707d"
+  },
+  "2023/03-ES214/tutorials/A01.qmd": {
+    "A01.html": "ed009770"
+  },
+  "2023/crypto.qmd": {
+    "crypto.html": "d268c088"
+  },
+  "2023/02-ADVALG.bak/index.qmd": {
+    "index.html": "59774631"
+  },
+  "2023/02-ADVALG.bak/quizzes/P01.qmd": {
+    "P01.html": "d0d4adc5"
+  },
+  "2023/03-noc23-cs103/index.qmd": {
+    "index.html": "ab19b2e9"
+  },
+  "2023/02-BSCS4021/index.qmd": {
+    "index.html": "a9f02656"
+  },
+  "2023/03-BSCS4021/index.qmd": {
+    "index.html": "0d554329"
+  },
+  "2023/03-noc23-cs102/index.qmd": {
+    "index.html": "d32926fe"
+  },
+  "2023/03-33/03/index.qmd": {
+    "index.html": "5f7d5fc2"
+  },
+  "2023/03-33/04/index.qmd": {
+    "index.html": "db2c7b2b"
+  },
+  "2023/03-33/32/index.qmd": {
+    "index.html": "3e2396a5"
+  },
+  "2023/03-33/33/index.qmd": {
+    "index.html": "47cab7ef"
+  },
+  "2023/03-33/05/index.qmd": {
+    "index.html": "596440bb"
+  },
+  "2023/03-33/02/index.qmd": {
+    "index.html": "4c37f199"
+  },
+  "2023/03-33/20/index.qmd": {
+    "index.html": "3224396f"
+  },
+  "2023/03-33/18/index.qmd": {
+    "index.html": "18290eee"
+  },
+  "2023/03-33/27/index.qmd": {
+    "index.html": "cd9423e8"
+  },
+  "2023/03-33/11/index.qmd": {
+    "index.html": "8d8bf2fe"
+  },
+  "2023/03-33/29/index.qmd": {
+    "index.html": "113415a8"
+  },
+  "2023/03-33/16/index.qmd": {
+    "index.html": "e7cb97bb"
+  },
+  "2023/03-33/28/index.qmd": {
+    "index.html": "abdfea5a"
+  },
+  "2023/03-33/17/index.qmd": {
+    "index.html": "2ec0b848"
+  },
+  "2023/03-33/10/index.qmd": {
+    "index.html": "f0e48fd5"
+  },
+  "2023/03-33/19/index.qmd": {
+    "index.html": "be818942"
+  },
+  "2023/03-33/26/index.qmd": {
+    "index.html": "358423f3"
+  },
+  "2023/03-33/index.qmd": {
+    "index.html": "cccaafa8"
+  },
+  "2023/03-33/21/index.qmd": {
+    "index.html": "ce012e2a"
+  },
+  "2023/03-33/07/index.qmd": {
+    "index.html": "abfb9386"
+  },
+  "2023/03-33/09/index.qmd": {
+    "index.html": "f93d1431"
+  },
+  "2023/03-33/31/index.qmd": {
+    "index.html": "fb2def89"
+  },
+  "2023/03-33/30/index.qmd": {
+    "index.html": "69a9a707"
+  },
+  "2023/03-33/08/index.qmd": {
+    "index.html": "eb03cf2a"
+  },
+  "2023/03-33/01/index.qmd": {
+    "index.html": "b3c13480"
+  },
+  "2023/03-33/06/index.qmd": {
+    "index.html": "93e60b40"
+  },
+  "2023/03-33/24/index.qmd": {
+    "index.html": "bdc061cb"
+  },
+  "2023/03-33/23/index.qmd": {
+    "index.html": "70b6cf95"
+  },
+  "2023/03-33/15/index.qmd": {
+    "index.html": "1f58ccd0"
+  },
+  "2023/03-33/12/index.qmd": {
+    "index.html": "edcdb67c"
+  },
+  "2023/03-33/13/index.qmd": {
+    "index.html": "01f40d97"
+  },
+  "2023/03-33/14/index.qmd": {
+    "index.html": "c87b63b9"
+  },
+  "2023/03-33/22/index.qmd": {
+    "index.html": "dca06e41"
+  },
+  "2023/03-33/25/index.qmd": {
+    "index.html": "af0c6c69"
+  },
+  "2023/01-ES242/labs/lab-w02.qmd": {
+    "lab-w02.html": "878d503f"
+  },
+  "2023/01-ES242/labs/lab-w03.qmd": {
+    "lab-w03.html": "f19b2f34"
+  },
+  "2023/01-ES242/labs/lab-w01.qmd": {
+    "lab-w01.html": "54b6bd31"
+  },
+  "2023/01-ES242/labs/lab-w14.qmd": {
+    "lab-w14.html": "e8bacd8c"
+  },
+  "2023/01-ES242/labs/lab-w10.qmd": {
+    "lab-w10.html": "7a0c34a6"
+  },
+  "2023/01-ES242/labs/lab-w04.qmd": {
+    "lab-w04.html": "75c630ee"
+  },
+  "2023/01-ES242/labs/lab-w06.qmd": {
+    "lab-w06.html": "1a6854d5"
+  },
+  "2023/01-ES242/labs/lab-w08.qmd": {
+    "lab-w08.html": "6fc6895d"
+  },
+  "2023/01-ES242/index.qmd": {
+    "index.html": "0f8e4960"
+  },
+  "2023/01-ES242/labquiz2.qmd": {
+    "labquiz2.html": "72676fe0"
+  },
+  "2023/01-ES242/exams/solutions01.qmd": {
+    "solutions01.html": "a144d2d5"
+  },
+  "2023/01-ES242/exams/exam01.qmd": {
+    "exam01.html": "57df3321"
+  },
+  "2023/01-ES242/exams/exam02.qmd": {
+    "exam02.html": "8c204c75"
+  },
+  "2023/01-ES242/midsem-questions.qmd": {
+    "midsem-questions.html": "5e05c382"
+  },
+  "2023/01-ES242/quizzes/q04.qmd": {
+    "q04.html": "28563a64"
+  },
+  "2023/01-ES242/quizzes/q01.qmd": {
+    "q01.html": "2abbe64f"
+  },
+  "2023/01-ES242/quizzes/q02.qmd": {
+    "q02.html": "611c635e"
+  },
+  "2023/01-ES242/quizzes/q03.qmd": {
+    "q03.html": "ef70d026"
+  },
+  "2023/01-ES242/quizzes/a04.qmd": {
+    "a04.html": "6d983eae"
+  },
+  "2023/01-ES242/quizzes/a01.qmd": {
+    "a01.html": "88c5d1d8"
+  },
+  "2023/01-ES242/quizzes/a03.qmd": {
+    "a03.html": "65a7f061"
+  },
+  "2023/01-ES242/quizzes/a02.qmd": {
+    "a02.html": "124e207f"
+  },
+  "2023/02-GAMES/index.qmd": {
+    "index.html": "bc8c4d25"
+  },
+  "2017/03-ES112/index.qmd": {
+    "index.html": "6a5f77b4"
+  },
+  "2017/03-GIAN/index.qmd": {
+    "index.html": "ce0a9b2e"
+  },
+  "2017/01-FP601/index.qmd": {
+    "index.html": "4b8da44f"
+  },
+  "2017/01-MA607/index.qmd": {
+    "index.html": "478377bd"
+  },
+  "2017/04-GIAN/index.qmd": {
+    "index.html": "70e5ffa4"
+  },
+  "2019/01-ES214/index.qmd": {
+    "index.html": "08f8c8bb"
+  },
+  "2019/03-SC235/index.qmd": {
+    "index.html": "8da8c135"
+  },
+  "2019/01-CS610/index.qmd": {
+    "index.html": "0fce78f4"
+  },
+  "2019/03-ES242/index.qmd": {
+    "index.html": "8e3b6512"
+  },
+  "2019/03-ST601/index.qmd": {
+    "index.html": "98bb4cec"
+  },
+  "2019/cards.qmd": {
+    "cards.html": "60e0d6a5"
+  },
+  "2021/03-noc21-cs92/index.qmd": {
+    "index.html": "1f46a545"
+  },
+  "2021/01-noc21-cs92/index.qmd": {
+    "index.html": "9a58f747"
+  },
+  "2021/01-ES301/index.qmd": {
+    "index.html": "e3966e5a"
+  },
+  "2021/03-CS610/index.qmd": {
+    "index.html": "6401a7a0"
+  },
+  "2021/03-noc21-cs99/index.qmd": {
+    "index.html": "23529086"
+  },
+  "2020/01-ES214/index.qmd": {
+    "index.html": "94d0a6e4"
+  },
+  "2020/03-ES102/index.qmd": {
+    "index.html": "9301ff59"
+  },
+  "2020/03-ES242/index.qmd": {
+    "index.html": "0a03845a"
+  },
+  "2020/02-ST601/index.qmd": {
+    "index.html": "3f3bec5b"
+  },
+  "2018/03-ES112/index.qmd": {
+    "index.html": "456fc1e3"
+  },
+  "2018/02-ES102/index.qmd": {
+    "index.html": "42571d82"
+  },
+  "2018/03-MA607/index.qmd": {
+    "index.html": "f13197ef"
+  },
+  "2016/01-CS321/index.qmd": {
+    "index.html": "cc00df4a"
+  },
+  "2016/01-CS607/index.qmd": {
+    "index.html": "e1daf612"
+  },
+  "2016/03-CS607/index.qmd": {
+    "index.html": "7ee26947"
+  },
+  "2016/03-FP601/index.qmd": {
+    "index.html": "7a8774ac"
+  },
+  "2025/01-CS614/index.qmd": {
+    "index.html": "24ef2011"
+  },
+  "2025/01-CS614/W01.md": {
+    "W01.html": "12ce2b74"
+  },
+  "2025/01-CS303/index.qmd": {
+    "index.html": "8942a464"
+  },
+  "2024/02-CS691/index.qmd": {
+    "index.html": "4f2f4490"
+  },
+  "2024/03-CS329/index.qmd": {
+    "index.html": "5144ff76"
+  },
+  "2024/03-CS329/Q01.md": {
+    "Q01.html": "a5f17760"
+  },
+  "2024/02-CS614/index.qmd": {
+    "index.html": "c8342326"
+  },
+  "2024/03-ES242/Q02.md": {
+    "Q02.html": "37a37f99"
+  },
+  "2024/03-ES242/Q06.md": {
+    "Q06.html": "924cf2ee"
+  },
+  "2024/03-ES242/Q07.md": {
+    "Q07.html": "9f7c744f"
+  },
+  "2024/03-ES242/Q03.md": {
+    "Q03.html": "130ba142"
+  },
+  "2024/03-ES242/Q08.md": {
+    "Q08.html": "ee86abc9"
+  },
+  "2024/03-ES242/index.qmd": {
+    "index.html": "56356466"
+  },
+  "2024/03-ES242/Q09.md": {
+    "Q09.html": "26a69639"
+  },
+  "2024/03-ES242/Q04.md": {
+    "Q04.html": "d93fd779"
+  },
+  "2024/03-ES242/Q10.md": {
+    "Q10.html": "4d845aaa"
+  },
+  "2024/03-ES242/Q01.md": {
+    "Q01.html": "9a3d9810"
+  },
+  "2024/03-ES242/Q05.md": {
+    "Q05.html": "927530dc"
+  },
+  "other.qmd": {
+    "other.html": "7c7f5de6"
+  },
+  "online.qmd": {
+    "online.html": "886eb184"
+  },
+  "2025/01-SC-CM/index.qmd": {
+    "index.html": "5e0d08d5"
+  }
+}

@@ -1,0 +1,9 @@
+- title: "Introduction and Course Overview"
+  date: "2024-05-06"
+  link: "lectures/01-intro"
+  type: "Lecture"
+  
+- title: "Approximation Algorithms"
+  date: "2024-05-09"
+  link: "lectures/02-approximation"
+  type: "Lecture"

@@ -1,0 +1,28 @@
+---
+title: "Other Courses"
+toc: false
+sidebar: false
+format:
+  html:
+    page-layout: full
+    css: styles.css
+listing:
+  - id: informal-listing 
+    contents: teaching-informal.yml
+    sort: [year desc, semester desc]
+    page-size: 100
+    type: table
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    feed: false
+    template: teaching.ejs
+---
+
+
+
+## Ad-hoc Offerings {.mt-2}
+
+:::{#informal-listing}
+:::
+

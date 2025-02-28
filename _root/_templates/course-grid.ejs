@@ -1,0 +1,21 @@
+<div class="course-grid">
+<% for (const item of items) { %>
+  <div class="course-card">
+    <h3 class="course-title">
+      <a href="<%- item.path %>"><%- item.title %></a>
+    </h3>
+    <% if (item.description) { %>
+    <div class="course-description">
+      <%- item.description %>
+    </div>
+    <% } %>
+    <% if (item.categories) { %>
+    <div class="course-categories">
+      <% for (const cat of item.categories) { %>
+        <span class="badge"><%- cat %></span>
+      <% } %>
+    </div>
+    <% } %>
+  </div>
+<% } %>
+</div>

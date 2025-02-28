@@ -1,0 +1,9 @@
+- title: "Introduction and Course Overview"
+  date: "2024-08-05"
+  link: "lectures/01-intro"
+  type: "Lecture"
+  
+- title: "Agents and Agent Architectures"
+  date: "2024-08-08"
+  link: "lectures/02-agents"
+  type: "Lecture"

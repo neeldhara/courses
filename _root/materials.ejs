@@ -1,0 +1,35 @@
+```{=html}
+    <table class="table materials-listing-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Lecture</th>
+          <th>Slides</th>
+          <th>Notes</th>
+          <th>Video</th>
+        </tr>
+      </thead>
+      <tbody class="list">
+        <% for (const item of items) { %>
+        <tr data-index="0" data-categories="null" <%= metadataAttrs(item) %>>            
+          <td><%= item.date %></td>
+          <td style="width:60% !important;">
+            <% if (item.lecid) { %><%= item.lecid %>.<% } %> 
+            <%= item.title %>
+            <br>
+            <em><small><%= item.summary %></small></em>
+          </td>
+          <td style="text-align: center;">
+            <% if (item.slides) { %><a href="<%= item.slides %>"><span class="bi bi-file-earmark-slides"></span></a><% } else { %><span class="bi bi-dash-circle-dotted"></span><% } %>
+          </td>
+          <td style="text-align: center;">
+            <% if (item.notes) { %><a href="<%= item.notes %>"><span class="bi bi-journal-richtext"></span></a><% } else { %><span class="bi bi-dash-circle-dotted"></span><% } %>
+          </td>
+          <td style="text-align: center;">
+            <% if (item.video) { %><a href="<%= item.video %>"><span class="bi bi-film"></span></a><% } else { %><span class="bi bi-dash-circle-dotted"></span><% } %>
+          </td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+```

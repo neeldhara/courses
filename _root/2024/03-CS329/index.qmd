@@ -1,0 +1,76 @@
+---
+title: "CS329 | Fall 2024"
+sidebar: false
+toc: false
+listing:
+  - id: lectures-listing
+    contents: materials.yml
+    sort: date asc
+    page-size: 100
+    type: table
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    feed: false
+    template: ../../materials.ejs
+  - id: assignments-listing
+    contents: materials-assignments.yml
+    sort: issueddate asc
+    page-size: 100
+    type: table
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    feed: false
+    template: ../../materials-assessments.ejs
+    field-types: 
+      dateissued: date
+      due: date
+date-format: DD MMM, YYYY
+---
+
+
+## CS329. Foundations of AI: Multiagent Systems
+
+##### 2024
+
+:::{.callout-note collapse="true" icon="false"}
+##### About the Course
+Foundations of AI: Multiagent Systems (CS329)  
+Co-taught with [Prof. Manisha Padala](https://iitgn.ac.in/faculty/cse/manisha)  
+Course Enrollment: 128 students
+
+:::{.callout-note collapse="true" icon="false"}
+##### Target Audience
+
+:::{.callout-tip collapse="true" icon="false"}
+##### Prerequisites
+
+:::{.callout-tip collapse="true" icon="false"}
+##### References
+
+:::{.callout-warning collapse="true" icon="false"}
+##### Timings and Venue
+Mondays and Thursdays, 11:30 AM
+Room 10/201
+
+:::{.callout-warning collapse="true" icon="false"}
+##### TAs and Office hours
+Office hours with instructors available by appointment
+
+:::{.callout-important collapse="true" icon="false"}
+##### Evaluation policy
+
+:::{.callout-important collapse="true" icon="false"}
+##### Logistics
+
+
+## Course Materials
+
+### Lectures
+
+:::{#lectures-listing}
+
+### Assignments
+
+:::{#assignments-listing}

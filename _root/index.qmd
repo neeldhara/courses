@@ -1,0 +1,41 @@
+---
+title: "Teaching"
+toc: false
+sidebar: false
+format:
+  html:
+    page-layout: full
+    css: styles.css
+---
+
+
+#### Background 
+
+I am attempting to catalog here courses that I have either taught, co-taught, or organized over the years. 
+
+At the moment, this is not much more than just a record of courses with some faint memories of logistics. The actual material in most cases is largely locked away in whatever LMS I happened to fancy that term (this is varied between Canvas, Gradescope, Google Classrooms, and Moodle; and now-defunct platforms like Examineer and Replit for Education). In the coming months I hope to port over as much as I can and I will report my progress here. 
+
+##### IIT Gandhinagar
+
+During the fall term, I typically teach either Discrete Mathematics for undergraduates or "DSA-I", which is the first part of our second-year undergraduate course on data structures and algorithms. In the early days, I've also occassionally taught the IITGN equivalent of CS101. During the spring term, I either teach "DSA-II" or Advanced Algorithms. More recently, I have started also (co-)teaching some of our AI/ML courses for undergraduate audiences.
+
+I've typically teach one of _Combinatorics with Applications to Computer Science_, _Graph Theory_, _Social Networks_, or a topics course as my second course, and these are usually graduate-level courses, but often taken by a few undergraduates as well. 
+
+Before joining IIT Gandhinagar, I ran a course on parameterized algorithms at IISc (CSA), and a few informal reading groups. These were very memorable adventures from my point of view: sadly, I don't have reciepts from those times :)
+
+##### Online 
+
+Since 2021 Fall, NPTEL has been running two courses that I co-teach: _Getting Started with Competitive Programming_ (both summer and winter terms; the first edition was created in collaboration with Arjun Arul, and future editions have been supported by Atul) and _Parameterized Algorithms_ (every winter term; joint with Saket Saurabh). Also, since 2022, I teach an elective course (Advanced Algorithms) that runs twice a year in the IIT Madras online BS program. For now, the materials for all these courses are available through their respective platforms. The CP course has a Discord server that is now peer-driven with TA support, and the BS course has its own Discourse community. In the near future, I hope to make most of these materials also directly available from here.
+
+##### Other Courses
+
+I also organize, every so often, short courses and workshops on technical and non-technical topics. Those are listed here too. A short course upcoming on the second weekend of March happens to be about [card magic](2025/01-SC-CM/) and will be offered by [Prof. Ramprasad Saptharishi](https://www.tcs.tifr.res.in/~ramprasad/). 
+
+If you would like to offer a short course or workshop at IIT Gandhinagar (typically ~10 hours, either spread out as 2 hours per day across 5 weekday evenings, or held in bootcamp mode over a weekend), please ping me at `neeldhara.m -AT- iitgn.ac.in`.
+
+---
+
+PS. I've also recently started organizing online reading groups for books. I now track them on a [separate website](https://grokabook.com).
+
+PPS. I omit from here records of summer and winter schools organized in the past. However, I hope to add these in the foreseeable future.
+

@@ -1,0 +1,65 @@
+---
+title: "CS303 | Spring 2025"
+sidebar: false
+toc: false
+date-format: DD MMM, YYYY
+---
+
+
+## CS303. Mathematical Foundations of AI --- Tutorials
+
+##### Spring 2025
+
+Instructor: [Prof. Manisha Padala](https://sites.google.com/view/manishapadala/home).
+Tutorials are available from Gradescope.
+
+:::{.callout-note icon="false"}
+##### About the Course
+The course covers mathematical tools necessary for various computer science and artificial intelligence courses. 
+
+Topics covered include: Linear Algebra, Optimization, and Probabilistic Modelling.
+:::
+
+:::{.callout-tip icon="false"}
+##### Prerequisites (Informal)
+Data Centric Computing (ES 113) and Probability Statistics and Data Visualisation (ES 114)
+:::
+
+
+:::{.callout-tip icon="false"}
+##### References
+Please visit the [main course website](https://sites.google.com/iitgn.ac.in/mathml/home?authuser=1) for course plan, lecture slides, references, and grading policy.
+:::
+
+
+:::{.callout-warning icon="false"}
+##### Timings and Venue
+Tutorials: Thursdays 2:00 PM - 3:20 PM at 1/101
+:::
+
+
+:::{.callout-warning icon="false"}
+##### Office hours
+By appointment.
+:::
+
+
+:::{.callout-important icon="false"}
+##### Evaluation policy
+- 5 Quizzes (individual) 10% each
+- 5 Worksheets (group, 5 points each) 10% in total
+- 2 Coding Assignments 5% each
+- Mid Semester Exam 10%
+- End Semester Exam 20%
+:::
+
+
+:::{.callout-important icon="false"}
+##### Logistics
+- Register through IMS
+- All assessments will be conducted on Gradescope (Code: YRWVWK)
+- All announcements are made over Google Classroom.
+:::
+
+
+

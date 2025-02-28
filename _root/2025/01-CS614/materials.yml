@@ -1,0 +1,113 @@
+- lecid: 1
+  date: 2025-01-06
+  title: "Introduction to Approximation Algorithms"
+  summary: "Example: Load Balancing"
+  slides: "https://www.dropbox.com/scl/fo/ooud1ar3iprfroa431xui/AO1EBQYi-4h3f9KGW8o_cZ4?rlkey=zz0v6rgmcwkdko2aia6ipl03u&dl=0"
+  video: "https://youtube.com/live/t0NNDCL6HFw?feature=share"
+
+- lecid: 2
+  date: 2025-01-09
+  title: "Introduction to Linear Programming"
+  summary: "Example: Vertex Cover"
+  slides: "https://www.dropbox.com/scl/fo/qvay7fk7srvjjz5fiwfwm/ACCUM74Tab1B1Gh-0-sNlVI?rlkey=7vjqujsi744lzwat63w8ofwxj&dl=0"
+  video: "https://youtube.com/live/E9eILR944no?feature=share"
+
+- lecid: "3a"
+  date: 2025-01-13
+  title: "Adaptive Rounding - I"
+  summary: "Example: Bin Packing"
+  slides: "https://www.dropbox.com/scl/fo/k2ege1rqdjanao3ct4t2a/ANCGOAslL4A6fYnHmHitC8U?rlkey=5t4uy3kk4ldjdws7bgm7rng53&dl=0"
+  video: "https://youtube.com/live/eYmvsNsOY7Q?feature=share"
+
+- lecid: "3b"
+  date: 2025-01-16
+  title: "Adaptive Rounding - II"
+  summary: "Example: Bin Packing (contd)"
+  slides: "https://www.dropbox.com/scl/fo/k2ege1rqdjanao3ct4t2a/ANCGOAslL4A6fYnHmHitC8U?rlkey=5t4uy3kk4ldjdws7bgm7rng53&dl=0"
+  video: "https://youtube.com/live/iNsC49vkLWI?feature=share"
+
+- lecid: 4
+  date: 2025-01-20
+  title: "Randomized Rounding"
+  summary: "Example: Set Cover"
+  slides: "https://www.dropbox.com/scl/fo/d5wk2xy2q6oahbk4akfly/ABys5laYmcTMwZZ2XVtY2T8?rlkey=gy1ec9an60np7gcaeku4tisrf&dl=0"
+  video: "https://youtube.com/live/SUNxfFF7Yi0?feature=share"
+
+- lecid: "5a"
+  date: 2025-01-23
+  title: "General Techniques"
+  summary: "Multiway Cut via Isolating Cuts"
+  slides: "https://www.dropbox.com/scl/fo/qmbmgsqmhew29z739c02l/AJsnOBaPnrZ4EqDx7hfh7Ps?rlkey=od0nv7ggqhvan1d44ngxpnlkq&dl=0"
+  video: "https://youtube.com/live/RnxzdLY0zBs?feature=share"
+
+- lecid: "5b"
+  date: 2025-01-27
+  title: "Randomized Rounding - I"
+  summary: "Multiway Cut"
+  slides: "https://www.dropbox.com/scl/fo/qmbmgsqmhew29z739c02l/AJsnOBaPnrZ4EqDx7hfh7Ps?rlkey=od0nv7ggqhvan1d44ngxpnlkq&dl=0"
+  video: "https://youtube.com/live/dGRAOVoSAD8?feature=share"
+
+- lecid: "5c"
+  date: 2025-01-30
+  title: "Randomized Rounding - II"
+  summary: "Multiway Cut (contd)"
+  slides: "https://www.dropbox.com/scl/fo/qmbmgsqmhew29z739c02l/AJsnOBaPnrZ4EqDx7hfh7Ps?rlkey=od0nv7ggqhvan1d44ngxpnlkq&dl=0"
+
+- lecid: 6
+  date: 2025-02-03
+  title: "Primal-Dual Approximation"
+  summary: "Vertex Cover"
+  slides: "https://www.dropbox.com/scl/fo/9ilm5mt0dathzj98fz0sd/AIG44Myq3cjjMbstKxWHrM8?rlkey=l8lmk247u0fca0jqj5z1cuelq&dl=0"
+  video: "NA"
+
+- date: 2025-02-06
+  title: "Class Cancelled"
+  summary: "Remark: this class is canceled."
+
+- lecid: "7a"
+  date: 2025-02-10
+  title: "Primal-Dual Approximation"
+  summary: "Steiner Forest"
+  slides: "https://www.dropbox.com/scl/fo/mrogk1k9d8wb9bgjonst7/AI8V9y3qF0E2Sfpc5bgYOXQ?rlkey=zroh7r6eys7s3jluzpxp6yw4q&dl=0"
+  video: "https://youtube.com/live/GAI7oxFLBMw?feature=share"
+
+- lecid: "7b"
+  date: 2025-02-13
+  title: "Primal-Dual Approximation"
+  summary: "Steiner Forest (contd)"
+  slides: "https://www.dropbox.com/scl/fo/mrogk1k9d8wb9bgjonst7/AI8V9y3qF0E2Sfpc5bgYOXQ?rlkey=zroh7r6eys7s3jluzpxp6yw4q&dl=0"
+  video: "https://youtube.com/live/sFLFxQlxj-w?feature=share"
+
+- lecid: "7c"
+  date: 2025-02-14
+  title: "Primal-Dual Approximation"
+  slides: "https://www.dropbox.com/scl/fo/mrogk1k9d8wb9bgjonst7/AI8V9y3qF0E2Sfpc5bgYOXQ?rlkey=zroh7r6eys7s3jluzpxp6yw4q&dl=0"
+  summary: "Steiner Forest (contd) <br> <em>Note: this is an extra makeup class</em>"
+
+- date: 2025-02-17
+  title: "Class Canceled"
+  summary: "Remark: this class is canceled."
+
+- lecid: "8a"
+  date: 2025-02-19
+  title: "Primal-Dual Approximation"
+  summary: "Facility Location - I <br> <em>Note: this is an extra makeup class</em>"
+  slides: "https://www.dropbox.com/scl/fo/6kzjntw9dza8heeavqffy/AARwGYGk7PxzirTmeL_ofN8?rlkey=xusbc2uapb08w7d5tdpq9h48c&dl=0"
+  video: "https://youtube.com/live/n-J8snvLjWU?feature=share"
+
+- lecid: "8b"
+  date: 2025-02-20
+  title: "Primal-Dual Approximation"
+  summary: "Facility Location II"
+  slides: "https://www.dropbox.com/scl/fo/6kzjntw9dza8heeavqffy/AARwGYGk7PxzirTmeL_ofN8?rlkey=xusbc2uapb08w7d5tdpq9h48c&dl=0"
+  video: "https://youtube.com/live/AJeRbPBzzRg?feature=share"
+
+- lecid: "9"
+  date: 2025-02-24
+  title: "Worksheet Discussions - I"
+  summary: ""
+
+- lecid: "10"
+  date: 2025-02-27
+  title: "Worksheet Discussions - II"
+  summary: ""

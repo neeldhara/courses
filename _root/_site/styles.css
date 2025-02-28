@@ -1,0 +1,214 @@
+/* Custom font definitions */
+@font-face {
+    font-family: 'amsterdamkingdom';
+    src: url('fonts/AmsterdamKindom.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'amsterdamkingdom';
+    src: url('fonts/AmsterdamKindom-Italic.woff') format('woff');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'heliotrope';
+    src: url('fonts/heliotrope_3_regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'heliotrope';
+    src: url('fonts/heliotrope_3_bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'blackjack';
+    src: url('fonts/blackjack.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Import Google Fonts */
+.quarto-title, #hyvor-talk-view {
+    display: none;
+}
+
+body {
+     
+    font-family: 'heliotrope', sans-serif;
+    line-height: 1.6;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.quarto-title-block .quarto-title-banner {
+    margin-bottom: 0;
+    border-bottom: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', serif;
+    font-weight: normal;
+}
+
+.quarto-title {
+    font-family: 'Lato', serif;
+    font-weight: normal;
+}
+
+h1, .quarto-title-banner .quarto-title .title {
+    font-size: 3em;
+}
+
+h2 {
+    font-size: 1.5em;
+    border-bottom: none;
+    margin-bottom: 25px !important;
+}
+
+h3 {
+    font-size: 1.8em;
+}
+
+/* Navigation styling */
+.navbar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-family: 'amsterdamkingdom', sans-serif;
+    font-weight: 700;
+}
+
+/* Course listing styles */
+.course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem 0;
+}
+
+.course-card {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 1.5rem;
+    transition: transform 0.2s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-5px);
+}
+
+.course-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+}
+
+.course-description {
+    color: #666;
+    font-size: 0.95rem;
+}
+
+.badge {
+    font-family: 'heliotrope', sans-serif;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+
+/* Custom table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+}
+
+tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* FontAwesome icon colors */
+.fa-book { color: #2c3e50; }
+.fa-video { color: #e74c3c; }
+.fa-file-pdf { color: #e74c3c; }
+.fa-link { color: #3498db; }
+.fa-github { color: #333; }
+
+/* Tooltip customization */
+.tooltip {
+    position: absolute;
+    z-index: 1070;
+    display: block;
+    font-family: 'heliotrope', sans-serif;
+    font-size: 14px;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+}
+
+.tooltip.show {
+    opacity: 1;
+}
+
+.tooltip-inner {
+    max-width: 200px;
+    padding: 8px 12px;
+    color: #fff;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 4px;
+    font-family: 'heliotrope', sans-serif;
+    font-size: 1.1em;
+}
+
+.tooltip .tooltip-arrow {
+    position: absolute;
+    display: block;
+    width: 0.8rem;
+    height: 0.4rem;
+}
+
+.tooltip.bs-tooltip-top .tooltip-arrow {
+    bottom: 0;
+}
+
+.tooltip.bs-tooltip-bottom .tooltip-arrow {
+    top: 0;
+}
+
+.tooltip.bs-tooltip-start .tooltip-arrow {
+    right: 0;
+}
+
+.tooltip.bs-tooltip-end .tooltip-arrow {
+    left: 0;
+}
+
+a, .nav-link{
+    text-decoration: none;
+    color:rgba(31, 78, 158, 0.8);
+}

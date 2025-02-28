@@ -1,0 +1,25 @@
+---
+title: "Short Courses"
+toc: false
+sidebar: false
+page-layout: full
+css: styles.css
+listing:
+  - id: short-listing 
+    contents: teaching-other.yml
+    sort: [year desc, semester desc]
+    page-size: 100
+    type: table
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    feed: false
+    template: teaching.ejs
+---
+
+
+## Short Courses
+
+:::{#short-listing}
+:::
+

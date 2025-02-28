@@ -1,0 +1,31 @@
+---
+title: "Online Courses"
+toc: false
+sidebar: false
+format:
+  html:
+    page-layout: full
+    css: styles.css
+listing:
+  - id: nptel-listing 
+    contents: teaching-nptel.yml
+    sort: [year desc, semester desc]
+    page-size: 100
+    type: table
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    feed: false
+    template: teaching.ejs
+---
+
+
+## Online Courses {.mt-2}
+
+I teach some of my courses online. Two of them --- _Parameterized Algorithms_ and _Getting Started with Competitive Programming_ --- are featured on NPTEL, and one of them --- _Advanced Algorithms_ --- is a part of the curriculum of the online BS program run by IIT Madras.
+
+The following is a list of the times these courses were offered. Currently links are to external listings, from where you can find most of the common materials (e.g, recorded videos), but in due course I hope to share here the materials that were specific to those cohorts (e.g, assignments and exams).  
+
+:::{#nptel-listing}
+:::
+
