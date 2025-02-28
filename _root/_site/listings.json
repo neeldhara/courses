@@ -92,63 +92,7 @@
     "items": []
   },
   {
-    "listing": "/2024/02-CS614/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2024/03-CS329/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/04-GIAN/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/01-noc22-cs59/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-SC302/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-noc22-cs82/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-DPBC/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-SC312/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-noc22-cs81/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-ES242/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2022/03-SC310/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2025/01-CS614/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2024/02-CS691/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2024/01-CS607/index.html",
-    "items": []
-  },
-  {
-    "listing": "/2024/01-MG/index.html",
+    "listing": "/2024/03-ES242/index.html",
     "items": []
   },
   {
@@ -156,11 +100,63 @@
     "items": []
   },
   {
-    "listing": "/2024/03-ES242/index.html",
+    "listing": "/2024/01-MG/index.html",
     "items": []
   },
   {
-    "listing": "/2024/01-ST699/index.html",
+    "listing": "/2024/01-CS607/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2024/02-CS691/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2025/01-CS614/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-SC310/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-ES242/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-noc22-cs81/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-SC312/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-DPBC/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-noc22-cs82/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/03-SC302/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/01-noc22-cs59/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2022/04-GIAN/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2024/03-CS329/index.html",
+    "items": []
+  },
+  {
+    "listing": "/2024/02-CS614/index.html",
     "items": []
   },
   {
