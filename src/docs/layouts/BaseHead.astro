@@ -50,9 +50,9 @@ import GeistMonoVariable from "@fontsource-variable/geist-mono/files/geist-mono-
   function initTheme() {
     const colorTheme = localStorage.getItem("colorTheme");
     if (!colorTheme) {
-      // set dark theme initially
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("colorTheme", "dark");
+      // set light theme initially
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("colorTheme", "light");
 
       // if no color theme yet, use the users preferences (uncomment the below code, and comment out the above code to use this instead)
       // if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
