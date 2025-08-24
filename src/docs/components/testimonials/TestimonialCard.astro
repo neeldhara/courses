@@ -1,0 +1,37 @@
+---
+import { Image } from "astro:assets";
+
+interface Props {
+  testimonial: string;
+  name: string;
+  title: string;
+  avatar: ImageMetadata;
+}
+
+const { testimonial, name, title, avatar, ...rest } = Astro.props;
+---
+
+<div
+  class:list={[
+    "dark:bg-muted/70 relative overflow-clip rounded-xl border transition-colors md:rounded-2xl",
+    "ring-accent/80 transition-shadow hover:ring-2",
+  ]}
+  {...rest}
+>
+  {/* Card Content */}
+  <div class="relative flex h-full flex-col justify-between p-6 transition-colors">
+    {/* Quote */}
+    <p class="text-muted-foreground mb-6 text-sm md:text-base">{testimonial}</p>
+
+    {/* Author */}
+    <div class="flex items-center gap-4">
+      <div class="bg-muted aspect-square h-12 shrink-0 overflow-hidden rounded-full border">
+        <Image src={avatar} alt={name} class="h-full w-full object-cover" width={96} />
+      </div>
+      <div>
+        <div class="font-medium">{name}</div>
+        <div class="text-muted-foreground text-sm">{title}</div>
+      </div>
+    </div>
+  </div>
+</div>

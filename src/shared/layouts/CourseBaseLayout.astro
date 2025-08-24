@@ -1,0 +1,67 @@
+---
+import "@/styles/global.css";
+import "@/docs/styles/docs-markdown-content.css";
+import "@/styles/math.css";
+import "@/styles/sidenotes.css";
+
+import AnnouncementBanner from "@/docs/components/announcement-banner/AnnouncementBanner.astro";
+import SkipLink from "@/docs/components/skip-link/SkipLink.astro";
+import siteSettings from "@/docs/config/siteSettings.json";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import CourseNav from "@/shared/components/CourseNav.astro";
+import BaseHead from "@/docs/layouts/BaseHead.astro";
+
+// image and authorData are defined on blog posts
+// authorData could also be defined on the about author page
+interface Props {
+  title: string;
+  description: string;
+  image?: ImageMetadata;
+  noindex?: boolean; // you need to opt-in to no indexing, as it hides the page from search engines
+  tabId?: string;
+  courseId: string;
+  courseName: string;
+  courseSidebarData?: any;
+}
+
+const { 
+  title, 
+  description, 
+  image, 
+  noindex = false, 
+  tabId = "notes",
+  courseId,
+  courseName,
+  courseSidebarData
+} = Astro.props as Props;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html id="documentation-layout" lang={currLocale} class="dark" transition:animate="fade">
+  <head>
+    <BaseHead
+      title={title}
+      description={description}
+      image={image ? image : undefined}
+      noindex={noindex}
+    />
+  </head>
+  <body id="body" class={siteSettings.useAnimations ? "use-animations" : ""}>
+    <SkipLink href="#main-content" />
+    <div class="min-h-[100lvh]">
+      <AnnouncementBanner />
+      {/* Course-specific Navbar */}
+      <header class="bg-background/80 sticky -top-px z-50 w-full border-b backdrop-blur">
+        <CourseNav 
+          tabId={tabId} 
+          courseId={courseId} 
+          courseName={courseName}
+          courseSidebarData={courseSidebarData}
+        />
+      </header>
+      <slot />
+    </div>
+  </body>
+</html>

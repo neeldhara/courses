@@ -1,0 +1,76 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<div
+  class:list={[
+    className,
+    "gradient-border z-10 overflow-hidden rounded-xl p-[2px]",
+    "transition-all duration-300",
+  ]}
+>
+    <div class="bg-background dark:bg-muted h-full rounded-[calc(var(--radius)+.125rem)] p-5">
+      <h3 class="text-foreground mb-2 text-lg leading-tight font-semibold">
+        Feedback?
+      </h3>
+      <p class="text-muted-foreground mb-4 text-xs text-pretty">
+        Send an email to: neeldhara.misra@gmail.com
+      </p>
+    </div>
+</div>
+
+<style define:vars={{ rotation: "-25deg" }}>
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    inset: calc(var(--spacing) * -12);
+    border-radius: 9999px;
+    transform: rotate(var(--rotation));
+    background: conic-gradient(
+      from var(--rotation),
+      var(--color-blue-600) 0%,
+      var(--color-purple-600) 25%,
+      var(--color-pink-800) 50%,
+      var(--color-purple-600) 75%,
+      var(--color-blue-600) 100%
+    );
+  }
+</style>
+
+<script>
+  import { animate } from "motion";
+
+  document.querySelectorAll(".gradient-border").forEach((element) => {
+    const animation = animate(
+      element,
+      {
+        // @ts-ignore - Motion animate CSS variables type issue
+        "--rotation": ["-25deg", "335deg"],
+      },
+      {
+        duration: 10,
+        repeat: Infinity,
+        easing: "linear",
+      },
+    );
+
+    animation.pause();
+
+    element.addEventListener("mouseenter", () => {
+      animation?.play();
+    });
+
+    element.addEventListener("mouseleave", () => {
+      animation?.pause();
+    });
+  });
+</script>

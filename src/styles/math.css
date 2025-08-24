@@ -1,0 +1,66 @@
+/* KaTeX Math Styling */
+
+/* Ensure proper sizing for math content */
+.katex {
+  font-size: 1.1em !important;
+  line-height: 1.4;
+}
+
+/* Inline math should align properly with text */
+.katex-display {
+  margin: 1.5em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Ensure display math doesn't overflow on mobile */
+.katex-display > .katex {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.5em 0;
+}
+
+/* Better spacing for inline math */
+.katex:not(.katex-display) {
+  vertical-align: middle;
+}
+
+/* Dark mode adjustments */
+.dark .katex {
+  color: var(--foreground);
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .katex {
+    font-size: 1em !important;
+  }
+  
+  .katex-display {
+    font-size: 0.95em !important;
+  }
+}
+
+/* Fix for potential overflow issues */
+.docs-markdown-content .katex-html {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Ensure math blocks don't break layout */
+.docs-markdown-content .katex-display {
+  display: block;
+  text-align: center;
+}
+
+/* Optional: Add subtle background to display math */
+.docs-markdown-content .katex-display > .katex {
+  background-color: var(--color-base-50);
+  padding: 1rem;
+  border-radius: 0.375rem;
+}
+
+.dark .docs-markdown-content .katex-display > .katex {
+  background-color: var(--color-base-900);
+}

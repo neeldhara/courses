@@ -1,0 +1,163 @@
+---
+title: Background
+tab: notes
+description: The styles used for rendered markdown
+sidebar:
+  order: 1
+tableOfContents:
+  minHeadingLevel: 1
+  maxHeadingLevel: 4
+---
+
+
+#### Prelude
+
+If you are wondering about the role of games in the context of AI, consider the following passage from the introduction of the paper _Programming a Computer for Playing Chess_, by Claude Shannon, published in 1950.
+
+> This paper is concerned with the problem of constructing a computing routine or "program" for a modern general purpose computer which will enable it to play chess. Although perhaps of no practical importance, the question is of theoretical interest, and it is hoped that a satisfactory solution of this problem will act as a wedge in attacking other problems of a similar nature and of greater significance. Some possibilities in this direction are :-
+>
+> 1. Machines for designing filters, equalizers, etc.
+> 2. Machines for designing relay and switching circuits.
+> 3. Machines which will handle routing of telephone calls based on
+> the individual circumstances rather than by fixed patterns.
+> 4. Machines for performing symbolic (non-numerical) mathematical
+> operations.
+> 5. Machines capable of translating from one language to another.
+> 6. Machines for making strategie decisions in simplified military
+> operations.
+> 7. Machines capable of orchestrating a melody.
+> 8. Machines capable of logical deduction.
+>
+> It is believed that all of these and many other devices of a similar nature are possible developments in the immediate future. The techniques developed for modern electronic and relay type computers make them not only theoretical possibilities, but in several cases worthy of serious consideration from the economic point of view. Machines of this general type are an extension over the ordinary use of numerical computers in several ways. First, the entities dealt with are not primarily numbers, but rather chess positions, circuits, mathematical expressions, words, etc. Second, the proper procedure involves general principles, something of the nature of judgment, and considerable trial and error, rather than a strict, unalterable computing process. Finally, the solutions of these problems are not merely right or wrong but have a continuous range of " quality" from the best down to the worst. We might be satisfied with a machine that designed good filters even though they were not always the best possible. 
+
+The game of Checkers was declared "solved" in 2007, meaning that the game has been fully analyzed and the outcome is known for any possible position given optimal play from both sides. Here's the abstract of the paper that announced this achievement:
+
+> The game of checkers has roughly 500 billion billion possible positions $$(5 \cdot 10^{20})$$. The task of solving the game, determining the final result in a game with no mistakes made by either player, is daunting. Since 1989, almost continuously, dozens of computers have been working on solving checkers, applying state-of-the-art artificial intelligence techniques to the proving process. This paper announces that checkers is now solved: perfect play by both sides leads to a draw. This is the most challenging popular game to be solved to date, roughly one million times as complex as Connect Four. Artificial intelligence technology has been used to generate strong heuristic-based game-playing programs, such as Deep Blue for chess. Solving a game takes this to the next level by replacing the heuristics with perfection. 
+
+Many games are not solved in this sense as yet. However, computers can still use AI techniques to play them quite well! The following documentary about AlphaGo would give you a sense of the kind of strides that have happened in this space.
+
+<div style={{ position: 'relative', paddingBottom: 'calc(56.25% + 3px)', height: 0, maxWidth: '100%', marginTop: '1rem', marginBottom: '2rem', borderRadius: '0.5rem' }}>
+  <iframe
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+    src="https://www.youtube.com/embed/WXuK6gekU1Y?si=OE--SDynRmeNiHC6"
+    title="YouTube video player"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Games are a rich source of problems for AI, and they have been studied for decades. The techniques developed for games have been applied to many other problems too. More recently, games are also serving as benchmarks for evaluating the performance of LLMs.
+
+#### What is a Game?
+
+Informally speaking, a game has the following ingredients:
+
+- a notion of a board or arena and pieces (cards, dice, tokens, etc.), whose different configurations constitute a state space, with a special _initial state_,
+- a typically non-empty set of players
+- a set of moves available to the players
+- rules that determine how moves affect the state of the game
+- a notion of winning, losing, or drawing the game
+
+Usually games end at _terminal_ states, from where no further moves are possible, and the win/lose/draw condition helps us determine the outcome of the game. There are many different types of games. You could ask yourself the following questions to classify a game:
+
+- How many players are there?
+- Are the players cooperating or competing?
+- Are all the players fully informed about the game state, or is there hidden information that some players may not be privy to?
+- Are the players taking turns, or are they acting simultaneously?
+- Can the game potentially go on forever, or does it always end in a finite number of moves?
+
+<Aside variant="info" title="Some Familiar Games">
+<Tabs defaultValue="chess">
+  <TabsList>
+    <TabsTrigger value="chess">Chess</TabsTrigger>
+    <TabsTrigger value="nim">Nim</TabsTrigger>
+    <TabsTrigger value="poker">Poker</TabsTrigger>
+    <TabsTrigger value="hanabi">Hanabi</TabsTrigger>
+    <TabsTrigger value="rps">Rock Paper Scissors</TabsTrigger>
+    <TabsTrigger value="tetris">Tetris</TabsTrigger>
+  </TabsList>
+  
+  <TabsContent value="chess">
+    **[Chess](https://en.wikipedia.org/wiki/Chess)** - A classic strategy board game
+    
+    - **Number of players:** 2
+    - **Game type:** Competitive
+    - **Information:** Perfect information (all pieces visible)
+    - **Turn structure:** Turn-based (alternating moves)
+    - **Game length:** Finite (draw by repetition/50-move rule)
+  </TabsContent>
+  
+  <TabsContent value="nim">
+    **[Nim](https://en.wikipedia.org/wiki/Nim)** - A mathematical strategy game
+    
+    - **Number of players:** 2
+    - **Game type:** Competitive
+    - **Information:** Perfect information (all heaps visible)
+    - **Turn structure:** Turn-based (alternating moves)
+    - **Game length:** Finite (always ends when last object taken)
+  </TabsContent>
+  
+  <TabsContent value="poker">
+    **[Poker](https://en.wikipedia.org/wiki/Poker)** - A card game combining skill and chance
+    
+    - **Number of players:** 2-10 (typically)
+    - **Game type:** Competitive
+    - **Information:** Hidden information (private cards)
+    - **Turn structure:** Turn-based with simultaneous elements (betting rounds)
+    - **Game length:** Finite (ends when all but one player folds or showdown)
+  </TabsContent>
+  
+  <TabsContent value="hanabi">
+    **[Hanabi](https://en.wikipedia.org/wiki/Hanabi_(card_game))** - A cooperative card game
+    
+    - **Number of players:** 2-5
+    - **Game type:** Cooperative
+    - **Information:** Hidden information (can't see own cards)
+    - **Turn structure:** Turn-based (sequential moves)
+    - **Game length:** Finite (deck runs out or max mistakes made)
+  </TabsContent>
+  
+  <TabsContent value="rps">
+    **[Rock Paper Scissors](https://en.wikipedia.org/wiki/Rock_paper_scissors)** - A simple hand game
+    
+    - **Number of players:** 2
+    - **Game type:** Competitive
+    - **Information:** Hidden information (choices revealed simultaneously)
+    - **Turn structure:** Simultaneous moves
+    - **Game length:** Finite (single round or best-of series)
+  </TabsContent>
+  
+  <TabsContent value="tetris">
+    **[Tetris](https://en.wikipedia.org/wiki/Tetris)** - A tile-matching puzzle game
+    
+    - **Number of players:** 1 (single-player) or 2+ (competitive modes)
+    - **Game type:** Competitive (against score/opponents) or Solo
+    - **Information:** Perfect information (upcoming pieces preview)
+    - **Turn structure:** Real-time/Continuous (not turn-based)
+    - **Game length:** Finite (ends when pieces reach top)
+  </TabsContent>
+</Tabs>
+</Aside>
+
+#### An Example: Nim
+
+Before moving on, try playing the game of Nim below! 
+
+<Aside variant="info" title="What is Nim?">
+The rules are simple: there are $$k$$ heaps of tokens, each heap potentially has a different number of tokens to begin with. Each player can take any number of tokens from one heap on their turn. 
+
+_Note._ On a single turn you can only pick one heap, and if the chosen heap has $$t$$ tokens, you can remove up to $$t$$ tokens from it, and this includes the option of removing all tokens from that heap making it empty.  
+
+Under normal play, the player who takes the last token wins. With misere play, the player who takes the last token loses. The interactive below is for normal play. 
+</Aside>
+
+<div style={{ width: '100%', height: '600px', marginTop: '1rem', marginBottom: '1rem' }}>
+  <iframe
+    src="https://interactives.neeldhara.com/games/nim"
+    title="Interactive Nim Game"
+    frameBorder="0"
+    style={{ width: '100%', height: '100%', border: '1px solid #e5e7eb', borderRadius: '0.5rem' }}
+  ></iframe>
+</div>

@@ -1,0 +1,64 @@
+---
+/**
+ * * These are alternating side cards with titles, text, and images
+ * Recommend using 2 or 3 cards in a row
+ */
+import image1 from "@images/feature/custom-components.jpg";
+import image2 from "@images/feature/frontmatter.jpg";
+import image3 from "@images/feature/sidebar.jpg";
+
+import FeatureCard from "./FeatureCardSideImage.astro";
+
+interface FeatureItem {
+  image: ImageMetadata; // an imported image
+  title: string;
+  description: string;
+  href: string; // link to learn more
+  buttonText: string; // button text
+}
+
+const featureData: FeatureItem[] = [
+  {
+    image: image1,
+    title: "Integrated Components",
+    description:
+      "In addition to steps, tabs, asides, and more, Solstice also supports custom components for you to use in your documentation.",
+    href: "/docs/components/",
+    buttonText: "Custom Components",
+  },
+  {
+    image: image3,
+    title: "Sidebar Customization",
+    description: "Easily configure the sidebar menu to match your desired docs structure.",
+    href: "/docs/reference/sidebar-navigation/",
+    buttonText: "Sidebar Config",
+  },
+  {
+    image: image2,
+    title: "Frontmatter Configuration",
+    description:
+      "Each docs entry in Solstice supports tons of frontmatter options for easy configuration of your documentation.",
+    href: "/docs/reference/frontmatter-reference/",
+    buttonText: "Frontmatter Reference",
+  },
+];
+---
+
+<section id="feature-side-image" class="my-12 overflow-hidden py-6 md:py-12">
+  <div class="docs-home-container">
+    <div class="flex flex-col gap-16 md:gap-24">
+      {
+        featureData.map((feature, idx) => (
+          <FeatureCard
+            title={feature.title}
+            description={feature.description}
+            image={feature.image}
+            imageSide={idx % 2 === 0 ? "right" : "left"}
+            href={feature.href}
+            buttonText={feature.buttonText}
+          />
+        ))
+      }
+    </div>
+  </div>
+</section>

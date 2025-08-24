@@ -1,0 +1,70 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { tv } from "tailwind-variants";
+
+interface Props extends HTMLAttributes<"button">, Omit<HTMLAttributes<"a">, "type"> {
+  /**
+   * Sets the variant of the button
+   * @default "primary"
+   */
+  variant?:
+    | "primary"
+    | "secondary"
+    | "outline"
+    | "ghost"
+    | "info"
+    | "success"
+    | "warning"
+    | "error";
+  /**
+   * Sets the size of the button
+   * @default "md"
+   */
+  size?: "sm" | "md" | "lg" | "icon";
+}
+
+const { variant = "primary", size = "md", class: className, ...rest } = Astro.props;
+
+const Tag = Astro.props.href ? "a" : "button";
+
+const button = tv({
+  base: [
+    "inline-flex items-center justify-center gap-1.5 rounded-full font-medium whitespace-nowrap transition-colors",
+    "[&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+    "focus-visible:outline-2 focus-visible:outline-offset-2",
+    "disabled:pointer-events-none disabled:opacity-50",
+  ],
+  variants: {
+    variant: {
+      primary:
+        "bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:outline-primary",
+      secondary:
+        "bg-secondary text-secondary-foreground hover:bg-secondary/90 focus-visible:outline-secondary",
+      outline:
+        "border-input hover:border-accent hover:text-foreground focus-visible:outline-outline border",
+      ghost:
+        "hover:bg-foreground/10 hover:text-foreground focus-visible:outline-outline bg-transparent",
+      info: "bg-info text-info-foreground hover:bg-info/90 focus-visible:outline-info",
+      success:
+        "bg-success text-success-foreground hover:bg-success/90 focus-visible:outline-success",
+      warning:
+        "bg-warning text-warning-foreground hover:bg-warning/90 focus-visible:outline-warning",
+      error: "bg-error text-error-foreground hover:bg-error/90 focus-visible:outline-error",
+    },
+    size: {
+      sm: "h-8 px-3 py-2 text-sm",
+      md: "h-10 px-4 py-2 text-base",
+      lg: "h-11 px-8 py-2 text-lg",
+      icon: "size-10",
+    },
+  },
+  defaultVariants: {
+    variant: "primary",
+    size: "md",
+  },
+});
+---
+
+<Tag class={button({ variant, size, class: className })} {...rest}>
+  <slot />
+</Tag>

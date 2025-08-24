@@ -1,0 +1,1000 @@
+---
+// MinimaxWidget.astro - Interactive Minimax Algorithm Visualization
+---
+
+<div class="minimax-widget">
+  <div class="controls">
+    <div class="button-row">
+      <div class="button-group">
+        <button id="random-btn" class="control-btn dice-btn" title="Random Setup"></button>
+        <button id="start-btn" class="control-btn" disabled>Start</button>
+        <button id="prev-btn" class="control-btn icon-btn" disabled title="Previous Step">◀</button>
+        <button id="next-btn" class="control-btn icon-btn" disabled title="Next Step">▶</button>
+        <button id="auto-btn" class="control-btn" disabled>Auto Play</button>
+      </div>
+      <button id="reset-btn" class="control-btn">Reset</button>
+    </div>
+    <div class="step-info">
+      <span id="step-text">Click the root node to choose if it's MAX or MIN</span>
+    </div>
+  </div>
+  
+  <svg id="game-tree" viewBox="0 0 800 500" class="game-tree">
+    <!-- Tree edges -->
+    <g id="edges">
+      <!-- Root to level 1 -->
+      <line x1="400" y1="60" x2="200" y2="140" stroke="#666" stroke-width="2"/>
+      <line x1="400" y1="60" x2="600" y2="140" stroke="#666" stroke-width="2"/>
+      
+      <!-- Level 1 to level 2 -->
+      <line x1="200" y1="140" x2="120" y2="240" stroke="#666" stroke-width="2"/>
+      <line x1="200" y1="140" x2="280" y2="240" stroke="#666" stroke-width="2"/>
+      <line x1="600" y1="140" x2="520" y2="240" stroke="#666" stroke-width="2"/>
+      <line x1="600" y1="140" x2="680" y2="240" stroke="#666" stroke-width="2"/>
+      
+      <!-- Level 2 to leaves -->
+      <line x1="120" y1="240" x2="80" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="120" y1="240" x2="160" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="280" y1="240" x2="240" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="280" y1="240" x2="320" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="520" y1="240" x2="480" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="520" y1="240" x2="560" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="680" y1="240" x2="640" y2="340" stroke="#666" stroke-width="2"/>
+      <line x1="680" y1="240" x2="720" y2="340" stroke="#666" stroke-width="2"/>
+    </g>
+    
+    <!-- Nodes -->
+    <g id="nodes">
+      <!-- Root (initially uncolored, clickable) -->
+      <g class="node root-node clickable" data-node="a" data-level="0">
+        <circle cx="400" cy="60" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="400" y="65" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">a</text>
+        <text x="400" y="20" text-anchor="middle" font-size="14" class="player-type"></text>
+      </g>
+      
+      <!-- Level 1 -->
+      <g class="node" data-node="c" data-level="1">
+        <circle cx="200" cy="140" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="200" y="145" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">c</text>
+      </g>
+      
+      <g class="node" data-node="b" data-level="1">
+        <circle cx="600" cy="140" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="600" y="145" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">b</text>
+      </g>
+      
+      <!-- Level 2 -->
+      <g class="node" data-node="f" data-level="2">
+        <circle cx="120" cy="240" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="120" y="245" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">f</text>
+      </g>
+      
+      <g class="node" data-node="g" data-level="2">
+        <circle cx="280" cy="240" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="280" y="245" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">g</text>
+      </g>
+      
+      <g class="node" data-node="d" data-level="2">
+        <circle cx="520" cy="240" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="520" y="245" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">d</text>
+      </g>
+      
+      <g class="node" data-node="e" data-level="2">
+        <circle cx="680" cy="240" r="30" fill="white" stroke="#999" stroke-width="3"/>
+        <text x="680" y="245" text-anchor="middle" font-size="18" font-weight="bold" class="node-label">e</text>
+      </g>
+      
+      <!-- Leaf nodes (initially blank, clickable) -->
+      <g class="node leaf-node editable" data-leaf="0" data-x="80" data-y="340">
+        <circle cx="80" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="80" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="1" data-x="160" data-y="340">
+        <circle cx="160" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="160" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="2" data-x="240" data-y="340">
+        <circle cx="240" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="240" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="3" data-x="320" data-y="340">
+        <circle cx="320" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="320" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="4" data-x="480" data-y="340">
+        <circle cx="480" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="480" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="5" data-x="560" data-y="340">
+        <circle cx="560" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="560" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="6" data-x="640" data-y="340">
+        <circle cx="640" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="640" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+      
+      <g class="node leaf-node editable" data-leaf="7" data-x="720" data-y="340">
+        <circle cx="720" cy="340" r="25" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="5,5"/>
+        <text x="720" y="345" text-anchor="middle" font-size="16" font-weight="bold" class="leaf-value">?</text>
+      </g>
+    </g>
+    
+    <!-- Legend -->
+    <g id="legend">
+      <rect x="10" y="10" width="150" height="100" fill="white" stroke="#ccc" stroke-width="1" rx="5"/>
+      <text x="85" y="30" text-anchor="middle" font-size="14" font-weight="bold">Legend</text>
+      <circle cx="30" cy="50" r="8" fill="white" stroke="#2563eb" stroke-width="2"/>
+      <text x="45" y="55" font-size="12">MAX node</text>
+      <circle cx="30" cy="70" r="8" fill="white" stroke="#dc2626" stroke-width="2"/>
+      <text x="45" y="75" font-size="12">MIN node</text>
+      <circle cx="30" cy="90" r="8" fill="white" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+      <text x="45" y="95" font-size="12">Click to set</text>
+    </g>
+  </svg>
+  
+  <!-- Root Player Selection Modal -->
+  <div id="root-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Choose Root Player Type</h3>
+      <p>Is the root node (a) a MAX or MIN player?</p>
+      <div class="player-buttons">
+        <button id="choose-max" class="player-btn max">MAX Player</button>
+        <button id="choose-min" class="player-btn min">MIN Player</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Value Input Modal -->
+  <div id="value-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Set Leaf Value</h3>
+      <div class="slider-container">
+        <input type="range" id="value-slider" min="-20" max="20" value="0" step="1">
+        <div class="slider-value" id="slider-value">0</div>
+      </div>
+      <div class="modal-buttons">
+        <button id="modal-cancel" class="modal-btn cancel">Cancel</button>
+        <button id="modal-ok" class="modal-btn ok">OK</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="explanation">
+    <h3>Current Step Explanation</h3>
+    <p id="explanation-text">
+      First, click on the root node (a) to choose whether it's a MAX or MIN player. Then set values for the leaf nodes.
+    </p>
+  </div>
+</div>
+
+<style>
+  .minimax-widget {
+    max-width: 100%;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--color-base-50);
+    border-radius: 0.5rem;
+    border: 1px solid var(--color-base-200);
+    position: relative;
+  }
+  
+  .control-btn {
+    box-sizing: border-box;
+  }
+  
+  .controls {
+    margin-bottom: 1.5rem;
+  }
+  
+  .button-row {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    justify-content: space-between;
+    height: 40px;
+  }
+  
+  .control-btn {
+    padding: 0.5rem 0.75rem;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: background 0.2s;
+    min-width: 80px;
+    height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    vertical-align: middle;
+  }
+  
+  .control-btn.dice-btn {
+    min-width: 40px;
+    padding: 0.5rem;
+    position: relative;
+    top: 7px;
+    background-color: dodgerblue;
+  }
+  
+  .control-btn.dice-btn::before {
+    content: "🎲";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 0.5rem;
+    height: 40px;
+    align-items: center;
+    align-content: center;
+  }
+  
+  .control-btn.icon-btn {
+    min-width: 40px;
+    padding: 0.5rem;
+  }
+  
+  /* Ensure reset button has same height as other buttons */
+  #reset-btn {
+    height: 40px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  .control-btn:hover:not(:disabled) {
+    background: var(--color-primary-dark);
+  }
+  
+  .control-btn:disabled {
+    background: var(--color-base-300);
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+  
+  .step-info {
+    font-size: 0.9rem;
+    color: var(--color-base-600);
+    text-align: center;
+  }
+  
+  
+  .game-tree {
+    width: 100%;
+    height: auto;
+    background: white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .node {
+    transition: all 0.3s ease;
+  }
+  
+  .root-node.clickable {
+    cursor: pointer;
+  }
+  
+  .root-node.clickable:hover circle {
+    fill: #f3f4f6;
+  }
+  
+  .leaf-node.editable {
+    cursor: pointer;
+  }
+  
+  .leaf-node.editable:hover circle {
+    fill: #f0fdf4;
+    stroke-width: 3;
+  }
+  
+  .node.computed circle {
+    fill: #fef3c7;
+  }
+  
+  .node.active circle {
+    fill: #dbeafe;
+  }
+  
+  .node.max-node circle {
+    stroke: #2563eb;
+  }
+  
+  .node.min-node circle {
+    stroke: #dc2626;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  .modal.hidden {
+    display: none;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+  }
+  
+  .modal-content h3 {
+    margin: 0 0 1rem 0;
+    color: var(--color-base-800);
+  }
+  
+  .modal-content p {
+    margin: 0 0 1.5rem 0;
+    color: var(--color-base-600);
+  }
+  
+  .player-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+  }
+  
+  .player-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.2s;
+    color: white;
+  }
+  
+  .player-btn.max {
+    background: #2563eb;
+  }
+  
+  .player-btn.max:hover {
+    background: #1d4ed8;
+  }
+  
+  .player-btn.min {
+    background: #dc2626;
+  }
+  
+  .player-btn.min:hover {
+    background: #b91c1c;
+  }
+  
+  .slider-container {
+    margin: 1.5rem 0;
+  }
+  
+  #value-slider {
+    width: 100%;
+    margin: 1rem 0;
+  }
+  
+  .slider-value {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--color-primary);
+    margin: 1rem 0;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+  }
+  
+  .modal-btn {
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  
+  .modal-btn.cancel {
+    background: var(--color-base-200);
+    color: var(--color-base-700);
+  }
+  
+  .modal-btn.cancel:hover {
+    background: var(--color-base-300);
+  }
+  
+  .modal-btn.ok {
+    background: var(--color-primary);
+    color: white;
+  }
+  
+  .modal-btn.ok:hover {
+    background: var(--color-primary-dark);
+  }
+  
+  .explanation {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 0.25rem;
+    border-left: 4px solid var(--color-primary);
+  }
+  
+  .explanation h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+    color: var(--color-base-800);
+  }
+  
+  .explanation p {
+    margin: 0;
+    color: var(--color-base-600);
+    line-height: 1.6;
+  }
+</style>
+
+<script is:inline>
+  class MinimaxVisualizer {
+    constructor() {
+      this.currentStep = 0;
+      this.isPlaying = false;
+      this.gameStarted = false;
+      this.rootIsMax = null;
+      this.leafValues = new Array(8).fill(null);
+      this.steps = [];
+      this.history = [];
+      
+      this.resetBtn = document.getElementById('reset-btn');
+      this.randomBtn = document.getElementById('random-btn');
+      this.startBtn = document.getElementById('start-btn');
+      this.prevBtn = document.getElementById('prev-btn');
+      this.nextBtn = document.getElementById('next-btn');
+      this.autoBtn = document.getElementById('auto-btn');
+      this.stepText = document.getElementById('step-text');
+      this.explanationText = document.getElementById('explanation-text');
+      
+      // Modal elements
+      this.rootModal = document.getElementById('root-modal');
+      this.valueModal = document.getElementById('value-modal');
+      this.slider = document.getElementById('value-slider');
+      this.sliderValue = document.getElementById('slider-value');
+      this.modalOk = document.getElementById('modal-ok');
+      this.modalCancel = document.getElementById('modal-cancel');
+      this.chooseMax = document.getElementById('choose-max');
+      this.chooseMin = document.getElementById('choose-min');
+      
+      this.currentLeafIndex = null;
+      
+      this.init();
+    }
+    
+    init() {
+      // Control buttons
+      if (this.resetBtn) this.resetBtn.addEventListener('click', () => this.reset());
+      if (this.randomBtn) this.randomBtn.addEventListener('click', () => this.randomSetup());
+      if (this.startBtn) this.startBtn.addEventListener('click', () => this.startAlgorithm());
+      if (this.prevBtn) this.prevBtn.addEventListener('click', () => this.previousStep());
+      if (this.nextBtn) this.nextBtn.addEventListener('click', () => this.nextStep());
+      if (this.autoBtn) this.autoBtn.addEventListener('click', () => this.toggleAutoPlay());
+      
+      // Root node click
+      const rootNode = document.querySelector('.root-node');
+      if (rootNode) {
+        rootNode.addEventListener('click', () => this.onRootClick());
+      }
+      
+      // Root player selection
+      if (this.chooseMax) {
+        this.chooseMax.addEventListener('click', () => this.setRootPlayer(true));
+      }
+      if (this.chooseMin) {
+        this.chooseMin.addEventListener('click', () => this.setRootPlayer(false));
+      }
+      
+      // Leaf node clicks
+      document.querySelectorAll('.leaf-node.editable').forEach(leaf => {
+        leaf.addEventListener('click', (e) => this.onLeafClick(e));
+      });
+      
+      // Modal controls
+      if (this.slider) {
+        this.slider.addEventListener('input', (e) => {
+          if (this.sliderValue) this.sliderValue.textContent = e.target.value;
+        });
+      }
+      
+      if (this.modalOk) {
+        this.modalOk.addEventListener('click', () => this.setLeafValue());
+      }
+      
+      if (this.modalCancel) {
+        this.modalCancel.addEventListener('click', () => this.closeValueModal());
+      }
+      
+      // Click outside modal to close
+      if (this.valueModal) {
+        this.valueModal.addEventListener('click', (e) => {
+          if (e.target === this.valueModal) this.closeValueModal();
+        });
+      }
+    }
+    
+    onRootClick() {
+      if (this.gameStarted || this.rootIsMax !== null) return;
+      this.rootModal.classList.remove('hidden');
+    }
+    
+    setRootPlayer(isMax) {
+      this.rootIsMax = isMax;
+      this.rootModal.classList.add('hidden');
+      
+      // Color code all nodes based on root choice
+      this.colorCodeNodes();
+      
+      // Update instructions
+      this.stepText.textContent = 'Click on leaf nodes to set values';
+      this.explanationText.textContent = `Root is ${isMax ? 'MAX' : 'MIN'}. Now click on the leaf nodes (green dashed circles) to set their values between -20 and +20.`;
+      
+      // Remove clickable class from root
+      const rootNode = document.querySelector('.root-node');
+      rootNode.classList.remove('clickable');
+      rootNode.style.cursor = 'default';
+    }
+    
+    colorCodeNodes() {
+      const nodes = document.querySelectorAll('.node[data-level]');
+      nodes.forEach(node => {
+        const level = parseInt(node.dataset.level);
+        // For a tree with levels: Root(0) -> Level1(1) -> Level2(2) -> Leaves(3)
+        // If root is MAX: Level 0=MAX, Level 1=MIN, Level 2=MAX
+        // If root is MIN: Level 0=MIN, Level 1=MAX, Level 2=MIN
+        let isMaxLevel;
+        if (this.rootIsMax) {
+          // Root is MAX: Level 0=MAX, Level 1=MIN, Level 2=MAX
+          isMaxLevel = (level === 0 || level === 2);
+        } else {
+          // Root is MIN: Level 0=MIN, Level 1=MAX, Level 2=MIN
+          isMaxLevel = (level === 1);
+        }
+        
+        if (!node.classList.contains('leaf-node')) {
+          const circle = node.querySelector('circle');
+          if (isMaxLevel) {
+            node.classList.add('max-node');
+            node.classList.remove('min-node');
+            circle.setAttribute('stroke', '#2563eb');
+          } else {
+            node.classList.add('min-node');
+            node.classList.remove('max-node');
+            circle.setAttribute('stroke', '#dc2626');
+          }
+        }
+      });
+      
+      // Add label to root
+      const rootLabel = document.querySelector('.root-node .player-type');
+      if (rootLabel) {
+        rootLabel.textContent = this.rootIsMax ? 'MAX' : 'MIN';
+        rootLabel.setAttribute('fill', this.rootIsMax ? '#2563eb' : '#dc2626');
+      }
+    }
+    
+    onLeafClick(e) {
+      if (this.gameStarted || this.rootIsMax === null) return;
+      
+      const leaf = e.currentTarget;
+      this.currentLeafIndex = parseInt(leaf.dataset.leaf);
+      
+      // Get current value if exists
+      const currentValue = this.leafValues[this.currentLeafIndex];
+      if (currentValue !== null) {
+        this.slider.value = currentValue;
+        this.sliderValue.textContent = currentValue;
+      } else {
+        this.slider.value = 0;
+        this.sliderValue.textContent = '0';
+      }
+      
+      this.valueModal.classList.remove('hidden');
+    }
+    
+    setLeafValue() {
+      const value = parseInt(this.slider.value);
+      this.leafValues[this.currentLeafIndex] = value;
+      
+      // Update display
+      const leaf = document.querySelector(`[data-leaf="${this.currentLeafIndex}"]`);
+      const valueText = leaf.querySelector('.leaf-value');
+      valueText.textContent = value;
+      
+      // Change appearance to show it's set
+      const circle = leaf.querySelector('circle');
+      circle.setAttribute('stroke', '#666');
+      circle.setAttribute('stroke-dasharray', '0');
+      
+      this.closeValueModal();
+      this.checkAllLeavesSet();
+    }
+    
+    closeValueModal() {
+      this.valueModal.classList.add('hidden');
+      this.currentLeafIndex = null;
+    }
+    
+    checkAllLeavesSet() {
+      const allSet = this.leafValues.every(v => v !== null);
+      if (this.startBtn) {
+        this.startBtn.disabled = !allSet;
+        if (allSet) {
+          this.stepText.textContent = 'All leaves set! Click "Start" to begin';
+        }
+      }
+    }
+    
+    startAlgorithm() {
+      this.gameStarted = true;
+      if (this.startBtn) this.startBtn.disabled = true;
+      
+      // Disable leaf editing
+      document.querySelectorAll('.leaf-node').forEach(leaf => {
+        leaf.classList.remove('editable');
+        leaf.style.cursor = 'default';
+      });
+      
+      // Generate steps based on leaf values and root type
+      this.steps = this.generateSteps();
+      this.currentStep = 0;
+      
+      // Enable navigation buttons
+      if (this.nextBtn) this.nextBtn.disabled = false;
+      if (this.autoBtn) this.autoBtn.disabled = false;
+      
+      this.updateDisplay();
+    }
+    
+    generateSteps() {
+      const steps = [];
+      // For a tree with levels: Root(0) -> Level1(1) -> Level2(2) -> Leaves(3)
+      // If root is MAX: Level 0=MAX, Level 1=MIN, Level 2=MAX
+      // If root is MIN: Level 0=MIN, Level 1=MAX, Level 2=MIN
+      const isLevel1Min = this.rootIsMax;  // Level 1 is opposite of root
+      const isLevel2Max = this.rootIsMax;  // Level 2 is same as root
+      
+      steps.push({
+        action: 'start',
+        description: 'Starting minimax algorithm with your values',
+        explanation: `The algorithm will compute values bottom-up. Level 2 nodes are ${isLevel2Max ? 'MAX' : 'MIN'}, Level 1 nodes are ${isLevel1Min ? 'MIN' : 'MAX'}. You can step through or auto-play the process.`
+      });
+      
+      // Compute f (Level 2)
+      const fValue = isLevel2Max ? Math.max(this.leafValues[0], this.leafValues[1]) : Math.min(this.leafValues[0], this.leafValues[1]);
+      steps.push({
+        action: 'compute',
+        node: 'f',
+        value: fValue,
+        description: `Node f (${isLevel2Max ? 'MAX' : 'MIN'}): ${isLevel2Max ? 'max' : 'min'}(${this.leafValues[0]}, ${this.leafValues[1]}) = ${fValue}`,
+        explanation: `Node f is a ${isLevel2Max ? 'MAX' : 'MIN'} node. It chooses the ${isLevel2Max ? 'maximum' : 'minimum'} value from its children.`
+      });
+      
+      // Compute g (Level 2)
+      const gValue = isLevel2Max ? Math.max(this.leafValues[2], this.leafValues[3]) : Math.min(this.leafValues[2], this.leafValues[3]);
+      steps.push({
+        action: 'compute',
+        node: 'g',
+        value: gValue,
+        description: `Node g (${isLevel2Max ? 'MAX' : 'MIN'}): ${isLevel2Max ? 'max' : 'min'}(${this.leafValues[2]}, ${this.leafValues[3]}) = ${gValue}`,
+        explanation: `Node g is a ${isLevel2Max ? 'MAX' : 'MIN'} node. It chooses the ${isLevel2Max ? 'maximum' : 'minimum'} value from its children.`
+      });
+      
+      // Compute d (Level 2)
+      const dValue = isLevel2Max ? Math.max(this.leafValues[4], this.leafValues[5]) : Math.min(this.leafValues[4], this.leafValues[5]);
+      steps.push({
+        action: 'compute',
+        node: 'd',
+        value: dValue,
+        description: `Node d (${isLevel2Max ? 'MAX' : 'MIN'}): ${isLevel2Max ? 'max' : 'min'}(${this.leafValues[4]}, ${this.leafValues[5]}) = ${dValue}`,
+        explanation: `Node d is a ${isLevel2Max ? 'MAX' : 'MIN'} node. It chooses the ${isLevel2Max ? 'maximum' : 'minimum'} value from its children.`
+      });
+      
+      // Compute e (Level 2)
+      const eValue = isLevel2Max ? Math.max(this.leafValues[6], this.leafValues[7]) : Math.min(this.leafValues[6], this.leafValues[7]);
+      steps.push({
+        action: 'compute',
+        node: 'e',
+        value: eValue,
+        description: `Node e (${isLevel2Max ? 'MAX' : 'MIN'}): ${isLevel2Max ? 'max' : 'min'}(${this.leafValues[6]}, ${this.leafValues[7]}) = ${eValue}`,
+        explanation: `Node e is a ${isLevel2Max ? 'MAX' : 'MIN'} node. It chooses the ${isLevel2Max ? 'maximum' : 'minimum'} value from its children.`
+      });
+      
+      // Compute c (Level 1)
+      const cValue = isLevel1Min ? Math.min(fValue, gValue) : Math.max(fValue, gValue);
+      steps.push({
+        action: 'compute',
+        node: 'c',
+        value: cValue,
+        description: `Node c (${isLevel1Min ? 'MIN' : 'MAX'}): ${isLevel1Min ? 'min' : 'max'}(${fValue}, ${gValue}) = ${cValue}`,
+        explanation: `Node c is a ${isLevel1Min ? 'MIN' : 'MAX'} node. It chooses the ${isLevel1Min ? 'minimum' : 'maximum'} value from its children.`
+      });
+      
+      // Compute b (Level 1)
+      const bValue = isLevel1Min ? Math.min(dValue, eValue) : Math.max(dValue, eValue);
+      steps.push({
+        action: 'compute',
+        node: 'b',
+        value: bValue,
+        description: `Node b (${isLevel1Min ? 'MIN' : 'MAX'}): ${isLevel1Min ? 'min' : 'max'}(${dValue}, ${eValue}) = ${bValue}`,
+        explanation: `Node b is a ${isLevel1Min ? 'MIN' : 'MAX'} node. It chooses the ${isLevel1Min ? 'minimum' : 'maximum'} value from its children.`
+      });
+      
+      // Compute a (root)
+      const aValue = this.rootIsMax ? Math.max(cValue, bValue) : Math.min(cValue, bValue);
+      steps.push({
+        action: 'compute',
+        node: 'a',
+        value: aValue,
+        description: `Node a (${this.rootIsMax ? 'MAX' : 'MIN'}): ${this.rootIsMax ? 'max' : 'min'}(${cValue}, ${bValue}) = ${aValue}`,
+        explanation: `Node a is the root ${this.rootIsMax ? 'MAX' : 'MIN'} node. The optimal value for the game is ${aValue}!`
+      });
+      
+      steps.push({
+        action: 'complete',
+        description: `Algorithm complete! The minimax value is ${aValue}`,
+        explanation: `With optimal play, the ${this.rootIsMax ? 'MAX' : 'MIN'} player at the root can guarantee a value of ${this.rootIsMax ? 'at least' : 'at most'} ${aValue}.`
+      });
+      
+      return steps;
+    }
+    
+    randomSetup() {
+      // Reset first
+      this.reset();
+      
+      // Randomly choose root player
+      const isMax = Math.random() < 0.5;
+      this.setRootPlayer(isMax);
+      
+      // Set random leaf values
+      for (let i = 0; i < 8; i++) {
+        const randomValue = Math.floor(Math.random() * 41) - 20; // Random from -20 to 20
+        this.leafValues[i] = randomValue;
+        
+        // Update display
+        const leaf = document.querySelector(`[data-leaf="${i}"]`);
+        const valueText = leaf.querySelector('.leaf-value');
+        valueText.textContent = randomValue;
+        
+        // Change appearance to show it's set
+        const circle = leaf.querySelector('circle');
+        circle.setAttribute('stroke', '#666');
+        circle.setAttribute('stroke-dasharray', '0');
+      }
+      
+      // Enable start button
+      if (this.startBtn) this.startBtn.disabled = false;
+      this.stepText.textContent = 'Random setup complete! Click "Start" to begin';
+      this.explanationText.textContent = `Root is ${isMax ? 'MAX' : 'MIN'} with random leaf values. Ready to start the algorithm!`;
+    }
+    
+    reset() {
+      this.currentStep = 0;
+      this.isPlaying = false;
+      this.gameStarted = false;
+      this.rootIsMax = null;
+      this.leafValues = new Array(8).fill(null);
+      this.steps = [];
+      this.history = [];
+      
+      if (this.autoBtn) this.autoBtn.textContent = 'Auto Play';
+      
+      // Reset all nodes
+      document.querySelectorAll('.node-label').forEach(label => {
+        const parent = label.parentElement;
+        const docsLabel = parent.dataset.node;
+        if (docsLabel) {
+          label.textContent = docsLabel;
+        }
+      });
+      
+      // Reset node colors to gray
+      document.querySelectorAll('.node:not(.leaf-node)').forEach(node => {
+        const circle = node.querySelector('circle');
+        circle.setAttribute('stroke', '#999');
+        node.classList.remove('max-node', 'min-node');
+      });
+      
+      // Reset root node
+      const rootNode = document.querySelector('.root-node');
+      rootNode.classList.add('clickable');
+      rootNode.style.cursor = 'pointer';
+      const rootLabel = document.querySelector('.root-node .player-type');
+      if (rootLabel) rootLabel.textContent = '';
+      
+      // Reset leaf nodes
+      document.querySelectorAll('.leaf-node').forEach((leaf, i) => {
+        leaf.classList.add('editable');
+        leaf.style.cursor = 'pointer';
+        const circle = leaf.querySelector('circle');
+        circle.setAttribute('stroke', '#10b981');
+        circle.setAttribute('stroke-dasharray', '5,5');
+        const valueText = leaf.querySelector('.leaf-value');
+        valueText.textContent = '?';
+      });
+      
+      // Remove all highlighting
+      document.querySelectorAll('.node').forEach(node => {
+        node.classList.remove('computed', 'active', 'highlight');
+      });
+      
+      // Reset buttons
+      this.startBtn.disabled = true;
+      this.prevBtn.disabled = true;
+      this.nextBtn.disabled = true;
+      this.autoBtn.disabled = true;
+      
+      this.stepText.textContent = 'Click the root node to choose if it\'s MAX or MIN';
+      this.explanationText.textContent = 'First, click on the root node (a) to choose whether it\'s a MAX or MIN player. Then set values for the leaf nodes.';
+    }
+    
+    previousStep() {
+      if (this.currentStep > 0) {
+        // Save current state to history
+        this.saveCurrentState();
+        
+        this.currentStep--;
+        
+        // Revert to previous state
+        this.revertToPreviousState();
+        
+        this.updateDisplay();
+        
+        // Enable next button when going back
+        if (this.nextBtn) {
+          this.nextBtn.disabled = false;
+        }
+      }
+    }
+    
+    nextStep() {
+      if (this.currentStep < this.steps.length) {
+        const step = this.steps[this.currentStep];
+        this.executeStep(step);
+        this.currentStep++;
+        this.updateDisplay();
+        
+        if (this.currentStep >= this.steps.length) {
+          this.nextBtn.disabled = true;
+          this.isPlaying = false;
+          this.autoBtn.textContent = 'Auto Play';
+        }
+      }
+    }
+    
+    executeStep(step) {
+      // Remove previous active highlights
+      document.querySelectorAll('.active').forEach(node => {
+        node.classList.remove('active');
+      });
+      
+      if (step.action === 'compute') {
+        const node = document.querySelector(`[data-node="${step.node}"]`);
+        if (node) {
+          node.classList.add('computed', 'active');
+          const label = node.querySelector('.node-label');
+          if (label) {
+            label.textContent = step.value;
+          }
+        }
+      }
+    }
+    
+    saveCurrentState() {
+      const state = {};
+      document.querySelectorAll('[data-node]').forEach(node => {
+        const label = node.querySelector('.node-label');
+        state[node.dataset.node] = {
+          text: label.textContent,
+          computed: node.classList.contains('computed')
+        };
+      });
+      this.history.push(state);
+    }
+    
+    revertToPreviousState() {
+      // Clear all computed states and restore docs labels
+      document.querySelectorAll('.node[data-node]').forEach(node => {
+        node.classList.remove('computed', 'active');
+        const label = node.querySelector('.node-label');
+        const docsLabel = node.dataset.node;
+        if (label && docsLabel) {
+          label.textContent = docsLabel;
+        }
+      });
+      
+      // Reapply states up to current step
+      for (let i = 0; i < this.currentStep; i++) {
+        const step = this.steps[i];
+        if (step.action === 'compute') {
+          const node = document.querySelector(`[data-node="${step.node}"]`);
+          if (node) {
+            node.classList.add('computed');
+            const label = node.querySelector('.node-label');
+            if (label) {
+              label.textContent = step.value;
+            }
+          }
+        }
+      }
+    }
+    
+    updateDisplay() {
+      const step = this.steps[this.currentStep] || this.steps[this.steps.length - 1];
+      if (this.stepText) this.stepText.textContent = step.description;
+      if (this.explanationText) this.explanationText.textContent = step.explanation;
+      
+      if (this.prevBtn) this.prevBtn.disabled = this.currentStep === 0;
+      if (this.nextBtn) this.nextBtn.disabled = this.currentStep >= this.steps.length;
+      
+      // Enable previous button when we have at least one step
+      if (this.prevBtn && this.currentStep > 0) {
+        this.prevBtn.disabled = false;
+      }
+    }
+    
+    toggleAutoPlay() {
+      this.isPlaying = !this.isPlaying;
+      if (this.autoBtn) this.autoBtn.textContent = this.isPlaying ? 'Pause' : 'Auto Play';
+      
+      if (this.isPlaying) {
+        this.autoPlay();
+      }
+    }
+    
+    autoPlay() {
+      if (this.isPlaying && this.currentStep < this.steps.length) {
+        this.nextStep();
+        setTimeout(() => this.autoPlay(), 1500);
+      } else {
+        this.isPlaying = false;
+        if (this.autoBtn) this.autoBtn.textContent = 'Auto Play';
+      }
+    }
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => new MinimaxVisualizer());
+  } else {
+    new MinimaxVisualizer();
+  }
+</script>

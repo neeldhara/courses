@@ -1,0 +1,45 @@
+---
+import ChevronLeft from "@tabler/icons/outline/chevron-left.svg";
+import ChevronRight from "@tabler/icons/outline/chevron-right.svg";
+
+interface Props {
+  prev: {
+    slug: string;
+    title: string;
+  } | null;
+  next: {
+    slug: string;
+    title: string;
+  } | null;
+  courseId: string;
+  tabId: string;
+}
+
+const { prev, next, courseId, tabId } = Astro.props;
+---
+
+<nav class="mt-8 flex items-center justify-between pt-8 border-t border-gray-200 dark:border-gray-700">
+  {
+    prev && (
+      <a
+        href={`/${courseId}/${tabId}/${prev.slug}`}
+        class="text-foreground hover:bg-muted text-md flex items-center gap-2 rounded-md px-2.5 py-1.5 font-medium transition-colors"
+      >
+        <ChevronLeft class="text-accent size-5 transition-transform" />
+        {prev.title}
+      </a>
+    )
+  }
+  {!prev && <div />}
+  {
+    next && (
+      <a
+        href={`/${courseId}/${tabId}/${next.slug}`}
+        class="text-foreground hover:bg-muted text-md flex items-center gap-2 rounded-md px-2.5 py-1.5 font-medium transition-colors"
+      >
+        {next.title}
+        <ChevronRight class="text-accent size-5 transition-transform" />
+      </a>
+    )
+  }
+</nav>

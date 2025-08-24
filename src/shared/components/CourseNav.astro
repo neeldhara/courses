@@ -1,0 +1,143 @@
+---
+// icons
+import Menu from "@tabler/icons/outline/menu-2.svg";
+import { Icon } from "astro-icon/components";
+
+import DocsLogo from "@/docs/components/docs-logo/DocsLogo.astro";
+import Search from "@/docs/components/search/Search.astro";
+import ThemeToggle from "@/docs/components/theme-toggle/ThemeToggle.astro";
+
+
+
+import { Dialog, DialogContent, DialogTrigger } from "@/docs/components/nav/nav-dialog";
+
+interface Props {
+  tabId?: string;
+  courseId: string;
+  courseName: string;
+  courseSidebarData?: any;
+}
+
+const { tabId = "notes", courseId, courseName, courseSidebarData } = Astro.props;
+
+// Get tabs from sidebar data or use defaults
+const courseTabs = courseSidebarData?.tabs || [
+  {
+    id: "notes",
+    title: "Notes",
+    icon: "tabler/file-text",
+    sections: [
+      { id: "introduction", title: "Introduction" },
+    ],
+  },
+  {
+    id: "assessments",
+    title: "Assessments",
+    icon: "tabler/edit-circle",
+    sections: [
+      { id: "assignments", title: "Assignments" },
+    ],
+  },
+  {
+    id: "editions",
+    title: "Editions",
+    icon: "tabler/stack-2",
+    sections: [
+      { id: "current", title: "Current Edition" },
+    ],
+  },
+];
+
+// Get the first section for each tab (for navigation links)
+const getTabUrl = (tab: any) => {
+  const firstSection = tab.sections?.[0]?.id || 'introduction';
+  return `/${courseId}/${tab.id}/${firstSection}`;
+};
+---
+
+<div class="flex h-(--nav-height) items-center px-4">
+  {/* Rest of the navbar */}
+  <nav class="flex flex-1 items-center justify-between">
+    <div class="ml-1 flex items-center space-x-6">
+      <DocsLogo />
+      {/* Course Name as Title */}
+      <div class="hidden md:flex items-center">
+        <h1 class="ml-3 font-heading text-base font-medium tracking-wide">
+          {courseName}
+        </h1>
+      </div>
+    </div>
+    
+    <div class="flex items-center">
+
+      <div class="flex items-center space-x-3">
+        {/* Latest Edition Button */}
+        <a
+          href={`/${courseId}/editions/current`}
+          class="hidden md:flex items-center gap-2 px-4 py-2 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md"
+        >
+          <Icon name="tabler/sparkles" class="size-4" />
+          <span>Latest Edition</span>
+        </a>
+        
+        <div class="bg-border h-8 w-px hidden md:block"></div>
+        
+        <Search />
+        <ThemeToggle class="hidden md:flex" size="md" />
+        
+        {/* Back to All Courses Link */}
+        <a
+          href="/"
+          class="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent/5"
+        >
+          <span class="text-base">←</span>
+          <span>All Courses</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+  
+  {/* Mobile Menu */}
+  <Dialog>
+    <DialogTrigger aria-label="Toggle Menu" class="docs-nav__link--base mr-1 p-1.5 md:hidden">
+      <Menu class="size-6" />
+    </DialogTrigger>
+    <DialogContent
+      animationDuration={300}
+      class="h-[calc(100vh-var(--nav-height))-1px] rounded-none"
+    >
+      <div class="overflow-x-hidden overflow-y-auto p-4">
+        {/* Mobile Course Title */}
+        <div class="mb-6 pb-4 border-b">
+          <h2 class="font-heading text-lg font-semibold">{courseName}</h2>
+        </div>
+        
+        {/* Latest Edition Button - Mobile */}
+        <div class="mb-6">
+          <a
+            href={`/${courseId}/editions/current`}
+            class="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors rounded-md w-full"
+          >
+            <Icon name="tabler/sparkles" class="size-4" />
+            <span>Latest Edition</span>
+          </a>
+        </div>
+        
+        {/* Mobile Utils */}
+        <div class="pt-4 border-t space-y-4">
+          <div class="flex justify-between items-center">
+            <ThemeToggle />
+          </div>
+          
+          <a
+            href="/"
+            class="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-md hover:bg-accent/5"
+          >
+            <span class="text-base">←</span>
+            <span>Back to All Courses</span>
+          </a>
+        </div>
+      </div>
+    </DialogContent>
+  </Dialog>
+</div>

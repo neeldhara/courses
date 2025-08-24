@@ -1,0 +1,35 @@
+---
+import AlertTriangle from "@tabler/icons/outline/alert-triangle.svg";
+
+import Button from "@/docs/components/button/Button.astro";
+---
+
+<div id="announcement-banner" class="bg-background relative z-20 overflow-hidden px-4 py-2">
+  <div class="bg-accent/6 absolute inset-0"></div>
+
+  <div
+    class="relative mx-auto flex max-w-7xl flex-wrap items-center justify-center gap-x-2 gap-y-2"
+  >
+    <div class="bg-primary/10 flex h-7 w-7 items-center justify-center rounded-full">
+      <AlertTriangle class="text-primary size-3" aria-hidden="true" />
+    </div>
+
+    <p class="text-center text-xs leading-snug lg:text-sm">
+      <span class="font-semibold">Work in Progress</span>
+
+      <span class="hidden md:inline-block"
+        ><span class="mx-1">&bull;</span> The site is new and most content is under development.</span
+      >
+    </p>
+    <!--<Button
+      href="https://cosmicthemes.com/themes/solstice"
+      rel="noopener"
+      target="_blank"
+      variant="secondary"
+      size="sm"
+      class="h-7 rounded-full text-xs md:h-7.5 md:text-sm"
+    >
+      Learn more <span aria-hidden="true">&rarr;</span>
+    </Button>-->
+  </div>
+</div>

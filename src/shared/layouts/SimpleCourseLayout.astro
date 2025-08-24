@@ -1,0 +1,432 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import Menu from "@tabler/icons/outline/menu-2.svg";
+
+import Footer from "@/docs/components/footer/Footer.astro";
+import CoursePagination from "@/shared/components/CoursePagination.astro";
+import { getCourseAdjacentPages } from "@/shared/js/courseUtils";
+import TableOfContents from "@/docs/components/table-of-contents/TableOfContents.astro";
+import TocLink from "@/docs/components/table-of-contents/TocLink.astro";
+import CourseBaseLayout from "@/shared/layouts/CourseBaseLayout.astro";
+import { Dialog, DialogContent, DialogTrigger } from "@/docs/components/nav/nav-dialog";
+import { siteSettings } from "@/docs/config/siteSettings.json";
+import { filterCollectionByLanguage } from "@/docs/js/localeUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import SidebarCta from "@/docs/components/cta/SidebarCtaRotatingBorder.astro";
+import Summary from "@/docs/components/summary/Summary.astro";
+
+interface Props {
+  doc: CollectionEntry<any>;
+  headings?: import("astro").MarkdownHeading[];
+  tabId?: string;
+  courseId: string;
+  courseName: string;
+  courseSidebarData?: any;
+}
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const { doc, headings = [], tabId = "notes", courseId, courseName, courseSidebarData } = Astro.props;
+const { title, description = "", sidebar, tableOfContents, pagefind = true, summary, showtitle = false } = doc.data;
+
+const minHeadingLevel = tableOfContents?.minHeadingLevel ?? 2;
+const maxHeadingLevel = tableOfContents?.maxHeadingLevel ?? 3;
+
+// Filter headings based on tableOfContents settings
+const filteredHeadings = headings.filter(
+  (heading) => heading.depth <= maxHeadingLevel && heading.depth >= minHeadingLevel,
+);
+const hasTOC = filteredHeadings.length > 0;
+
+// Get course collection
+const courseDocs = await getCollection(courseId as any, ({ data }) => {
+  return data.draft !== true;
+});
+
+// Filter docs by locale
+const filteredDocs = filterCollectionByLanguage(courseDocs, currLocale);
+
+// Group docs by tab and section
+const docsByTab: Record<string, Record<string, any[]>> = {};
+
+filteredDocs.forEach((doc) => {
+  // The filtered docs have already stripped the locale
+  // Format is: notes/introduction/index or notes/introduction
+  const parts = doc.id.split('/');
+  const docTab = parts[0] || 'notes';
+  const section = parts[1] || 'introduction';
+  
+  if (!docsByTab[docTab]) {
+    docsByTab[docTab] = {};
+  }
+  if (!docsByTab[docTab][section]) {
+    docsByTab[docTab][section] = [];
+  }
+  
+  // Generate the correct URL path
+  const remainingPath = parts.slice(1).join('/').replace(/\/index$/, '').replace(/^index$/, '');
+  const slug = remainingPath || section;
+  
+  // Check if this is an index file for the section itself
+  const isIndexFile = parts.length === 2 || (parts.length === 3 && parts[2] === 'index');
+  
+  docsByTab[docTab][section].push({
+    id: doc.id,
+    slug: `/${courseId}/${docTab}/${slug}`,
+    title: doc.data.sidebar?.label || doc.data.title,
+    order: doc.data.sidebar?.order || (isIndexFile ? 0 : 999),
+    badge: doc.data.sidebar?.badge,
+    isIndex: isIndexFile,
+  });
+});
+
+// Sort docs within each section
+Object.values(docsByTab).forEach(sections => {
+  Object.values(sections).forEach(docs => {
+    docs.sort((a, b) => a.order - b.order);
+  });
+});
+
+// Get sidebar data or use defaults
+const sidebarTabs = courseSidebarData?.tabs || [
+  {
+    id: "notes",
+    title: "Notes",
+    icon: "tabler/file-text",
+    sections: [
+      { id: "introduction", title: "Introduction" },
+      { id: "modules", title: "Modules" },
+      { id: "resources", title: "Resources" },
+    ],
+  },
+  {
+    id: "assessments",
+    title: "Assessments",
+    icon: "tabler/edit-circle",
+    sections: [
+      { id: "assignments", title: "Assignments" },
+      { id: "quizzes", title: "Quizzes" },
+      { id: "exams", title: "Exams" },
+    ],
+  },
+  {
+    id: "editions",
+    title: "Editions",
+    icon: "tabler/stack-2",
+    sections: [
+      { id: "current", title: "Current Edition" },
+      { id: "archive", title: "Previous Editions" },
+    ],
+  },
+];
+
+// Find current tab config
+const currentTab = sidebarTabs.find((t: any) => t.id === tabId) || sidebarTabs[0];
+const currentPath = Astro.url.pathname;
+
+// Get adjacent pages for navigation
+const { prev, next } = await getCourseAdjacentPages(doc.id, courseId, tabId);
+---
+
+<CourseBaseLayout 
+  title={`${title} - ${courseName}`} 
+  description={description} 
+  tabId={tabId}
+  courseId={courseId}
+  courseName={courseName}
+  courseSidebarData={courseSidebarData}
+>
+  <div
+    class="min-h-[calc(100vh-var(--nav-height))] flex-1 md:grid md:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)]"
+  >
+    {/* Mobile Sidebar Toggle */}
+    <div class="md:hidden flex items-center justify-between px-4 py-2 border-b">
+      <Dialog>
+        <DialogTrigger aria-label="Toggle Sidebar" class="flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-md hover:bg-accent/5">
+          <Menu class="size-5" />
+          <span>Course Content</span>
+        </DialogTrigger>
+        <DialogContent
+          animationDuration={300}
+          class="h-[calc(100vh-var(--nav-height))-1px] rounded-none w-[280px] left-0"
+        >
+          <div class="overflow-x-hidden overflow-y-auto p-4">
+            {/* Mobile Tab Selector */}
+            <div class="mb-6 rounded-lg border p-2">
+              <div class="flex flex-col space-y-1">
+                {sidebarTabs.map((tab: any) => (
+                  <a
+                    href={`/${courseId}/${tab.id}/${tab.sections[0]?.id || 'introduction'}`}
+                    class={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                      tab.id === tabId
+                        ? 'bg-accent/10 text-foreground'
+                        : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {tab.icon && (
+                      <Icon name={tab.icon} class="size-4 shrink-0" aria-hidden="true" />
+                    )}
+                    <span>{tab.title}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            
+            <nav class="space-y-6">
+              {currentTab.sections?.map((section: any) => {
+                const sectionDocs = docsByTab[tabId]?.[section.id] || [];
+                
+                return sectionDocs.length > 0 && (
+                  <details class="sidebar-section group" open>
+                    <summary class="font-heading mb-2 flex cursor-pointer items-center justify-between text-base font-medium tracking-wide">
+                      <span>{section.title}</span>
+                    </summary>
+                    <ul class="space-y-2 border-l">
+                      {sectionDocs.map((doc: any) => {
+                        const isActive = currentPath === doc.slug || currentPath === doc.slug + '/';
+                        return (
+                          <li key={doc.id}>
+                            <a
+                              href={doc.slug}
+                              class={`-ml-px flex items-center justify-between border-l py-1 pl-4 pr-2 text-sm transition-colors ${
+                                isActive
+                                  ? 'border-accent text-accent font-medium'
+                                  : 'border-transparent text-muted-foreground hover:border-muted-foreground/50 hover:text-foreground'
+                              }`}>
+                              <span>{doc.isIndex && sectionDocs.length === 1 ? section.title : doc.title}</span>
+                              {doc.badge && (
+                                <span class={`badge badge-${doc.badge.variant || 'note'} ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                                  doc.badge.variant === 'note' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
+                                  doc.badge.variant === 'tip' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' :
+                                  doc.badge.variant === 'caution' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300' :
+                                  doc.badge.variant === 'danger' ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300' :
+                                  'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+                                }`}>
+                                  {doc.badge.text}
+                                </span>
+                              )}
+                            </a>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </details>
+                );
+              })}
+            </nav>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+    {/* Desktop Sidebar */}
+    <aside class="hidden shrink-0 border-r pl-4 md:block">
+      <div class="sticky top-(--nav-height)">
+        <div
+          class="max-h-[calc(100vh-var(--nav-height))] overflow-y-auto px-1 pt-(--main-content-pt) pb-4"
+        >
+          {/* Tab Selector */}
+          <div class="mb-6 rounded-lg border p-2">
+            <div class="flex flex-col space-y-1">
+              {sidebarTabs.map((tab: any) => (
+                <a
+                  href={`/${courseId}/${tab.id}/${tab.sections[0]?.id || 'introduction'}`}
+                  class={`flex items-center gap-2 px-2 py-1.5 rounded-md text-sm font-medium transition-colors ${
+                    tab.id === tabId
+                      ? 'bg-accent/10 text-foreground'
+                      : 'text-muted-foreground hover:text-foreground'
+                  }`}
+                >
+                  {tab.icon && (
+                    <Icon name={tab.icon} class="size-4 shrink-0" aria-hidden="true" />
+                  )}
+                  <span>{tab.title}</span>
+                </a>
+              ))}
+            </div>
+          </div>
+
+          {/* Section Links */}
+          <nav class="space-y-6">
+            {currentTab.sections?.map((section: any) => {
+              const sectionDocs = docsByTab[tabId]?.[section.id] || [];
+              
+              // Always show as expandable section for consistency
+              return sectionDocs.length > 0 && (
+                <details class="sidebar-section group" open>
+                  <summary class="font-heading mb-2 flex cursor-pointer items-center justify-between text-base font-medium tracking-wide md:text-base">
+                    <span>{section.title}</span>
+                  </summary>
+                  <ul class="space-y-2 border-l">
+                    {sectionDocs.map((doc: any) => {
+                      const isActive = currentPath === doc.slug || currentPath === doc.slug + '/';
+                      return (
+                        <li key={doc.id}>
+                          <a
+                            href={doc.slug}
+                            class={`-ml-px flex items-center justify-between border-l py-1 pl-4 pr-2 text-sm transition-colors ${
+                              isActive
+                                ? 'border-accent text-accent font-medium'
+                                : 'border-transparent text-muted-foreground hover:border-muted-foreground/50 hover:text-foreground'
+                            }`}>
+                            <span>{doc.isIndex && sectionDocs.length === 1 ? section.title : doc.title}</span>
+                            {doc.badge && (
+                              <span class={`badge badge-${doc.badge.variant || 'note'} ml-2 inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${
+                                doc.badge.variant === 'note' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300' :
+                                doc.badge.variant === 'tip' ? 'bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300' :
+                                doc.badge.variant === 'caution' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900 dark:text-yellow-300' :
+                                doc.badge.variant === 'danger' ? 'bg-red-100 text-red-700 dark:bg-red-900 dark:text-red-300' :
+                                'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300'
+                              }`}>
+                                {doc.badge.text}
+                              </span>
+                            )}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </details>
+              );
+            })}
+          </nav>
+        </div>
+      </div>
+    </aside>
+
+    {/* Main Content and TOC Container */}
+    <div class="mx-auto w-full min-w-0">
+      <div
+        class="docs-site-container gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_280px] 2xl:grid-cols-[minmax(0,1fr)_320px]"
+      >
+        {/* Main Content */}
+        <main class="-mt-px w-full min-w-0" style="max-width: 48rem;">
+          {/* Mobile Table of Contents Dropdown */}
+          {hasTOC && (
+            <div class="sticky top-[calc(var(--nav-height)-1px)] z-40 -mx-4 mb-4 lg:hidden">
+              <details class="mobile-toc bg-background/90 relative px-4 py-2 backdrop-blur">
+                <summary class="font-heading cursor-pointer list-none font-medium tracking-wide"
+                  >On this page</summary
+                >
+                <ul
+                  class="bg-background absolute top-full right-0 left-0 space-y-1 border-b px-4 pt-2 pb-4"
+                >
+                  {
+                    filteredHeadings.map((heading) => (
+                      <TocLink heading={heading} minHeadingLevel={minHeadingLevel} />
+                    ))
+                  }
+                </ul>
+              </details>
+            </div>
+          )}
+
+          {/* Content */}
+          <div
+            id="main-content"
+            class="w-full max-w-2xl min-w-0 scroll-mt-[calc(var(--nav-height)+1rem)] pb-(--main-content-pt) lg:mt-(--main-content-pt) lg:px-1"
+            data-pagefind-body={pagefind ? true : undefined}
+          >
+            {showtitle && (
+              <div class="flex">
+                <h1 class="docs-h1 docs-text-gradient mt-4 mb-8 pb-1">{title}</h1>
+              </div>
+            )}
+            <div class="docs-markdown-content">
+              <slot />
+            </div>
+            
+            {/* Previous/Next Navigation */}
+            {siteSettings.pagination !== false && (
+              <CoursePagination 
+                prev={prev} 
+                next={next} 
+                courseId={courseId}
+                tabId={tabId}
+              />
+            )}
+          </div>
+        </main>
+
+        {/* Desktop Table of Contents */}
+        <aside id="toc-aside" class="hidden text-sm lg:block">
+          <div class="sticky top-[calc(var(--nav-height)+1rem)] px-1 pt-(--main-content-pt) pb-4 xl:px-4">
+            <div class="max-h-[calc(100vh-var(--nav-height)-2rem)] overflow-y-auto">
+              {hasTOC && <TableOfContents headings={filteredHeadings} minHeadingLevel={minHeadingLevel} />}
+              
+              {/* Summary Block - appears between TOC and CTA */}
+              {summary && (
+                <Summary 
+                  class="mt-6 mb-4"
+                  title={summary.title}
+                  content={summary.content}
+                  items={summary.items}
+                  variant={summary.variant}
+                />
+              )}
+              
+              <SidebarCta class="mt-10" />
+            </div>
+          </div>
+        </aside>
+      </div>
+      <Footer />
+    </div>
+  </div>
+</CourseBaseLayout>
+
+<style>
+  /* Sidebar section styles to match original docs */
+  .sidebar-section summary {
+    list-style: none;
+  }
+  .sidebar-section summary::-webkit-details-marker {
+    display: none;
+  }
+  .sidebar-section summary::after {
+    background-color: currentColor;
+    content: "";
+    display: inline-block;
+    height: 1rem;
+    width: 1rem;
+    margin-inline-start: 0.5rem;
+    vertical-align: -0.125rem;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    transition: transform 0.2s ease-in-out;
+    flex-shrink: 0;
+  }
+  .sidebar-section[open] > summary::after {
+    transform: rotateZ(90deg);
+  }
+
+  /* Mobile Table of Contents dropdown styles */
+  .mobile-toc summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-toc summary::before {
+    --details-marker-size: 1.25rem;
+
+    background-color: currentColor;
+    content: "";
+    display: inline-block;
+    height: var(--details-marker-size);
+    width: var(--details-marker-size);
+    margin-inline: calc((var(--details-marker-size) / 4) * -1) 0.25rem;
+    vertical-align: middle;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-toc summary::before {
+      transition: transform 0.2s ease-in-out;
+    }
+  }
+  .mobile-toc[open] > summary::before {
+    transform: rotateZ(90deg);
+  }
+</style>

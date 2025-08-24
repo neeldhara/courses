@@ -1,0 +1,86 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  color?: string;
+  icon?: string;
+  title?: string;
+  borderColor?: string;
+  bgOpacity?: number;
+  textColor?: string;
+  iconColor?: string;
+}
+
+const {
+  color = "#3b82f6", // Default blue color
+  icon = "tabler/info-circle", // Default info icon (must be available in src/icons/tabler/)
+  title = "Note",
+  borderColor,
+  bgOpacity = 0.1,
+  textColor,
+  iconColor
+} = Astro.props as Props;
+
+// Use provided colors or derive from main color
+const finalBorderColor = borderColor || color;
+const finalTextColor = textColor || "currentColor";
+const finalIconColor = iconColor || color;
+
+// Convert hex to RGB for opacity support
+function hexToRgb(hex: string): string {
+  // Remove # if present
+  hex = hex.replace('#', '');
+  
+  // Parse hex values
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  
+  return `${r}, ${g}, ${b}`;
+}
+
+// Generate background color with opacity
+const bgColorRgb = hexToRgb(color);
+const bgColorWithOpacity = `rgba(${bgColorRgb}, ${bgOpacity})`;
+---
+
+<div
+  class="custom-aside dark:text-foreground my-4 rounded-lg border px-4 py-3"
+  style={`
+    border-color: ${finalBorderColor};
+    background-color: ${bgColorWithOpacity};
+    color: ${finalTextColor};
+  `}
+>
+  <div class="not-content flex items-center gap-2 pb-2">
+    <Icon
+      name={icon}
+      class="h-6 w-6"
+      style={`color: ${finalIconColor};`}
+    />
+    <p class="font-medium">{title}</p>
+  </div>
+  <slot />
+</div>
+
+<style is:global>
+  @import "tailwindcss/theme" theme(reference);
+  @import "@/styles/tailwind-theme.css" theme(reference);
+
+  .custom-aside > :first-child {
+    @apply mt-0;
+  }
+  .custom-aside > :nth-child(2) {
+    @apply mt-0;
+  }
+  .custom-aside > :last-child {
+    @apply mb-0;
+  }
+  .custom-aside code {
+    @apply border-none px-0.5;
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  .dark .custom-aside code {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+</style>

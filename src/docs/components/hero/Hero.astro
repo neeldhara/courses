@@ -1,0 +1,88 @@
+---
+import Button from "@/docs/components/button/Button.astro";
+import { docsRoute } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute } from "@/docs/js/translationUtils";
+import { useTranslations } from "@/docs/js/translationUtils";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const t = useTranslations(currLocale);
+---
+
+<div class="relative" id="hero">
+  <div
+    id="main-content"
+    class="docs-home-container relative flex min-h-[40lvh] items-center justify-center overflow-clip py-16 md:min-h-[60lvh] md:py-40"
+  >
+    <!-- background elements -->
+    <div
+      class="pointer-events-none absolute inset-x-0 inset-y-0 m-auto overflow-clip lg:inset-x-4 lg:rounded-b-[4rem]"
+      aria-hidden="true"
+    >
+      <div class="relative h-full w-full">
+        <!-- particles canvas -->
+        <canvas
+          data-particle-animation
+          data-particle-quantity="30"
+          data-particle-staticity="70"
+          data-particle-ease="70"
+          data-particle-max-size="3"></canvas>
+        <!-- Decorative bottom glow -->
+        <div
+          aria-hidden="true"
+          class="hero-bottom-glow pointer-events-none absolute inset-0 -z-10 overflow-clip blur-3xl"
+        >
+        </div>
+      </div>
+    </div>
+
+    <!-- main hero section -->
+    <div class="relative z-10 max-w-[800px] px-2 pb-10 text-center">
+      <div class="flex justify-center">
+        <h1
+          data-mos="fade-down"
+          data-mos-anchor="#main-content"
+          class="from-foreground/60 font-heading via-foreground/70 to-foreground/90 mx-auto mb-5 bg-gradient-to-b bg-clip-text pb-2 text-4xl leading-12 font-medium sm:text-6xl md:leading-15 lg:text-7xl dark:text-transparent"
+        >
+          {t("hero_title")}
+        </h1>
+      </div>
+      <p
+        class="text-muted-foreground mb-8 text-pretty sm:text-lg md:text-xl"
+        data-mos="fade-down"
+        data-mos-anchor="#main-content"
+        data-mos-delay="150"
+      >
+        {t("hero_description")}
+      </p>
+      <div
+        class="flex flex-wrap items-center justify-center gap-4"
+        data-mos="fade-down"
+        data-mos-anchor="#main-content"
+        data-mos-delay="300"
+      >
+        <Button
+          href={getLocalizedRoute(currLocale, `/${docsRoute}/getting-started`)}
+          variant="primary"
+        >
+          Get Started
+        </Button>
+        <Button href={getLocalizedRoute(currLocale, `/${docsRoute}/components`)} variant="ghost">
+          Components
+        </Button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* U-shaped bottom glow behind hero */
+  .hero-bottom-glow {
+    background: radial-gradient(
+      100% 100% at 50% 20%,
+      transparent 0%,
+      transparent 50%,
+      var(--color-accent) 80%
+    );
+  }
+</style>

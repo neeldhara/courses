@@ -1,0 +1,259 @@
+---
+import type { CollectionEntry } from "astro:content";
+import type { MarkdownHeading } from "astro";
+
+import Breadcrumbs from "@/docs/components/breadcrumbs/Breadcrumbs.astro";
+import ContributorsBubble from "@/docs/components/contributors/ContributorsBubble.astro";
+import DocsNextPrevButtons from "@/docs/components/navigation/DocsNextPrevButtons.astro";
+import EditOnGithub from "@/docs/components/navigation/EditOnGithub.astro";
+import MobileMenu from "@/docs/components/navigation/MobileMenu.astro";
+import MobileMenuButton from "@/docs/components/navigation/MobileMenuButton.astro";
+import MobileTOC from "@/docs/components/navigation/MobileTOC.astro";
+import Sidebar from "@/docs/components/navigation/Sidebar.astro";
+import TableOfContents from "@/docs/components/navigation/TableOfContents.astro";
+import TabsNav from "@/docs/components/navigation/TabsNav.astro";
+import SkipLink from "@/docs/components/skip-link/SkipLink.astro";
+import { locales, siteSettings } from "@/docs/config/siteSettings.json";
+import type { DocsSidebarNavData } from "@/docs/config/types/configDataTypes";
+import { getNavigationData } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute, getTranslatedData } from "@/docs/js/translationUtils";
+import DocsBaseLayout from "@/docs/layouts/DocsBaseLayout.astro";
+import CoursePagination from "@/shared/components/CoursePagination.astro";
+import { getCourseAdjacentPages } from "@/shared/js/courseUtils";
+
+import fs from 'fs';
+import path from 'path';
+
+interface Props {
+  doc: CollectionEntry<any>;
+  headings: MarkdownHeading[];
+  tabId?: string;
+  courseId: string;
+  courseName: string;
+}
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const localizedSiteSettings = getTranslatedData("siteData", currLocale);
+const { doc, headings, tabId = "notes", courseId, courseName } = Astro.props;
+
+// Try to load course-specific sidebar data
+let sidebarData: DocsSidebarNavData;
+const courseSidebarPath = path.join(process.cwd(), 'src', courseId, 'config', currLocale, 'sidebarNavData.json.ts');
+
+if (fs.existsSync(courseSidebarPath)) {
+  // Dynamically import course-specific sidebar
+  const module = await import(courseSidebarPath);
+  sidebarData = module.default;
+} else {
+  // Fallback to default course structure
+  sidebarData = {
+    tabs: [
+      {
+        id: "notes",
+        title: "Notes",
+        description: `Course notes for ${courseName}`,
+        icon: "tabler/file-text",
+        sections: [
+          {
+            id: "introduction",
+            title: "Introduction",
+          },
+          {
+            id: "modules",
+            title: "Modules",
+          },
+          {
+            id: "resources",
+            title: "Resources",
+          },
+        ],
+      },
+      {
+        id: "assessments",
+        title: "Assessments",
+        description: `Assessments for ${courseName}`,
+        icon: "tabler/edit-circle",
+        sections: [
+          {
+            id: "assignments",
+            title: "Assignments",
+          },
+          {
+            id: "quizzes",
+            title: "Quizzes",
+          },
+          {
+            id: "exams",
+            title: "Exams",
+          },
+        ],
+      },
+      {
+        id: "editions",
+        title: "Editions",
+        description: "Course editions",
+        icon: "tabler/stack-2",
+        sections: [
+          {
+            id: "current",
+            title: "Current Edition",
+          },
+          {
+            id: "archive",
+            title: "Previous Editions",
+          },
+        ],
+      },
+    ],
+  };
+}
+
+const documentationTabs = sidebarData.tabs;
+
+// Get course-specific collection
+const courseCollection = await Astro.glob(`/src/${courseId}/data/docs/${currLocale}/**/*.{md,mdx}`);
+
+// Build navigation data for the course
+const { sidebarNav, flatSidebarNav, nextPrevButtons } = await getNavigationData(
+  tabId,
+  doc,
+  `${courseId}` as any,
+  currLocale,
+  sidebarData
+);
+
+// Determine if we should show TOC
+const { tableOfContents } = doc.data;
+const showTOC = tableOfContents !== false && headings.length > 0;
+---
+
+<DocsBaseLayout 
+  title={`${doc.data.title} - ${courseName}`} 
+  description={doc.data.description}
+>
+  <SkipLink />
+  <div class="docs-layout">
+    <aside class="sidebar-container">
+      <MobileMenuButton />
+      <div class="sidebar">
+        <TabsNav tabs={documentationTabs} activeTab={tabId} courseId={courseId} />
+        <Sidebar sidebarNav={sidebarNav} />
+      </div>
+    </aside>
+
+    <main id="main-content" class="main-content">
+      <div class="content-container">
+        {siteSettings.breadcrumbs && (
+          <Breadcrumbs flatSidebarNav={flatSidebarNav} />
+        )}
+        
+        <article class="docs-content">
+          <h1>{doc.data.title}</h1>
+          <slot />
+        </article>
+
+        {siteSettings.nextPrevButtons && nextPrevButtons && (
+          <DocsNextPrevButtons 
+            prevButton={nextPrevButtons.prevButton} 
+            nextButton={nextPrevButtons.nextButton} 
+          />
+        )}
+
+        <div class="content-footer">
+          {siteSettings.editOnGithub && (
+            <EditOnGithub />
+          )}
+        </div>
+      </div>
+    </main>
+
+    {showTOC && (
+      <aside class="toc-container">
+        <TableOfContents headings={headings} />
+      </aside>
+    )}
+  </div>
+
+  <MobileMenu>
+    <TabsNav tabs={documentationTabs} activeTab={tabId} courseId={courseId} />
+    <Sidebar sidebarNav={sidebarNav} />
+  </MobileMenu>
+
+  {showTOC && (
+    <MobileTOC headings={headings} />
+  )}
+</DocsBaseLayout>
+
+<style>
+  .docs-layout {
+    display: grid;
+    grid-template-columns: var(--sidebar-width) 1fr auto;
+    gap: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+
+  .sidebar-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+  }
+
+  .main-content {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .content-container {
+    max-width: var(--content-max-width, 75ch);
+    margin: 0 auto;
+  }
+
+  .docs-content {
+    line-height: 1.7;
+  }
+
+  .docs-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .content-footer {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .toc-container {
+    position: sticky;
+    top: 2rem;
+    width: var(--toc-width, 250px);
+    height: fit-content;
+    max-height: calc(100vh - 4rem);
+    overflow-y: auto;
+  }
+
+  @media (max-width: 1280px) {
+    .toc-container {
+      display: none;
+    }
+    
+    .docs-layout {
+      grid-template-columns: var(--sidebar-width) 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .docs-layout {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+    
+    .sidebar-container {
+      display: none;
+    }
+  }
+</style>

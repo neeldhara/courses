@@ -1,0 +1,15 @@
+---
+import FileText from "@tabler/icons/outline/file-text.svg";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute } from "@/docs/js/translationUtils";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<a
+  class="docs-primary-focus text-foreground font-heading flex items-center gap-2 align-middle text-xl font-medium tracking-wide"
+  href={getLocalizedRoute(currLocale)}
+  class=""
+>
+  <FileText class="size-6 opacity-90" />
+</a>

@@ -1,0 +1,90 @@
+/* Sidenote and MarginNote Global Styling */
+
+/* Reset the counter for each page */
+main {
+  counter-reset: sidenote-counter;
+  position: relative;
+}
+
+/* Ensure the main content container has proper positioning context */
+#main-content {
+  position: relative;
+  counter-reset: sidenote-counter;
+}
+
+/* Styling for the main content area - ensure it doesn't overflow */
+.docs-markdown-content {
+  position: relative;
+  overflow: visible;
+}
+
+/* Ensure proper spacing on desktop for sidenotes */
+@media (min-width: 1281px) {
+  /* Add padding to prevent overlap */
+  .docs-markdown-content {
+    padding-right: 20px;
+  }
+  
+  /* Ensure the content doesn't get too wide */
+  #main-content {
+    max-width: 45rem;
+  }
+}
+
+/* Wrapper for full-width content (like code blocks) */
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
+
+/* Ensure sidenote wrappers don't break layout */
+.sidenote-wrapper,
+.marginnote-wrapper {
+  position: relative;
+  display: inline;
+}
+
+/* Styles for margin-notes container in the TOC aside */
+#margin-notes .tufte-note {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--color-muted-foreground);
+  border-left: 3px solid var(--color-border);
+  padding-left: 0.5rem;
+  margin: 0; /* JS sets vertical spacing via margin-top */
+}
+#margin-notes .tufte-note .note-number {
+  color: var(--color-primary);
+  font-weight: 600;
+  margin-right: 0.35rem;
+  text-decoration: none;
+}
+
+/* Substack-like hover card for inline references on desktop */
+@media (min-width: 1281px) {
+  .sidenote-wrapper:hover::after {
+    content: attr(data-hover);
+    position: absolute;
+    z-index: 50;
+    top: 1.2em;
+    left: 0;
+    transform: translateX(0.5rem);
+    max-width: 380px;
+    background: var(--background);
+    color: var(--foreground);
+    border: 1px solid var(--color-border);
+    border-radius: 0.5rem;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    white-space: normal;
+    line-height: 1.5;
+  }
+  .dark .sidenote-wrapper:hover::after {
+    background: var(--color-base-950);
+  }
+}
+

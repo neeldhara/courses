@@ -1,0 +1,131 @@
+---
+import { courseRoutes } from '@/shared/config/courseRouting';
+import DocsLandingLayout from "@/docs/layouts/DocsLandingLayout.astro";
+
+const coursesByType = Object.entries(courseRoutes)
+  .filter(([id, course]) => course.type !== 'Hidden') // Exclude hidden courses
+  .reduce((acc, [id, course]) => {
+    const type = course.type;
+    if (!acc[type]) acc[type] = [];
+    acc[type].push({ id, ...course });
+    return acc;
+  }, {} as Record<string, Array<{ id: string; path: string; name: string; type: string }>>);
+
+// Sort courses within each type alphabetically
+Object.keys(coursesByType).forEach(type => {
+  coursesByType[type].sort((a, b) => a.name.localeCompare(b.name));
+});
+
+const typeOrder = ['IITGN Core', 'IITGN Elective', 'NPTEL', 'IIT Madras', 'Swayam Prabha'];
+---
+
+<DocsLandingLayout title="Courses - Neeldhara" description="Course catalog for Neeldhara's teaching">
+  <main>
+    <div class="container mx-auto px-4 py-16">
+      <div class="text-center mb-12 header-container">
+        <div class="title-wrapper">
+          <h1 class="text-3xl md:text-4xl lg:text-5xl font-medium mb-4 text-purple-600 dark:text-purple-400 course-title">
+            Course Catalog
+          </h1>
+        </div>
+        <p class="text-xl text-gray-600 dark:text-gray-400">
+          Explore the complete collection of courses
+        </p>
+      </div>
+
+      {typeOrder.map(type => coursesByType[type] && (
+        <div class="mb-12">
+          <h2 class="font-heading text-2xl font-medium mb-6 text-gray-800 dark:text-gray-200">
+            {type}
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {coursesByType[type].map(course => (
+              <a 
+                href={course.path}
+                class="group block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors duration-300 border border-gray-200 dark:border-gray-700"
+              >
+                <div class="flex items-start justify-between mb-3">
+                  <h3 class="font-heading text-lg font-medium text-gray-900 dark:text-white group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors">
+                    {course.name}
+                  </h3>
+                </div>
+                <div class="flex items-center justify-between">
+                  <span class="text-sm px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full">
+                    {course.id.toUpperCase()}
+                  </span>
+                  <span class="text-sm text-gray-500 dark:text-gray-400">
+                    Coming Soon →
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      <div class="mt-16 text-center">
+        <div class="inline-block p-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl">
+          <h3 class="font-heading text-2xl font-medium mb-4 text-gray-800 dark:text-gray-200">
+            📚 More courses coming soon!
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            We're continuously working on bringing more educational content online. 
+            Each course will feature comprehensive notes, assessments, and resources 
+            to support your learning journey.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocsLandingLayout>
+
+<style>
+  .container {
+    max-width: 1400px;
+  }
+  
+  /* Ensure headings don't get cut off */
+  h1 {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.4;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  /* Specific fix for cursive font descenders */
+  .text-center h1 {
+    overflow: visible !important;
+    min-height: fit-content;
+  }
+  
+  /* Header container with extra space */
+  .header-container {
+    padding: 2rem 0;
+    overflow: visible !important;
+  }
+  
+  /* Title wrapper with explicit spacing */
+  .title-wrapper {
+    padding: 2em 1rem;
+    overflow: visible !important;
+    height: auto !important;
+    min-height: 200px; /* Ensure enough space for descenders */
+    display: block;
+    text-align: center;
+  }
+  
+  /* Final styles for course title */
+  .course-title {
+    font-family: "Geist Variable", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "Roboto", "Helvetica", "Arial", "sans-serif" !important;
+    line-height: 1.6 !important;
+    padding: 2rem 1rem !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    display: block !important;
+    height: auto !important;
+    min-height: 150px !important;
+    position: relative !important;
+    z-index: 1 !important;
+  }
+</style>

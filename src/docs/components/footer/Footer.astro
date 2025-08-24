@@ -1,0 +1,110 @@
+---
+const today = new Date();
+
+interface FooterLinkItem {
+  label: string;
+  href: string;
+  newTab?: boolean;
+}
+
+// Course links - all 12 courses
+const courseLinks: FooterLinkItem[] = [
+  { label: "Competitive Programming", href: "/cp", newTab: false },
+  { label: "Fixed Parameter Tractability", href: "/fpt", newTab: false },
+  { label: "Fun with Math & Computing", href: "/fun", newTab: false },
+  { label: "Advanced Algorithms", href: "/advalgo", newTab: false },
+  { label: "Magic", href: "/magic", newTab: false },
+];
+
+const moreCourseLinks: FooterLinkItem[] = [
+  { label: "Mathematics for AI", href: "/mfai", newTab: false },
+  { label: "Multi-Agent Systems", href: "/mas", newTab: false },
+  { label: "Discrete Mathematics", href: "/dm", newTab: false },
+  { label: "Data Structures & Algorithms", href: "/dsa", newTab: false },
+];
+
+const electives: FooterLinkItem[] = [
+{ label: "COMSOC", href: "/comsoc", newTab: false },
+  { label: "Combinatorics", href: "/combinatorics", newTab: false },
+  { label: "Linear Algebra", href: "/linalg", newTab: false },
+  { label: "Advanced Algorithms", href: "/advalgo", newTab: false },
+];
+
+---
+
+<footer class="bg-background text-foreground mt-8 border-t">
+  <div class="docs-site-container pt-8 pb-16">
+    <div class="grid grid-cols-1 gap-8 text-sm sm:grid-cols-2 lg:grid-cols-4">
+      <!-- Logo and Description (Column 1) -->
+      <div class="flex flex-col items-start">
+        <div class="text-lg font-heading mb-2">
+          Courses Catalog
+        </div>
+        <p class="text-muted-foreground text-xs mb-4">
+          This is an attempt to collect relevant materials across courses I have (co)-taught at IIT Gandhinagar, NPTEL, Swayam Prabha, and the IIT Madras BS program in Data Science.
+        </p>
+        <!-- Copyright -->
+        <div class="text-foreground/60 mt-auto text-xs">
+          <p>&copy; {today.getFullYear()} Neeldhara Misra</p>
+        </div>
+      </div>
+
+      <!-- Course Links Part 1 (Column 2) -->
+      <div class="flex flex-col gap-2">
+        <h3 class="font-medium">MOOCs</h3>
+        {
+          courseLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-2"
+              target={link.newTab ? "_blank" : undefined}
+              rel={link.newTab ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+              {link.label === "Magic" && (
+                <span class="text-xs px-2 py-0.5 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-full font-medium">
+                  Coming Soon
+                </span>
+              )}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Course Links Part 2 (Column 3) -->
+      <div class="flex flex-col gap-2">
+        <h3 class="font-medium">Core Courses at IITGN</h3>
+        {
+          moreCourseLinks.map((link) => (
+            <a
+              href={link.href}
+              class="text-muted-foreground hover:text-foreground transition-colors"
+              target={link.newTab ? "_blank" : undefined}
+              rel={link.newTab ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+      </div>
+
+      <!-- Resources & Legal (Column 4) -->
+      <div class="flex flex-col gap-2">
+        <h3 class="font-medium">Electives at IITGN</h3>
+        {
+          electives.map((link) => (
+            <a
+              href={link.href}
+              class="text-muted-foreground hover:text-foreground transition-colors"
+              target={link.newTab ? "_blank" : undefined}
+              rel={link.newTab ? "noopener noreferrer" : undefined}
+            >
+              {link.label}
+            </a>
+          ))
+        }
+        
+        
+    </div>
+  </div>
+</footer>

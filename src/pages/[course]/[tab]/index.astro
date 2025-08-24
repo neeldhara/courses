@@ -1,0 +1,116 @@
+---
+import { getCollection } from "astro:content";
+import { courseRoutes } from '@/shared/config/courseRouting';
+import { defaultLocale } from "@/docs/config/siteSettings.json";
+import { filterCollectionByLanguage } from "@/docs/js/localeUtils";
+import fs from 'fs';
+import path from 'path';
+
+export async function getStaticPaths() {
+  const paths: any[] = [];
+  
+  // List of valid course IDs
+  const courseIds = Object.keys(courseRoutes);
+  
+  // For each course, get its collection and create redirect paths
+  for (const courseId of courseIds) {
+    try {
+      // Get the course-specific collection
+      const courseDocs = await getCollection(courseId as any, ({ data }) => {
+        return data.draft !== true;
+      });
+      
+      // Filter by language
+      const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
+      
+      // Load course-specific sidebar data to get available tabs
+      let courseSidebarData;
+      const sidebarPath = path.join(process.cwd(), 'src', courseId, 'config', defaultLocale, 'sidebarNavData.json.ts');
+      
+      if (fs.existsSync(sidebarPath)) {
+        const sidebarModule = await import(/* @vite-ignore */ sidebarPath);
+        courseSidebarData = sidebarModule.default;
+      }
+      
+      // Get available tabs
+      const tabs = courseSidebarData?.tabs || [
+        { id: "notes", title: "Notes" },
+        { id: "assessments", title: "Assessments" },
+        { id: "editions", title: "Editions" }
+      ];
+      
+      // For each tab, find the first available page and create a redirect path
+      for (const tab of tabs) {
+        const tabDocs = filteredDocs.filter(doc => {
+          const parts = doc.id.split('/');
+          const docTab = parts[0];
+          return docTab === tab.id;
+        });
+        
+        if (tabDocs.length > 0) {
+          // Sort docs to find the "first" one
+          const sortedDocs = tabDocs.sort((a, b) => {
+            // First, sort by sidebar order if available
+            const aOrder = a.data.sidebar?.order;
+            const bOrder = b.data.sidebar?.order;
+            
+            if (aOrder !== undefined && bOrder !== undefined) {
+              return aOrder - bOrder;
+            }
+            
+            // If only one has order, it should come first
+            if (aOrder !== undefined) return -1;
+            if (bOrder !== undefined) return 1;
+            
+            // If neither has order, sort by path depth (prefer shallower paths)
+            const aDepth = a.id.split('/').length;
+            const bDepth = b.id.split('/').length;
+            
+            if (aDepth !== bDepth) {
+              return aDepth - bDepth;
+            }
+            
+            // Finally, sort alphabetically by title
+            return a.data.title.localeCompare(b.data.title, defaultLocale);
+          });
+          
+          const firstDoc = sortedDocs[0];
+          const parts = firstDoc.id.split('/');
+          const remainingPath = parts.slice(1).join('/');
+          let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+          
+          // If there's no remaining path, use the first subfolder name
+          if (!slug && parts.length > 1) {
+            slug = parts[1];
+          }
+          
+          console.log(`Creating redirect for ${courseId}/${tab.id} -> ${slug || 'index'}`);
+          
+          paths.push({
+            params: { 
+              course: courseId,
+              tab: tab.id
+            },
+            props: { 
+              redirectTo: `/${courseId}/${tab.id}/${slug || 'index'}`,
+              courseId,
+              courseName: courseRoutes[courseId as keyof typeof courseRoutes].name,
+              tabId: tab.id,
+              tabTitle: tab.title
+            },
+          });
+        }
+      }
+    } catch (e) {
+      console.log(`No content found for course: ${courseId}`);
+    }
+  }
+  
+  return paths;
+}
+
+const { redirectTo, courseId, courseName, tabId, tabTitle } = Astro.props;
+
+// Perform the redirect
+return Astro.redirect(redirectTo);
+---

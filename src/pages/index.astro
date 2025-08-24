@@ -1,0 +1,182 @@
+---
+import { courseRoutes } from '@/shared/config/courseRouting';
+import DocsLandingLayout from "@/docs/layouts/DocsLandingLayout.astro";
+
+// Convert all courses to a flat array with normalized filter categories
+// Filter out hidden courses from the homepage
+const allCourses = Object.entries(courseRoutes)
+  .filter(([id, course]) => course.type !== 'Hidden') // Exclude hidden courses
+  .map(([id, course]) => {
+    let filterCategories: string[] = [];
+    
+    // Normalize IITGN categories
+    if (course.type === 'IITGN Core' || course.type === 'IITGN Elective') {
+      filterCategories.push('IITGN');
+    } else {
+      filterCategories.push(course.type);
+    }
+    
+    // Special case: Advanced Algorithms appears in both IIT Madras and IITGN
+    if (id === 'advalgo') {
+      filterCategories.push('IITGN');
+    }
+    
+    return {
+      id,
+      ...course,
+      filterCategories,
+      originalType: course.type
+    };
+  }).sort((a, b) => a.name.localeCompare(b.name)); // Sort alphabetically by course name
+
+const filterCategories = ['All', 'IITGN', 'NPTEL', 'Swayam Prabha', 'IIT Madras'];
+---
+
+<DocsLandingLayout title="Courses - Neeldhara" description="Course catalog for Neeldhara's teaching">
+  <main class="overflow-hidden">
+    <div class="container mx-auto px-4 py-16">
+
+      <!-- Filter Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 mb-12">
+        {filterCategories.map(category => (
+          <button 
+            data-filter={category}
+            class="filter-btn px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 border-2 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
+            class:list={[
+              category === 'All' 
+                ? 'bg-purple-600 text-white border-purple-600 active' 
+                : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-300 dark:border-gray-600 hover:border-purple-500 dark:hover:border-purple-400'
+            ]}
+          >
+            {category}
+          </button>
+        ))}
+      </div>
+
+      <!-- All Courses Grid -->
+      <div id="courses-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {allCourses.map(course => (
+          <a
+            href={course.path}
+            data-categories={course.filterCategories.join(',')}
+            class="course-card group block p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md hover:bg-yellow-50 dark:hover:bg-yellow-900/20 transition-colors duration-300 border border-gray-200 dark:border-gray-700"
+          >
+            <div class="flex items-start justify-between mb-3">
+              <h3 class="font-heading text-lg font-medium text-gray-900 dark:text-white group-hover:text-gray-800 dark:group-hover:text-gray-100 transition-colors">
+                {course.name}
+              </h3>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm px-3 py-1 bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300 rounded-full">
+                {course.id.toUpperCase()}
+              </span>
+              <div class="flex flex-col items-end">
+                <span class="text-xs text-gray-400 dark:text-gray-500 mb-1">
+                  {course.originalType}
+                </span>
+                <span class="text-sm text-gray-500 dark:text-gray-400">
+                  Coming Soon →
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+
+      <div class="mt-16 text-center">
+        <div class="inline-block p-8 bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-2xl">
+          <h3 class="font-heading text-2xl font-medium mb-4 text-gray-800 dark:text-gray-200">
+            📚 Other Courses
+          </h3>
+          <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+            I have also been involved in organizing short courses and workshops. <br /> The material from such will also be listed here eventually. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocsLandingLayout>
+
+<script>
+  function initializeFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const courseCards = document.querySelectorAll('.course-card');
+    
+    // Remove any existing event listeners first (to prevent duplicates)
+    filterButtons.forEach(button => {
+      const newButton = button.cloneNode(true);
+      button.parentNode?.replaceChild(newButton, button);
+    });
+    
+    // Re-query after replacing to get the new elements
+    const freshFilterButtons = document.querySelectorAll('.filter-btn');
+    
+    freshFilterButtons.forEach(button => {
+      button.addEventListener('click', function() {
+        const filter = this.dataset.filter;
+        
+        // Update active button styling
+        freshFilterButtons.forEach(btn => {
+          btn.classList.remove('active', 'bg-purple-600', 'text-white', 'border-purple-600');
+          btn.classList.add('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-300', 'dark:border-gray-600');
+        });
+        
+        this.classList.add('active', 'bg-purple-600', 'text-white', 'border-purple-600');
+        this.classList.remove('bg-white', 'dark:bg-gray-800', 'text-gray-700', 'dark:text-gray-300', 'border-gray-300', 'dark:border-gray-600');
+        
+        // Filter course cards
+        courseCards.forEach(card => {
+          const htmlCard = card as HTMLElement;
+          const categories = htmlCard.dataset.categories?.split(',') || [];
+          
+          if (filter === 'All' || categories.includes(filter)) {
+            htmlCard.style.display = 'block';
+            htmlCard.style.opacity = '0';
+            setTimeout(() => {
+              htmlCard.style.opacity = '1';
+            }, 50);
+          } else {
+            htmlCard.style.display = 'none';
+          }
+        });
+      });
+    });
+  }
+
+  // Initialize on DOMContentLoaded (first page load)
+  document.addEventListener('DOMContentLoaded', function() {
+    initializeFilters();
+  });
+  
+  // Also initialize after Astro page transitions
+  document.addEventListener('astro:page-load', function() {
+    initializeFilters();
+  });
+</script>
+
+<style>
+  .container {
+    max-width: 1200px;
+  }
+  
+  .course-card {
+    transition: opacity 0.3s ease-in-out;
+  }
+  
+  .filter-btn.active {
+    transform: scale(1.05);
+  }
+  
+  /* Ensure cursive font headings display properly */
+  .title-wrapper h1 {
+    line-height: 1.4;
+    padding: 1rem 0;
+    overflow: visible;
+    min-height: 5rem;
+  }
+  
+  /* Course card headings with cursive font */
+  .course-card h3 {
+    line-height: 1.4;
+  }
+</style>

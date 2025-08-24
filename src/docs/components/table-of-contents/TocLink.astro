@@ -1,0 +1,28 @@
+---
+interface Props {
+  heading: import("astro").MarkdownHeading;
+  class?: string;
+  minHeadingLevel?: number;
+}
+
+const { heading, class: className, minHeadingLevel = 2 } = Astro.props;
+---
+
+<li class="-ml-px flex flex-col gap-1">
+  <a
+    href={`#${heading.slug}`}
+    class:list={[
+      "docs-nav__link--sidebar docs-primary-focus inline-block py-0.5",
+      {
+        "pl-4": heading.depth === minHeadingLevel,
+        "pl-6": heading.depth === minHeadingLevel + 1,
+        "pl-8": heading.depth === minHeadingLevel + 2,
+        "pl-10": heading.depth === minHeadingLevel + 3,
+        "pl-12": heading.depth >= minHeadingLevel + 4,
+      },
+      className,
+    ]}
+  >
+    {heading.text}
+  </a>
+</li>

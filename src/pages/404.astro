@@ -1,0 +1,120 @@
+---
+import astronaut from "@images/404/astronaut-nobg.png";
+import { Image } from "astro:assets";
+
+import Button from "@/docs/components/button/Button.astro";
+import { docsRoute } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute } from "@/docs/js/translationUtils";
+import BaseLayoutDocs from "@/docs/layouts/BaseLayoutDocs.astro";
+import Docs404Layout from "@/docs/layouts/Docs404Layout.astro";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<Docs404Layout title="404" description="Error 404 page not found." noindex={true}>
+  <!-- Particle Canvas Background -->
+  <div class="dark bg-background text-foreground">
+    <div class="absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+      <div class="pointer-events-none absolute inset-x-0 inset-y-0 m-auto overflow-clip">
+        <div class="relative h-full w-full">
+          <!-- particles canvas -->
+          <canvas
+            data-particle-animation
+            data-particle-quantity="40"
+            data-particle-staticity="70"
+            data-particle-ease="70"
+            data-particle-max-size="3"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="docs-site-container relative z-10">
+      <div class="flex min-h-screen flex-col items-center justify-center text-center">
+        <div class="animate-astroFloat">
+          <!-- <div> -->
+          <!-- 404 Text -->
+          <h1 class="text-[10rem] leading-none font-bold">
+            <span class="from-primary bg-gradient-to-r to-white bg-clip-text text-transparent">
+              404
+            </span>
+          </h1>
+
+          <!-- Message -->
+          <p class="mb-4 text-2xl font-bold md:text-4xl">Houston, we have a problem!</p>
+          <p class="mb-8 max-w-lg text-xl text-gray-400">
+            The page you're looking for has drifted into deep space or never existed in the first
+            place.
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href={getLocalizedRoute(currLocale, `/`)} variant="secondary">
+              Return Home
+            </Button>
+          </div>
+        </div>
+
+        <!-- Floating Astronaut -->
+        <div class="astronaut absolute h-32 w-32 md:h-48 md:w-48">
+          <Image src={astronaut} alt="Astronaut floating in space" class="h-full w-full" />
+        </div>
+      </div>
+    </div>
+  </div>
+</Docs404Layout>
+
+<style>
+  /* Floating Animation */
+  @keyframes astroFloat {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-astroFloat {
+    @media (prefers-reduced-motion: no-preference) {
+      animation: astroFloat 8s ease-in-out infinite;
+    }
+  }
+
+  /* Astronaut Animation */
+  .astronaut {
+    top: 20%;
+    right: 10%;
+    animation: astronaut 15s ease-in-out infinite;
+    z-index: 20;
+  }
+
+  @keyframes astronaut {
+    0% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+    25% {
+      transform: translate(50px, 50px) rotate(45deg);
+    }
+    50% {
+      transform: translate(0, 100px) rotate(90deg);
+    }
+    75% {
+      transform: translate(-50px, 50px) rotate(45deg);
+    }
+    100% {
+      transform: translate(0, 0) rotate(0deg);
+    }
+  }
+</style>
+
+<script>
+  import startParticles from "@/docs/js/particle-effect.js";
+
+  startParticles();
+  document.addEventListener("astro:after-swap", () => {
+    startParticles();
+  });
+</script>

@@ -1,0 +1,179 @@
+.nim-game-tree {
+  display: flex;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  background-color: #f8f9fa;
+  font-family: sans-serif;
+  overflow-x: auto;
+}
+
+.nim-node-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.node-content {
+  position: relative;
+  background-color: white;
+  border-radius: 12px;
+  padding: 12px 20px;
+  text-align: center;
+  cursor: pointer;
+  border: 2px solid;
+  width: 160px; /* narrower, consistent width */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 1;
+}
+
+
+.node-content:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+}
+
+.node-content.max-player {
+  border-color: #4a90e2;
+}
+
+.node-content.min-player {
+  border-color: #50e3c2;
+}
+
+.node-content.terminal {
+  border-color: #f5a623;
+  cursor: default;
+}
+
+.node-state {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.winner {
+  font-size: 0.9rem;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.terminal.max-player .winner,
+.terminal.min-player .winner {
+  color: #f5a623;
+}
+
+.expand-indicator {
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #aaa;
+  margin: 8px auto 0;
+  transition: transform 0.2s;
+}
+
+.expand-indicator.expanded {
+  transform: rotate(180deg);
+}
+
+.children {
+  display: inline-flex; /* shrink to content so connectors span only children width */
+  width: fit-content;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 12px;
+  padding-top: 40px; /* space for connector lines */
+  position: relative;
+  margin: 0 auto; /* center under parent */
+}
+
+/* Vertical line from parent to the horizontal connector */
+.children::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background-color: #d1d5db; /* neutral-300 */
+}
+
+/* Single horizontal connector spanning all children */
+.children::after {
+  content: '';
+  position: absolute;
+  top: 20px;
+  left: 0;
+  width: 100%; /* exactly span the children width */
+  height: 2px;
+  background-color: #d1d5db;
+}
+
+.child-branch {
+  position: relative;
+  display: flex;
+  align-items: flex-start; /* ensure children start at same Y */
+  justify-content: center; /* center the node within its branch column */
+  flex: 0 0 auto; /* do not stretch */
+}
+
+/* Disable per-child horizontal lines (replaced by the global connector) */
+.child-branch::before {
+  display: none;
+}
+
+/* Vertical line from the horizontal connector down to each child */
+.child-branch::after {
+  content: '';
+  position: absolute;
+  top: 20px; /* aligns with .children::after */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  height: 20px;
+  background-color: #d1d5db;
+}
+
+/* Ensure consistent offset from connector to nodes */
+.child-branch > .node-content {
+  /* start content below the vertical stem (20px) plus a small gap */
+  margin-top: 24px;
+}
+
+/* Tooltip Styles */
+.move-tooltip {
+  visibility: hidden;
+  width: 140px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  z-index: 10;
+  bottom: 115%;
+  left: 50%;
+  margin-left: -70px;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  pointer-events: none;
+}
+
+.node-content:hover .move-tooltip {
+  visibility: visible;
+  opacity: 1;
+}
+
+.move-tooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}

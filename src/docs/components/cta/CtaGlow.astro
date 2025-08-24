@@ -1,0 +1,76 @@
+---
+import BrandGithub from "@tabler/icons/outline/brand-github.svg";
+
+import Button from "@/docs/components/button/Button.astro";
+import { docsRoute } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute } from "@/docs/js/translationUtils";
+const currLocale = getLocaleFromUrl(Astro.url);
+
+// Define component properties directly
+const title = "Ready to build your documentation?";
+const description =
+  "Get started with Solstice today and create beautiful, maintainable documentation that your users will love.";
+const primaryLink = getLocalizedRoute(currLocale, `${docsRoute}/getting-started`);
+const githubLink = "https://github.com/Boston343";
+---
+
+<div class="relative my-12 py-6 md:py-12" data-mos="fade-in">
+  <div class="docs-home-container relative overflow-clip bg-gradient-to-b py-20 md:py-32">
+    <!-- background elements -->
+    <div
+      class="pointer-events-none absolute inset-x-0 inset-y-0 m-auto overflow-clip lg:inset-x-4 lg:rounded-[4rem]"
+      aria-hidden="true"
+    >
+      <div class="relative h-full w-full">
+        <!-- particles canvas -->
+        <canvas
+          data-particle-animation
+          data-particle-quantity="20"
+          data-particle-staticity="80"
+          data-particle-ease="70"
+          data-particle-max-size="3"></canvas>
+        <!-- Decorative bottom glow -->
+        <div
+          aria-hidden="true"
+          class="cta-glow pointer-events-none absolute inset-0 -z-10 overflow-clip blur-3xl"
+        >
+        </div>
+      </div>
+    </div>
+
+    <div class="relative mx-auto max-w-4xl px-4 text-center">
+      <h2 class="docs-text-gradient docs-h1 mb-4 text-pretty">
+        {title}
+      </h2>
+      <p class="text-muted-foreground mx-auto mb-8 max-w-[600px] text-pretty md:text-lg">
+        {description}
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-4">
+        <Button href={primaryLink} variant="primary"> Get Started </Button>
+        <Button href={githubLink} variant="ghost" target="_blank" rel="noopener noreferrer">
+          <BrandGithub class="mr-2 size-4" />
+          View on GitHub
+        </Button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Radial gradient glow similar to hero */
+  .cta-glow {
+    background: radial-gradient(
+      100% 100% at 50% 50%,
+      transparent 0%,
+      transparent 40%,
+      var(--color-accent) 50%
+    );
+    opacity: 0.4;
+
+    /* on larger screens, make it full width */
+    @media (min-width: 640px) {
+      opacity: 1;
+    }
+  }
+</style>

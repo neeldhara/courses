@@ -1,0 +1,67 @@
+---
+title: The Minimax Algorithm
+tab: notes
+description: Computing utilities over a game tree
+sidebar:
+  order: 4
+tableOfContents:
+  minHeadingLevel: 1
+  maxHeadingLevel: 4
+---
+
+import MinimaxWidget from './MinimaxWidget.astro';
+
+Now that we know how game trees work, and what strategies are, we'd like to be able to look at a game and figure out which player has the upper hand. We are going to do this by assigning a _utility value_ to each terminal state of the game tree, and then propagating these values up the tree to compute a value for each internal node.
+
+#### The Minimax Algorithm
+
+As before, we will restrict our attention to two-player games. We continue to refer to these players as the <Badge text="MAX" variant="info" /> player and the <Badge text="MIN" variant="tip" /> player. Throughout our discussion here, we will assign utilities from the perspective of the <Badge text="MAX" variant="info" /> player. Since each leaf node is a terminal state, and we know whose turn it is, we are able to assign a utility to each leaf node. In particular:
+
+- if it's the <Badge text="MAX" variant="info" /> player's turn and  state is winning for them: high utility
+- if it's the <Badge text="MAX" variant="info" /> player's turn and  state is losing for them: low utility
+- if it's the <Badge text="MIN" variant="tip" /> player's turn and  state is winning for them: low utility
+- if it's the <Badge text="MIN" variant="tip" /> player's turn and  state is losing for them: high utility
+
+Now suppose we are at an internal node in the game tree, and we want to compute its utility value. We will do this by looking at the values of its children, which are themselves internal nodes or leaf nodes. Our procedure for computing utilities is recursive, and we will assume that we have already computed the utilities of all the children of the node we are looking at. The base case is when we are at a leaf node, in which case we simply return the utility value assigned to that node. 
+
+<Aside variant="caution" title="Minimax Algorithm">
+Think about how the algorithm would work before reading further!
+</Aside>
+
+Let's consider internal nodes now. Remember that we are thinking about assigning utilities from the perspective of the <Badge text="MAX" variant="info" /> player.
+
+If the node we are at is a <Badge text="MAX" variant="info" /> node, the player has control of the game and can pick any of the child nodes they like. In particular, they can pick the node that has the largest utility. So we will want to return the largest utility that is available among the child nodes. On the other hand, if the node we are at is a <Badge text="MIN" variant="tip" /> node, the opponent is in control and we may be thrown into any of the futures visible from said node. In the worst-case, the opponent will choose the child node with the smallest utility value. So the smallest utility value is the best the <Badge text="MAX" variant="info" /> player can hope for at this node, and so we will return the smallest utility value among the child nodes.
+
+To summarize:
+
+- If <Badge text="MAX" variant="info" /> node: return the maximum utility value of its children. 
+- If <Badge text="MIN" variant="tip" /> node: return the minimum utility value of its children. 
+
+This way, we propagate the utilities up the tree, and at the root node, we will have the utility value for the entire game tree. Formally, for a non-leaf node $$s$$ in the game tree, we define the utility function $$u(s)$$ as follows:  
+
+```math
+u(s) =
+\begin{cases}
+  \max_{t \in \text{child}(s)} u(t) & \text{if } \text{player}(s) = \text{MAX},\\
+  \min_{t \in \text{child}(s)} u(t) & \text{if } \text{player}(s) = \text{MIN}.
+\end{cases}
+```
+
+#### Interactive Visualization
+
+Play around with an interactive visualization of the minimax algorithm below. Here's how to use the setup:
+
+1. **Choose root player**: Click on the root node (a) to decide if it's a MAX or MIN player
+2. **Set leaf values**: Click on the green dashed circles (leaf nodes) to set values between -20 and +20
+3. **Random Setup:** Alternatively, you can click the dice to generate random values for leaf nodes and a random root player.
+4. **Start the algorithm**: Once all leaves have values, click "Start Algorithm", this activates two options for you:
+   - **Step through**: Use the next and previous buttons to compute values step by step
+   - **Auto play**: Step through the entire algorithm without intervention
+
+
+The algorithm alternates between MAX and MIN players at each level, computing optimal values bottom-up.
+
+<MinimaxWidget />
+
+#### Food for Thought
+

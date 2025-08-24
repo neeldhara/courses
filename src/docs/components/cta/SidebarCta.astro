@@ -1,0 +1,34 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props as Props;
+---
+
+<a href="https://cosmicthemes.com" target="_blank" rel="noopener" class="group">
+  <div
+    class:list={[
+      className,
+      "dark:bg-muted/70 z-10 overflow-hidden rounded-xl border p-6",
+      "ring-accent/80 transition-shadow group-hover:ring-2",
+    ]}
+  >
+    <h3 class="text-foreground mb-2 text-lg leading-tight font-medium">Ship in Days, Not Weeks</h3>
+    <p class="text-muted-foreground mb-4 text-xs text-pretty">
+      Launch production-ready sites with our Astro + Tailwind templates - i18n, CMS, and animations
+      baked in.
+    </p>
+    <div
+      class:list={[
+        "inline-flex items-center justify-center rounded-full",
+        "from-primary bg-gradient-to-br to-blue-500 p-0.5",
+        "text-sm font-medium",
+      ]}
+    >
+      <div class="bg-background inline-flex items-center justify-center rounded-full px-3 py-1.5">
+        Explore Now
+      </div>
+    </div>
+  </div>
+</a>

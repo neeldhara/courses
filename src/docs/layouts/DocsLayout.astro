@@ -1,0 +1,168 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+import SidebarCta from "@/docs/components/cta/SidebarCta.astro";
+import Summary from "@/docs/components/summary/Summary.astro";
+import Footer from "@/docs/components/footer/Footer.astro";
+import DocsPagination from "@/docs/components/nav/DocsPagination.astro";
+import SidebarNav from "@/docs/components/nav/SidebarNav.astro";
+import TableOfContents from "@/docs/components/table-of-contents/TableOfContents.astro";
+import TocLink from "@/docs/components/table-of-contents/TocLink.astro";
+import { siteSettings } from "@/docs/config/siteSettings.json";
+import { getAdjacentPages } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+
+import BaseLayoutDocs from "./BaseLayoutDocs.astro";
+
+const currLocale = getLocaleFromUrl(Astro.url);
+
+interface Props {
+  doc: CollectionEntry<"docs">;
+  headings?: import("astro").MarkdownHeading[];
+  tabId?: string;
+}
+
+const { doc, headings = [], tabId = "main" } = Astro.props;
+const { title, description = "", sidebar, tableOfContents, pagefind = true, summary, showtitle = false } = doc.data;
+
+const minHeadingLevel = tableOfContents?.minHeadingLevel ?? 2;
+const maxHeadingLevel = tableOfContents?.maxHeadingLevel ?? 3;
+
+// Filter headings based on tableOfContents settings
+const filteredHeadings = headings.filter(
+  (heading) => heading.depth <= maxHeadingLevel && heading.depth >= minHeadingLevel,
+);
+const hasTOC = filteredHeadings.length > 0;
+
+// Get adjacent pages - only from the current tab
+const { prev, next } = await getAdjacentPages(doc.id, currLocale, tabId);
+---
+
+<BaseLayoutDocs title={title} description={description} tabId={tabId}>
+  <div
+    class="min-h-[calc(100vh-var(--nav-height))] flex-1 md:grid md:grid-cols-[260px_minmax(0,1fr)] xl:grid-cols-[280px_minmax(0,1fr)]"
+  >
+    {/* Desktop Sidebar */}
+    <aside class="hidden shrink-0 border-r pl-4 md:block">
+      <div class="sticky top-(--nav-height)">
+        <div
+          class="max-h-[calc(100vh-var(--nav-height))] overflow-y-auto px-1 pt-(--main-content-pt) pb-4"
+        >
+          <SidebarNav tabId={tabId} />
+        </div>
+      </div>
+    </aside>
+
+    {/* Main Content and TOC Container */}
+    <div class="mx-auto w-full min-w-0">
+      <div
+        class="docs-site-container gap-10 lg:grid lg:grid-cols-[minmax(0,1fr)_240px] xl:grid-cols-[minmax(0,1fr)_260px]"
+      >
+        {/* Main Content */}
+        <main class="-mt-px w-full max-w-2xl min-w-0">
+          {/* Mobile Table of Contents Dropdown */}
+          {hasTOC && (
+            <div class="sticky top-[calc(var(--nav-height)-1px)] z-40 -mx-4 mb-4 lg:hidden">
+              <details class="mobile-toc bg-background/90 relative px-4 py-2 backdrop-blur">
+                <summary class="font-heading cursor-pointer list-none font-medium tracking-wide"
+                  >On this page</summary
+                >
+                <ul
+                  class="bg-background absolute top-full right-0 left-0 space-y-1 border-b px-4 pt-2 pb-4"
+                >
+                  {
+                    filteredHeadings.map((heading) => (
+                      <TocLink heading={heading} minHeadingLevel={minHeadingLevel} />
+                    ))
+                  }
+                </ul>
+              </details>
+            </div>
+          )}
+
+          {/* Content */}
+          <div
+            id="main-content"
+            class="w-full max-w-2xl min-w-0 scroll-mt-[calc(var(--nav-height)+1rem)] pb-(--main-content-pt) lg:mt-(--main-content-pt) lg:px-1"
+            data-pagefind-body={pagefind ? true : undefined}
+          >
+            {showtitle && (
+              <div class="flex">
+                <h1 class="docs-h1 docs-text-gradient mb-8 pb-1">{title}</h1>
+              </div>
+            )}
+            <div class="docs-markdown-content">
+              <slot />
+            </div>
+
+            {/* Previous/Next Navigation */}
+            {siteSettings.pagination !== false && <DocsPagination prev={prev} next={next} />}
+          </div>
+        </main>
+
+        {/* Desktop Table of Contents */}
+        <aside id="toc-aside" class="hidden text-sm lg:block">
+          <div class="sticky top-[calc(var(--nav-height)+1rem)] px-1 pt-(--main-content-pt) pb-4 xl:px-4">
+            <div class="max-h-[calc(100vh-var(--nav-height)-2rem)] overflow-y-auto">
+              {hasTOC && <TableOfContents headings={filteredHeadings} minHeadingLevel={minHeadingLevel} />}
+              
+              {/* Summary Block - appears between TOC and CTA */}
+              {summary && (
+                <Summary 
+                  class="mt-6 mb-4"
+                  title={summary.title}
+                  content={summary.content}
+                  items={summary.items}
+                  variant={summary.variant}
+                />
+              )}
+              
+              <SidebarCta class="mt-10" />
+            </div>
+          </div>
+        </aside>
+      </div>
+      <Footer />
+    </div>
+  </div>
+
+  <div class="pointer-events-none fixed inset-0 z-10 hidden dark:block">
+    <div class="relative hidden h-14 opacity-50 md:flex">
+      <div
+        class="to-primary/20 pointer-events-none absolute top-[300px] -right-[350px] z-10 h-[400px] w-[1000px] origin-top-right rotate-60 rounded-2xl bg-gradient-to-bl from-blue-500/20 blur-3xl xl:top-[600px] 2xl:top-[700px]"
+      >
+      </div>
+    </div>
+  </div>
+</BaseLayoutDocs>
+
+<style>
+  /* Mobile Table of Contents dropdown styles */
+  .mobile-toc summary::-webkit-details-marker {
+    display: none;
+  }
+  .mobile-toc summary::before {
+    --details-marker-size: 1.25rem;
+
+    background-color: currentColor;
+    content: "";
+    display: inline-block;
+    height: var(--details-marker-size);
+    width: var(--details-marker-size);
+    margin-inline: calc((var(--details-marker-size) / 4) * -1) 0.25rem;
+    vertical-align: middle;
+    /* vertical-align: -0.25rem; */
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14.8 11.3 10.6 7a1 1 0 1 0-1.4 1.5l3.5 3.5-3.5 3.5a1 1 0 0 0 0 1.4 1 1 0 0 0 .7.3 1 1 0 0 0 .7-.3l4.2-4.2a1 1 0 0 0 0-1.4Z'/%3E%3C/svg%3E%0A");
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .mobile-toc summary::before {
+      transition: transform 0.2s ease-in-out;
+    }
+  }
+  .mobile-toc[open] > summary::before {
+    transform: rotateZ(90deg);
+  }
+</style>

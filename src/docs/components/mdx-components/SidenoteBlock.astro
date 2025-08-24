@@ -1,0 +1,76 @@
+---
+interface Props {
+  children?: any;
+  note?: string;
+}
+
+const { note } = Astro.props;
+---
+
+<!-- Two-column block for content with sidenote -->
+<div class="sidenote-block">
+  <div class="sidenote-content">
+    <slot />
+  </div>
+  {note && (
+    <aside class="sidenote-aside">
+      <Fragment set:html={note} />
+    </aside>
+  )}
+</div>
+
+<style>
+  /* No counter for layout blocks */
+  .sidenote-block {
+    margin: 1.5rem 0;
+    width: 100%;
+  }
+
+  /* Desktop: Two-column layout */
+  @media (min-width: 768px) {
+    .sidenote-block {
+      display: grid;
+      grid-template-columns: 60% 40%;
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .sidenote-content {
+      grid-column: 1;
+    }
+
+    .sidenote-aside {
+      grid-column: 2;
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--color-muted-foreground);
+      padding-top: 0.125rem;
+    }
+  }
+
+  /* Mobile: Stack vertically */
+  @media (max-width: 767px) {
+    .sidenote-block {
+      display: block;
+    }
+
+    .sidenote-content {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidenote-aside {
+      display: block;
+      background: var(--color-base-100);
+      border-left: 3px solid var(--color-muted-foreground);
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      border-radius: 0.375rem;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .dark .sidenote-aside {
+      background: var(--color-base-900);
+    }
+  }
+</style>

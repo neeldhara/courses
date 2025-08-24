@@ -1,0 +1,58 @@
+---
+/**
+ * * These are alternating side cards with titles, check-marked list items, and images
+ */
+
+import { Image } from "astro:assets";
+
+import Button from "@/docs/components/button/Button.astro";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute } from "@/docs/js/translationUtils";
+
+interface Props {
+  title: string; // larger title
+  description: string; // paragraph text
+  buttonText: string; // button text
+  href: string; // link to learn more
+  image: ImageMetadata; // an imported image
+  imageSide: "left" | "right";
+  rest?: any; // catch-all for any additional parameters, such as "aria-label"
+}
+
+const { image, title, buttonText, href, description, imageSide, ...rest } = Astro.props as Props;
+
+const currLocale = getLocaleFromUrl(Astro.url);
+---
+
+<div
+  class="mx-auto grid max-w-6xl gap-8 rounded-lg md:grid-cols-2 md:gap-12 md:rounded-2xl"
+  {...rest}
+>
+  <!-- text -->
+  <div
+    class=`${imageSide === "left" ? "md:order-last": ""} col-span-1 flex items-center`
+    data-mos="fade-down"
+  >
+    <div class="">
+      <h2 class="docs-h1">{title}</h2>
+      <div>
+        <p class="text-muted-foreground mt-4 mr-auto max-w-md text-pretty">
+          {description}
+        </p>
+      </div>
+      <div class="z-20 mt-8 flex">
+        <Button variant="outline" href={getLocalizedRoute(currLocale, href)}>
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  </div>
+
+  <!-- image -->
+  <div
+    class="mb-auto h-auto w-full overflow-hidden rounded-xl border md:rounded-2xl"
+    data-mos="fade-in"
+  >
+    <Image class="h-full w-full object-cover" src={image} alt={title} height={700} />
+  </div>
+</div>

@@ -1,0 +1,76 @@
+---
+interface Props {
+  id?: string;
+  children?: any;
+}
+
+const { id } = Astro.props;
+const noteId = id || `sn-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<!-- Simple inline sidenote -->
+<span class="sidenote-wrapper" id={`ref-${noteId}`}>
+  <label for={noteId} class="sidenote-number"></label>
+  <input type="checkbox" id={noteId} class="sidenote-toggle" />
+  <span class="sidenote">
+    <slot />
+  </span>
+</span>
+
+<style>
+  /* Counter for sidenotes */
+  .sidenote-wrapper {
+    counter-increment: sidenote-counter;
+    position: relative;
+    display: inline;
+  }
+
+  /* The clickable number in the text */
+  .sidenote-number {
+    color: var(--color-primary);
+    cursor: pointer;
+    font-size: 0.9em;
+    vertical-align: super;
+    font-weight: 500;
+    user-select: none;
+    margin-left: 0.05rem;
+    margin-right: 0.05rem;
+    display: inline;
+  }
+  .sidenote-number::after { 
+    content: counter(sidenote-counter); 
+  }
+
+  .sidenote-number:hover {
+    color: var(--color-primary-hover);
+    text-decoration: underline;
+  }
+
+  /* Hide the checkbox */
+  .sidenote-toggle {
+    display: none;
+  }
+
+  /* The actual sidenote content - hidden by default */
+  .sidenote {
+    display: none;
+  }
+
+  /* Mobile behavior - expandable */
+  @media (max-width: 767px) {
+    .sidenote-toggle:checked + .sidenote {
+      display: block;
+      background: var(--color-base-100);
+      border-left: 3px solid var(--color-primary);
+      padding: 0.75rem 1rem;
+      margin: 0.75rem 0;
+      border-radius: 0.375rem;
+      font-size: 0.9em;
+      line-height: 1.5;
+    }
+
+    .dark .sidenote-toggle:checked + .sidenote {
+      background: var(--color-base-900);
+    }
+  }
+</style>

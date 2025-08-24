@@ -1,0 +1,73 @@
+---
+title: Strategies
+tab: notes
+description: Functions that tell you what to do in a game
+sidebar:
+  order: 3
+tableOfContents:
+  minHeadingLevel: 1
+  maxHeadingLevel: 4
+---
+
+A strategy is a function from states to actions: intuitively, it guides a player through a game. Formally:
+
+- a strategy for the <Badge text="MAX" variant="info" /> player is a function $$\sigma: \mathcal{S} \rightarrow \mathcal{A}$$ that satisfies <br /> $$\sigma(s) \in \text{Actions}(s)$$ for all states $$s \in \mathcal{S}$$ for which Player$$(s)$$ is <Badge text="MAX" variant="info" />.
+- a strategy for the <Badge text="MIN" variant="tip" /> player is a function $$\sigma: \mathcal{S} \rightarrow \mathcal{A}$$ that satisfies <br /> $$\sigma(s) \in \text{Actions}(s)$$ for all states $$s \in \mathcal{S}$$ for which Player$$(s)$$ is <Badge text="MIN" variant="tip" />.
+
+#### Winning Strategies
+
+A _winning strategy_ is a strategy that guarantees a win for the player who uses it, irrespective of how the opponent plays. A few questions should feel fairly natural once this definition is presented:
+
+- Does a game always have a winning strategy for some player?
+- How do we find a winning strategy for a given game?
+- Given a strategy, how do we know if it is winning?
+
+In fact, the idea of a winning strategy feels really ambitious, so it would be fair to wonder if we could ever come up with one. Note that there are two slightly distinct questions here: the _existence_ of a winning strategy vs the _availability_ of one that we can actually put to use. It's nice to have concrete examples of winning strategies, so try figuring out one for Nim.
+
+<Aside variant="caution" title="Winning Strategies in Nim (Warm Up)">
+For the game of Nim, work out winning strategies for:
+- when there are two heaps at play
+- when there are $$k$$ heaps but each heap has one or two tokens
+- the general game
+</Aside>
+
+As a warm up, try the following variation on Nim, where there is only one heap, and you can only take one, two, or three tokens from a heap at a time. 
+
+<div style={{ position: 'relative', paddingBottom: 'calc(56.25% + 3px)', height: 0, maxWidth: '100%', marginTop: '1rem', marginBottom: '2rem', borderRadius: '0.5rem' }}>
+  <iframe
+    style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none' }}
+    src="https://www.youtube.com/embed/9KABcmczPdg"
+    title="YouTube video player"
+    frameBorder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowFullScreen
+  ></iframe>
+</div>
+
+<Aside variant="caution" title="Winning Strategies in Nim (Spoiler)">
+For the game of Nim, it can be shown that there is a winning strategy for the <Badge text="MAX" variant="info" /> player &mdash; i.e, the player who starts &mdash; if and only if the XOR of the sizes of all heaps is non-zero.
+</Aside>
+
+#### Existence of Winning Strategies
+
+For the kinds of games we are working with right now, it turns out that there is always a winning strategy for one of the players.
+
+<Aside variant="tip" title="Existence of Winning Strategies">
+**Theorem.** _(Informal Statement)_ 
+
+In a finite, deterministic, two-person game of perfect information in which the players move alternately, if the game cannot end in a draw, then one of the two players must have a winning strategy.
+</Aside>
+
+Here's a version for games that can possibly end in a draw:
+
+<Aside variant="tip" title="Wins or Draws">
+**Theorem.** _(Informal Statement)_ 
+
+In a finite, deterministic, two-person game of perfect information in which the players move alternately, then either one of the two players has a winning strategy or both players have a drawing strategy.
+</Aside>
+
+{/* TBA. Proof. */}
+
+#### Computing Winning Strategies
+
+Although winning strategies exist, they are not always easy to find. Indeed, it is often computationally intractable to find winning strategies for many games. Up next, we will look at a technique that assigns utility values to states in a game tree, which can help us determine which player has the upper hand. 

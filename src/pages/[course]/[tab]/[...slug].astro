@@ -1,0 +1,136 @@
+---
+import { getCollection, render } from "astro:content";
+
+import CustomH1 from "@/docs/components/markdown-overrides/CustomH1.astro";
+import CustomH1Copy from "@/docs/components/markdown-overrides/CustomH1Copy.astro";
+import CustomH2 from "@/docs/components/markdown-overrides/CustomH2.astro";
+import CustomH2Copy from "@/docs/components/markdown-overrides/CustomH2Copy.astro";
+import CustomH3 from "@/docs/components/markdown-overrides/CustomH3.astro";
+import CustomH3Copy from "@/docs/components/markdown-overrides/CustomH3Copy.astro";
+import CustomH4 from "@/docs/components/markdown-overrides/CustomH4.astro";
+import CustomH4Copy from "@/docs/components/markdown-overrides/CustomH4Copy.astro";
+import CustomH5 from "@/docs/components/markdown-overrides/CustomH5.astro";
+import CustomH5Copy from "@/docs/components/markdown-overrides/CustomH5Copy.astro";
+import CustomH6 from "@/docs/components/markdown-overrides/CustomH6.astro";
+import CustomH6Copy from "@/docs/components/markdown-overrides/CustomH6Copy.astro";
+import ExternalLink from "@/docs/components/markdown-overrides/ExternalLink.astro";
+import { defaultLocale, siteSettings } from "@/docs/config/siteSettings.json";
+import { filterCollectionByLanguage } from "@/docs/js/localeUtils";
+import SimpleCourseLayout from "@/shared/layouts/SimpleCourseLayout.astro";
+import { courseRoutes } from '@/shared/config/courseRouting';
+import fs from 'fs';
+import path from 'path';
+
+export async function getStaticPaths() {
+  const paths: any[] = [];
+  
+  // List of valid course IDs
+  const courseIds = Object.keys(courseRoutes);
+  
+  // For each course, get its collection and create paths
+  for (const courseId of courseIds) {
+    try {
+      // Get the course-specific collection
+      const courseDocs = await getCollection(courseId as any, ({ data }) => {
+        // filter out draft pages
+        return data.draft !== true;
+      });
+      
+      // Filter by language
+      const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
+      
+      // Load course-specific sidebar data to pass as props
+      let courseSidebarData;
+      const sidebarPath = path.join(process.cwd(), 'src', courseId, 'config', defaultLocale, 'sidebarNavData.json.ts');
+      
+      if (fs.existsSync(sidebarPath)) {
+        // Import the course sidebar module
+        const sidebarModule = await import(/* @vite-ignore */ sidebarPath);
+        courseSidebarData = sidebarModule.default;
+      }
+      
+      // Generate paths for this course
+      const coursePaths = filteredDocs.map((doc) => {
+        // Parse the document ID to get the proper slug
+        // The filtered docs have already stripped the locale
+        // Format can be: notes/introduction/index or notes/introduction
+        const parts = doc.id.split('/');
+        const tab = parts[0]; // notes, assessments, or editions
+        const remainingPath = parts.slice(1).join('/');
+        
+        // Create the slug that removes 'index' at the end
+        let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+        
+        // If there's no remaining path, use the first subfolder name
+        if (!slug && parts.length > 1) {
+          slug = parts[1];
+        }
+        
+        console.log(`Generating path for ${courseId}: doc.id=${doc.id}, tab=${tab}, slug=${slug}`);
+        
+        return {
+          params: { 
+            course: courseId,
+            tab: tab,
+            slug: slug || 'index'
+          },
+          props: { 
+            doc,
+            courseId,
+            courseName: courseRoutes[courseId as keyof typeof courseRoutes].name,
+            tabId: doc.data.tab || tab,
+            courseSidebarData
+          },
+        };
+      });
+      
+      paths.push(...coursePaths);
+    } catch (e) {
+      // Collection might not exist for this course yet
+      console.log(`No content found for course: ${courseId}`);
+    }
+  }
+  
+  return paths;
+}
+
+const { doc, courseId, courseName, tabId, courseSidebarData } = Astro.props;
+const { Content, headings } = await render(doc);
+---
+
+<SimpleCourseLayout 
+  doc={doc} 
+  headings={headings} 
+  tabId={tabId} 
+  courseId={courseId} 
+  courseName={courseName} 
+  courseSidebarData={courseSidebarData}
+>
+  {
+    siteSettings.copyLinkButtons === false ? (
+      <Content
+        components={{
+          a: ExternalLink,
+          h1: CustomH1,
+          h2: CustomH2,
+          h3: CustomH3,
+          h4: CustomH4,
+          h5: CustomH5,
+          h6: CustomH6,
+        }}
+      />
+    ) : (
+      <Content
+        components={{
+          a: ExternalLink,
+          h1: CustomH1Copy,
+          h2: CustomH2Copy,
+          h3: CustomH3Copy,
+          h4: CustomH4Copy,
+          h5: CustomH5Copy,
+          h6: CustomH6Copy,
+        }}
+      />
+    )
+  }
+</SimpleCourseLayout>

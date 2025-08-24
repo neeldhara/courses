@@ -1,0 +1,126 @@
+---
+title: CustomAside Component Examples
+description: Examples of using the CustomAside component with custom colors and icons
+---
+
+import { CustomAside } from './index.ts';
+
+# CustomAside Component Examples
+
+The CustomAside component allows you to create custom aside blocks with your own colors and icons.
+
+## Basic Usage
+
+<CustomAside
+  color="#8b5cf6"
+  icon="tabler/star"
+  title="Custom Purple Note"
+>
+  This is a custom aside with a purple color scheme and a sparkles icon.
+</CustomAside>
+
+## Different Colors and Icons
+
+<CustomAside
+  color="#10b981"
+  icon="tabler/accessible"
+  title="Success Message"
+>
+  Operation completed successfully! This uses a green color and accessible icon.
+</CustomAside>
+
+<CustomAside
+  color="#f59e0b"
+  icon="tabler/alert-triangle"
+  title="Warning"
+>
+  Please be careful with this operation. This uses an orange color and warning triangle icon.
+</CustomAside>
+
+<CustomAside
+  color="#ef4444"
+  icon="tabler/flame"
+  title="Critical Error"
+>
+  A critical error has occurred. This uses a red color and flame icon.
+</CustomAside>
+
+## Custom Styling Options
+
+<CustomAside
+  color="#06b6d4"
+  icon="tabler/bulb"
+  title="Custom Opacity"
+  bgOpacity={0.2}
+>
+  This aside has a higher background opacity (0.2 instead of default 0.1).
+</CustomAside>
+
+<CustomAside
+  color="#ec4899"
+  icon="tabler/school"
+  title="Custom Colors"
+  borderColor="#db2777"
+  iconColor="#be185d"
+  textColor="#831843"
+>
+  This aside has custom border, icon, and text colors that are different from the base color.
+</CustomAside>
+
+## Available Props
+
+The CustomAside component accepts the following props:
+
+- **color** (string): Main color in hex format (default: "#3b82f6")
+- **icon** (string): Icon name from the icon library (default: "tabler/info-circle")
+- **title** (string): Title text for the aside (default: "Note")
+- **borderColor** (string): Custom border color (defaults to main color)
+- **bgOpacity** (number): Background opacity from 0 to 1 (default: 0.1)
+- **textColor** (string): Custom text color (default: "currentColor")
+- **iconColor** (string): Custom icon color (defaults to main color)
+
+## Usage in MDX Files
+
+```mdx
+import { CustomAside } from '@/docs/components/mdx-components';
+
+<CustomAside
+  color="#8b5cf6"
+  icon="tabler/sparkles"
+  title="Custom Note"
+>
+  Your content here...
+</CustomAside>
+```
+
+## Available Icons
+
+You can use any icon that exists in the `src/icons/tabler/` directory. Currently available icons include:
+- `tabler/accessible`
+- `tabler/alert-triangle`
+- `tabler/api-app`
+- `tabler/arrow-up-right`
+- `tabler/brand-bluesky`
+- `tabler/brand-facebook`
+- `tabler/brand-github`
+- `tabler/brand-google-filled`
+- `tabler/brand-threads`
+- `tabler/brand-twitter`
+- `tabler/brand-x`
+- `tabler/bulb`
+- `tabler/chevron-down`
+- `tabler/command`
+- `tabler/edit-circle`
+- `tabler/file-text`
+- `tabler/flame`
+- `tabler/info-circle`
+- `tabler/language`
+- `tabler/link`
+- `tabler/mail`
+- `tabler/moon-stars`
+- `tabler/school`
+- `tabler/search`
+- `tabler/sparkles`
+- `tabler/stack-2`
+- `tabler/sun`
+- `tabler/x`

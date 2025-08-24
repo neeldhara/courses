@@ -1,0 +1,45 @@
+---
+title: Game Trees
+tab: notes
+description: Capturing all possible plays in a game
+sidebar:
+  order: 2
+tableOfContents:
+  minHeadingLevel: 1
+  maxHeadingLevel: 4
+---
+
+
+A game tree captures all possible plays in a game. If you are familiar with [interactive fiction](https://en.wikipedia.org/wiki/Interactive_fiction), you can imagine that the author of such a game would have to write down all the possible choices that the player can make, and how those choices affect the state of the game. A game tree is a mathematical construct that allows us to do something similar.
+
+
+#### Game Ingredients 
+
+We will focus on two-player, turn-based, deterministic games with no draws. 
+
+Let's refer to these players as the <Badge text="MAX" variant="info" /> player and the <Badge text="MIN" variant="tip" /> player. A game consists of a state space $$\mathcal{S}$$ and a space of possible actions or moves, $$\mathcal{A}$$. Additionally, we have: 
+
+- Players: $$\mathcal{S} \longrightarrow \{$$ <Badge text="MAX" variant="info" />, <Badge text="MIN" variant="tip" /> $$\}$$. <br /> Players$$(s)$$ denotes whose turn it is at state $$s$$.
+- Actions: $$\mathcal{S} \longrightarrow \mathcal{A}$$. <br /> Actions$$(s)$$ are the available actions for player$$(s)$$ at state $$s$$.
+- Result: $$\mathcal{S} \times \mathcal{A} \longrightarrow \mathcal{S}$$. <br /> Result$$(s, a)$$ is the state that results from taking action $$a$$ at state $$s$$.
+- Terminal-test: $$\mathcal{S} \longrightarrow \mathbb{B}$$. <br /> Terminal-test$$(s)$$ returns true if the state $$s$$ is a terminal state.
+- Outcome: $$\mathcal{S} \longrightarrow \mathbb{B} \cup \{\bot\}$$. <br /> Outcome$$(s)$$ returns:
+  - `true` if $$s$$ is a terminal state that is winning for the <Badge text="MAX" variant="info" /> player,
+  - `false` if $$s$$ is a terminal state that is winning for the <Badge text="MIN" variant="tip" /> player,
+  - $$\bot$$ otherwise.
+- Initial state: $$s_0 \in \mathcal{S}$$.
+
+#### Game Trees
+
+A game tree is recursively defined as follows:
+
+- The root of the tree is the initial state $$s_0$$. 
+- For any node $$s$$, the children of $$s$$ are the states that result from taking each available action for Player$$(s)$$ at $$s$$. 
+- In particular, if there are no actions available at a state $$s$$, then the state is a leaf node with no children.
+
+
+
+<NimGameTree client:load />
+
+
+

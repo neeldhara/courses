@@ -1,0 +1,38 @@
+---
+import CtaGlow from "@/docs/components/cta/CtaGlow.astro";
+import Features from "@/docs/components/feature/FeatureSideImage.astro";
+import Hero from "@/docs/components/hero/Hero.astro";
+import Sponsors from "@/docs/components/sponsors/Sponsors.astro";
+import Testimonials from "@/docs/components/testimonials/Testimonials.astro";
+import { defaultLocale } from "@/docs/config/siteSettings.json";
+import { docsRoute } from "@/docs/js/docsUtils";
+import { getLocaleFromUrl } from "@/docs/js/localeUtils";
+import { getLocalizedRoute, getTranslatedData } from "@/docs/js/translationUtils";
+import DocsLandingLayout from "@/docs/layouts/DocsLandingLayout.astro";
+
+export async function getStaticPaths() {
+  // replace any starting or ending slashes, then remove anything before the first slash remaining if necessary
+  const localizedDocsRoute = getLocalizedRoute(defaultLocale, docsRoute)
+    .replace(/^\/|\/$/g, "")
+    .replace(/^[^/]+\//, "");
+
+  return [
+    {
+      params: { docsRoute: localizedDocsRoute },
+    },
+  ];
+}
+
+const currLocale = getLocaleFromUrl(Astro.url);
+const siteData = getTranslatedData("siteData", currLocale);
+---
+
+<DocsLandingLayout title={siteData.title} description={siteData.description}>
+  <main class="overflow-hidden">
+    <Hero />
+    <Sponsors />
+    <Features />
+    <Testimonials />
+    <CtaGlow />
+  </main>
+</DocsLandingLayout>
