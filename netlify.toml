@@ -5,12 +5,90 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# Subdomain redirects for courses
+[[redirects]]
+  from = "https://fun.neeldhara.com/*"
+  to = "https://neeldhara.com/fun/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://mas.neeldhara.com/*"
+  to = "https://neeldhara.com/mas/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://mfai.neeldhara.com/*"
+  to = "https://neeldhara.com/mfai/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://dm.neeldhara.com/*"
+  to = "https://neeldhara.com/dm/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://dsa.neeldhara.com/*"
+  to = "https://neeldhara.com/dsa/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://fpt.neeldhara.com/*"
+  to = "https://neeldhara.com/fpt/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://cp.neeldhara.com/*"
+  to = "https://neeldhara.com/cp/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://magic.neeldhara.com/*"
+  to = "https://neeldhara.com/magic/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://advalgo.neeldhara.com/*"
+  to = "https://neeldhara.com/advalgo/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://combinatorics.neeldhara.com/*"
+  to = "https://neeldhara.com/combinatorics/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://linalg.neeldhara.com/*"
+  to = "https://neeldhara.com/linalg/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://comsoc.neeldhara.com/*"
+  to = "https://neeldhara.com/comsoc/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://misc.neeldhara.com/*"
+  to = "https://neeldhara.com/misc/:splat"
+  status = 301
+  force = true
+
+# SPA fallback for client-side routing
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-  conditions = {Role = ["admin"]}
-  force = false
 
 [[headers]]
   for = "/*"
