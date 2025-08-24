@@ -87,7 +87,8 @@ export async function getStaticPaths() {
       paths.push(...coursePaths);
     } catch (e) {
       // Collection might not exist for this course yet
-      console.log(`No content found for course: ${courseId}`);
+      console.error(`Error getting content for course: ${courseId}`, e);
+      throw e;
     }
   }
   
