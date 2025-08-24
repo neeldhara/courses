@@ -75,67 +75,67 @@ const docsCollection = defineCollection({
 
 // Course collections
 const funCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/fun/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/fun/data/docs" }),
   schema: courseSchema,
 });
 
 const masCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/mas/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/mas/data/docs" }),
   schema: courseSchema,
 });
 
 const mfaiCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/mfai/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/mfai/data/docs" }),
   schema: courseSchema,
 });
 
 const dmCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/dm/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/dm/data/docs" }),
   schema: courseSchema,
 });
 
 const dsaCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/dsa/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/dsa/data/docs" }),
   schema: courseSchema,
 });
 
 const fptCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/fpt/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/fpt/data/docs" }),
   schema: courseSchema,
 });
 
 const cpCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/cp/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/cp/data/docs" }),
   schema: courseSchema,
 });
 
 const magicCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/magic/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/magic/data/docs" }),
   schema: courseSchema,
 });
 
 const advalgoCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/advalgo/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/advalgo/data/docs" }),
   schema: courseSchema,
 });
 
 const combinatoricsCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/combinatorics/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/combinatorics/data/docs" }),
   schema: courseSchema,
 });
 
 const linalgCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/linalg/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/linalg/data/docs" }),
   schema: courseSchema,
 });
 
 const comsocCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/comsoc/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/comsoc/data/docs" }),
   schema: courseSchema,
 });
 
 const miscCollection = defineCollection({
-  loader: glob({ pattern: "**/[^_]*{md,mdx}", base: "./src/misc/data/docs" }),
+  loader: glob({ pattern: "**/[^_]*/*.mdx", base: "./src/misc/data/docs" }),
   schema: courseSchema,
 });
 
