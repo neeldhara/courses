@@ -82,8 +82,25 @@ export async function getStaticPaths() {
           let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
           
           // If there's no remaining path, use the first subfolder name
-          if (!slug && parts.length > 1) {
-            slug = parts[1];
+          // If the slug is empty, it means we are at an index page.
+          // In that case, we should look for a more specific sub-page to redirect to.
+          // This avoids redirecting to 'index' and causing a loop.
+          if (!slug) {
+            if (parts.length > 1) {
+              slug = parts[1]
+            } else {
+              // Handle cases where the first doc is an index page.
+              // We find another document in the same tab that is NOT an index page.
+              const nextDoc = sortedDocs.find(d => !d.id.endsWith('/index'))
+              if (nextDoc) {
+                const nextParts = nextDoc.id.split('/');
+                const nextRemainingPath = nextParts.slice(1).join('/');
+                slug = nextRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+              } else {
+                // Default to the first doc's slug if no other is found
+                slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+              }
+            }
           }
           
           console.log(`Creating redirect for ${courseId}/${tab.id} -> ${slug || 'index'}`);
@@ -111,8 +128,20 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { redirectTo, courseId, courseName, tabId, tabTitle } = Astro.props;
-
-// Perform the redirect
-return Astro.redirect(redirectTo);
+const { redirectTo, courseName, tabTitle } = Astro.props;
 ---
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+    <title>Redirecting...</title>
+    <link rel="canonical" href={redirectTo} />
+</head>
+<body>
+    <h1>Redirecting to {courseName}: {tabTitle}</h1>
+    <p>If you are not redirected automatically, <a href={redirectTo}>click here</a>.</p>
+    <script define:vars={{ redirectTo }}>
+        window.location.href = redirectTo;
+    </script>
+</body>
+</html>
