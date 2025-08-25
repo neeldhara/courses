@@ -117,8 +117,20 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { redirectTo, courseId, courseName, tabId, tabTitle } = Astro.props;
-
-// Perform the redirect
-return Astro.redirect(redirectTo);
+const { redirectTo, courseName, tabTitle } = Astro.props;
 ---
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+    <title>Redirecting...</title>
+    <link rel="canonical" href={redirectTo} />
+</head>
+<body>
+    <h1>Redirecting to {courseName}: {tabTitle}</h1>
+    <p>If you are not redirected automatically, <a href={redirectTo}>click here</a>.</p>
+    <script define:vars={{ redirectTo }}>
+        window.location.href = redirectTo;
+    </script>
+</body>
+</html>
