@@ -82,14 +82,16 @@ export async function getStaticPaths() {
           let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
 
           // If the slug is empty, it means the first document is an index page.
-          // To prevent a redirect loop, we find the second document in the list.
-          if (!slug && sortedDocs.length > 1) {
-            const secondDoc = sortedDocs[1];
-            const secondParts = secondDoc.id.split('/');
-            const secondRemainingPath = secondParts.slice(1).join('/');
-            slug = secondRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
-          } else if (!slug && parts.length > 1) {
-            slug = parts[1]
+          // To prevent a redirect loop, we find the first non-index page in the sorted list.
+          if (!slug) {
+            const nextDoc = sortedDocs.find(doc => !doc.id.endsWith('index'));
+            if (nextDoc) {
+                const nextParts = nextDoc.id.split('/');
+                const nextRemainingPath = nextParts.slice(1).join('/');
+                slug = nextRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+            } else if (parts.length > 1) {
+                slug = parts[1]
+            }
           }
           
           console.log(`Creating redirect for ${courseId}/${tab.id} -> ${slug || 'index'}`);
