@@ -8,81 +8,81 @@
 
 # Subdomain redirects for courses
 [[redirects]]
-  from = "https://fun.neeldhara.com/*"
-  to = "https://neeldhara.com/fun/:splat"
-  status = 301
+  from = "https://fun.neeldhara.courses/*"
+  to = "https://neeldhara.courses/fun/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://mas.neeldhara.com/*"
-  to = "https://neeldhara.com/mas/:splat"
-  status = 301
+  from = "https://mas.neeldhara.courses/*"
+  to = "https://neeldhara.courses/mas/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://mfai.neeldhara.com/*"
-  to = "https://neeldhara.com/mfai/:splat"
-  status = 301
+  from = "https://mfai.neeldhara.courses/*"
+  to = "https://neeldhara.courses/mfai/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://dm.neeldhara.com/*"
-  to = "https://neeldhara.com/dm/:splat"
-  status = 301
+  from = "https://dm.neeldhara.courses/*"
+  to = "https://neeldhara.courses/dm/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://dsa.neeldhara.com/*"
-  to = "https://neeldhara.com/dsa/:splat"
-  status = 301
+  from = "https://dsa.neeldhara.courses/*"
+  to = "https://neeldhara.courses/dsa/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://fpt.neeldhara.com/*"
-  to = "https://neeldhara.com/fpt/:splat"
-  status = 301
+  from = "https://fpt.neeldhara.courses/*"
+  to = "https://neeldhara.courses/fpt/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://cp.neeldhara.com/*"
-  to = "https://neeldhara.com/cp/:splat"
-  status = 301
+  from = "https://cp.neeldhara.courses/*"
+  to = "https://neeldhara.courses/cp/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://magic.neeldhara.com/*"
-  to = "https://neeldhara.com/magic/:splat"
-  status = 301
+  from = "https://magic.neeldhara.courses/*"
+  to = "https://neeldhara.courses/magic/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://advalgo.neeldhara.com/*"
-  to = "https://neeldhara.com/advalgo/:splat"
-  status = 301
+  from = "https://advalgo.neeldhara.courses/*"
+  to = "https://neeldhara.courses/advalgo/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://combinatorics.neeldhara.com/*"
-  to = "https://neeldhara.com/combinatorics/:splat"
-  status = 301
+  from = "https://combinatorics.neeldhara.courses/*"
+  to = "https://neeldhara.courses/combinatorics/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://linalg.neeldhara.com/*"
-  to = "https://neeldhara.com/linalg/:splat"
-  status = 301
+  from = "https://linalg.neeldhara.courses/*"
+  to = "https://neeldhara.courses/linalg/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://comsoc.neeldhara.com/*"
-  to = "https://neeldhara.com/comsoc/:splat"
-  status = 301
+  from = "https://comsoc.neeldhara.courses/*"
+  to = "https://neeldhara.courses/comsoc/:splat"
+  status = 200
   force = true
 
 [[redirects]]
-  from = "https://misc.neeldhara.com/*"
-  to = "https://neeldhara.com/misc/:splat"
-  status = 301
+  from = "https://misc.neeldhara.courses/*"
+  to = "https://neeldhara.courses/misc/:splat"
+  status = 200
   force = true
 
 # SPA fallback for client-side routing
