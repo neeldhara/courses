@@ -18,10 +18,18 @@ import { defaultLocale, siteSettings } from "@/docs/config/siteSettings.json";
 import { filterCollectionByLanguage } from "@/docs/js/localeUtils";
 import SimpleCourseLayout from "@/shared/layouts/SimpleCourseLayout.astro";
 import { courseRoutes } from '@/shared/config/courseRouting';
-import fs from 'fs';
-import path from 'path';
 
 export async function getStaticPaths() {
+  // Get all sidebar data first, so we can map it to courses
+  const sidebarModules = import.meta.glob('/src/**/sidebarNavData.json.ts');
+  const sidebarData: Record<string, any> = {};
+
+  for (const path in sidebarModules) {
+    const courseId = path.split('/')[2]; // e.g., /src/fun/config/en/sidebarNavData.json.ts -> fun
+    const module = await sidebarModules[path]();
+    sidebarData[courseId] = (module as any).default;
+  }
+
   const paths: any[] = [];
   
   // List of valid course IDs
@@ -39,15 +47,8 @@ export async function getStaticPaths() {
       // Filter by language
       const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
       
-      // Load course-specific sidebar data to pass as props
-      let courseSidebarData;
-      const sidebarPath = path.join(process.cwd(), 'src', courseId, 'config', defaultLocale, 'sidebarNavData.json.ts');
-      
-      if (fs.existsSync(sidebarPath)) {
-        // Import the course sidebar module
-        const sidebarModule = await import(/* @vite-ignore */ sidebarPath);
-        courseSidebarData = sidebarModule.default;
-      }
+      // Get pre-loaded sidebar data
+      const courseSidebarData = sidebarData[courseId];
       
       // Generate paths for this course
       const coursePaths = filteredDocs.map((doc) => {
@@ -87,8 +88,7 @@ export async function getStaticPaths() {
       paths.push(...coursePaths);
     } catch (e) {
       // Collection might not exist for this course yet
-      console.error(`Error getting content for course: ${courseId}`, e);
-      throw e;
+      console.log(`No content found for course: ${courseId}`);
     }
   }
   
