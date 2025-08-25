@@ -9,79 +9,79 @@
 # Subdomain redirects for courses
 [[redirects]]
   from = "https://fun.neeldhara.courses/*"
-  to = "https://neeldhara.courses/fun/:splat"
+  to = "/fun/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://mas.neeldhara.courses/*"
-  to = "https://neeldhara.courses/mas/:splat"
+  to = "/mas/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://mfai.neeldhara.courses/*"
-  to = "https://neeldhara.courses/mfai/:splat"
+  to = "/mfai/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://dm.neeldhara.courses/*"
-  to = "https://neeldhara.courses/dm/:splat"
+  to = "/dm/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://dsa.neeldhara.courses/*"
-  to = "https://neeldhara.courses/dsa/:splat"
+  to = "/dsa/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://fpt.neeldhara.courses/*"
-  to = "https://neeldhara.courses/fpt/:splat"
+  to = "/fpt/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://cp.neeldhara.courses/*"
-  to = "https://neeldhara.courses/cp/:splat"
+  to = "/cp/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://magic.neeldhara.courses/*"
-  to = "https://neeldhara.courses/magic/:splat"
+  to = "/magic/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://advalgo.neeldhara.courses/*"
-  to = "https://neeldhara.courses/advalgo/:splat"
+  to = "/advalgo/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://combinatorics.neeldhara.courses/*"
-  to = "https://neeldhara.courses/combinatorics/:splat"
+  to = "/combinatorics/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://linalg.neeldhara.courses/*"
-  to = "https://neeldhara.courses/linalg/:splat"
+  to = "/linalg/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://comsoc.neeldhara.courses/*"
-  to = "https://neeldhara.courses/comsoc/:splat"
+  to = "/comsoc/:splat"
   status = 200
   force = true
 
 [[redirects]]
   from = "https://misc.neeldhara.courses/*"
-  to = "https://neeldhara.courses/misc/:splat"
+  to = "/misc/:splat"
   status = 200
   force = true
 

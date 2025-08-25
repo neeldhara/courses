@@ -102,7 +102,7 @@ export async function getStaticPaths() {
               tab: tab.id
             },
             props: { 
-              redirectTo: `/${courseId}/${tab.id}/${slug || 'index'}`,
+              redirectTo: `/${slug || 'index'}`,
               courseId,
               courseName: courseRoutes[courseId as keyof typeof courseRoutes].name,
               tabId: tab.id,
