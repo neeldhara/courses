@@ -6,6 +6,47 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--force"
 
+# Asset redirects for subdomains - these must come first
+[[redirects]]
+  from = "https://*.neeldhara.courses/_astro/*"
+  to = "/_astro/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/assets/*"
+  to = "/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/images/*"
+  to = "/images/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/favicons/*"
+  to = "/favicons/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/pagefind/*"
+  to = "/pagefind/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/*.css"
+  to = "/:splat.css"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/*.js"
+  to = "/:splat.js"
+  status = 200
+
+[[redirects]]
+  from = "https://*.neeldhara.courses/*.json"
+  to = "/:splat.json"
+  status = 200
+
 # Subdomain redirects for courses
 [[redirects]]
   from = "https://fun.neeldhara.courses/*"
