@@ -6,6 +6,72 @@
   NODE_VERSION = "18"
   NPM_FLAGS = "--force"
 
+# Subdomain redirects for courses
+[[redirects]]
+  from = "https://fun.neeldhara.courses/*"
+  to = "/fun/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://mas.neeldhara.courses/*"
+  to = "/mas/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://mfai.neeldhara.courses/*"
+  to = "/mfai/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://dm.neeldhara.courses/*"
+  to = "/dm/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://dsa.neeldhara.courses/*"
+  to = "/dsa/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://fpt.neeldhara.courses/*"
+  to = "/fpt/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://cp.neeldhara.courses/*"
+  to = "/cp/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://magic.neeldhara.courses/*"
+  to = "/magic/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://advalgo.neeldhara.courses/*"
+  to = "/advalgo/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://combinatorics.neeldhara.courses/*"
+  to = "/combinatorics/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://linalg.neeldhara.courses/*"
+  to = "/linalg/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://comsoc.neeldhara.courses/*"
+  to = "/comsoc/:splat"
+  status = 200
+
+[[redirects]]
+  from = "https://misc.neeldhara.courses/*"
+  to = "/misc/:splat"
+  status = 200
+
 # SPA fallback for client-side routing
 [[redirects]]
   from = "/*"
@@ -35,11 +101,6 @@
  [headers.values]
    Cache-Control = "public, max-age=31536000, immutable"
 
-# Subdomain redirects for ID.neeldhara.courses
-[[redirects]]
- from = "https://:course.neeldhara.courses/*"
- to = "/:course/:splat"
- status = 200
 
 [dev]
  command = "npm run dev"
