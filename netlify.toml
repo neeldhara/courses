@@ -113,6 +113,72 @@
   to = "/misc/:splat"
   status = 200
 
+# Course index pages - serve the coming soon pages
+[[redirects]]
+  from = "/fun/"
+  to = "/fun/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/mas/"
+  to = "/mas/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/mfai/"
+  to = "/mfai/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/dm/"
+  to = "/dm/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/dsa/"
+  to = "/dsa/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/fpt/"
+  to = "/fpt/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/cp/"
+  to = "/cp/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/magic/"
+  to = "/magic/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/advalgo/"
+  to = "/advalgo/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/combinatorics/"
+  to = "/combinatorics/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/linalg/"
+  to = "/linalg/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/comsoc/"
+  to = "/comsoc/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/misc/"
+  to = "/misc/index.html"
+  status = 200
+
 # SPA fallback for client-side routing
 [[redirects]]
   from = "/*"
