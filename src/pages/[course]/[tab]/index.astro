@@ -77,9 +77,20 @@ export async function getStaticPaths() {
     }
   }
   
-  const redirects = paths
+  // Generate redirects for both main domain and subdomains
+  const mainDomainRedirects = paths
     .map(p => `/${p.params.course}/${p.params.tab}\t${p.props.redirectTo}\t302`)
     .join("\n");
+  
+  // For subdomains, the redirect should not include the course prefix in the target
+  const subdomainRedirects = paths
+    .map(p => {
+      const targetPath = p.props.redirectTo.replace(`/${p.params.course}`, '');
+      return `https://${p.params.course}.neeldhara.courses/${p.params.tab}\thttps://${p.params.course}.neeldhara.courses${targetPath}\t302`;
+    })
+    .join("\n");
+  
+  const redirects = `${mainDomainRedirects}\n${subdomainRedirects}`;
 
   const distDir = path.resolve(process.cwd(), "dist");
   if (!fs.existsSync(distDir)) {
