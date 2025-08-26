@@ -4,6 +4,9 @@ import { courseRoutes } from '@/shared/config/courseRouting';
 import { defaultLocale } from "@/docs/config/siteSettings.json";
 import { filterCollectionByLanguage } from "@/docs/js/localeUtils";
 
+import { promises as fs } from 'fs';
+import path from 'path';
+
 export async function getStaticPaths() {
   // Get all sidebar data first, so we can map it to courses
   const sidebarModules = import.meta.glob('/src/**/sidebarNavData.json.ts');
@@ -14,125 +17,147 @@ export async function getStaticPaths() {
     const module = await sidebarModules[path]();
     sidebarData[courseId] = (module as any).default;
   }
-
-  const paths: any[] = [];
   
-  // List of valid course IDs
   const courseIds = Object.keys(courseRoutes);
   
-  // For each course, get its collection and create redirect paths
+  // In a Netlify environment, generate redirect rules
+  if (process.env.CONTEXT === 'production' || process.env.CONTEXT === 'deploy-preview') {
+    const redirectRules: string[] = [];
+    for (const courseId of courseIds) {
+      try {
+        const courseDocs = await getCollection(courseId as any, ({ data }) => data.draft !== true);
+        const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
+        const courseSidebarData = sidebarData[courseId];
+        const tabs = courseSidebarData?.tabs || [
+            { id: "notes", title: "Notes" },
+            { id: "assessments", title: "Assessments" },
+            { id: "editions", title: "Editions" }
+        ];
+        
+        for (const tab of tabs) {
+            const tabDocs = filteredDocs.filter(doc => doc.id.startsWith(`${tab.id}/`));
+            
+            if (tabDocs.length > 0) {
+                const sortedDocs = tabDocs.sort((a, b) => {
+                    const aOrder = a.data.sidebar?.order;
+                    const bOrder = b.data.sidebar?.order;
+                    if (aOrder !== undefined && bOrder !== undefined) return aOrder - bOrder;
+                    if (aOrder !== undefined) return -1;
+                    if (bOrder !== undefined) return 1;
+                    const aDepth = a.id.split('/').length;
+                    const bDepth = b.id.split('/').length;
+                    if (aDepth !== bDepth) return aDepth - bDepth;
+                    return a.data.title.localeCompare(b.data.title, defaultLocale);
+                });
+                
+                const firstDoc = sortedDocs[0];
+                const parts = firstDoc.id.split('/');
+                const remainingPath = parts.slice(1).join('/');
+                let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+                if (!slug) {
+                    const nextDoc = sortedDocs.find(doc => !doc.id.endsWith('index') && doc.id.startsWith(`${tab.id}/`));
+                    if (nextDoc) {
+                        const nextParts = nextDoc.id.split('/');
+                        const nextRemainingPath = nextParts.slice(1).join('/');
+                        slug = nextRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+                    } else if (parts.length > 1) {
+                        slug = parts[1];
+                    }
+                }
+                
+                const from = `/${courseId}/${tab.id}/`;
+                const to = `/${courseId}/${tab.id}/${slug || 'index'}`;
+                redirectRules.push(`${from} ${to} 301`);
+            }
+        }
+      } catch (e) {
+        console.log(`No content found for course: ${courseId}`);
+      }
+    }
+    const redirectsDir = path.resolve(process.cwd(), 'dist');
+    await fs.mkdir(redirectsDir, { recursive: true });
+    await fs.writeFile(path.join(redirectsDir, '_course_redirects'), redirectRules.join('\n'));
+    return [];
+  }
+
+  // For local development, generate redirect pages
+  const paths: any[] = [];
   for (const courseId of courseIds) {
     try {
-      // Get the course-specific collection
-      const courseDocs = await getCollection(courseId as any, ({ data }) => {
-        return data.draft !== true;
-      });
-      
-      // Filter by language
-      const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
-      
-      // Get pre-loaded sidebar data
-      const courseSidebarData = sidebarData[courseId];
-      
-      // Get available tabs
-      const tabs = courseSidebarData?.tabs || [
-        { id: "notes", title: "Notes" },
-        { id: "assessments", title: "Assessments" },
-        { id: "editions", title: "Editions" }
-      ];
-      
-      // For each tab, find the first available page and create a redirect path
-      for (const tab of tabs) {
-        const tabDocs = filteredDocs.filter(doc => {
-          const parts = doc.id.split('/');
-          const docTab = parts[0];
-          return docTab === tab.id;
-        });
+        const courseDocs = await getCollection(courseId as any, ({ data }) => data.draft !== true);
+        const filteredDocs = filterCollectionByLanguage(courseDocs, defaultLocale);
+        const courseSidebarData = sidebarData[courseId];
+        const tabs = courseSidebarData?.tabs || [
+            { id: "notes", title: "Notes" },
+            { id: "assessments", title: "Assessments" },
+            { id: "editions", title: "Editions" }
+        ];
         
-        if (tabDocs.length > 0) {
-          // Sort docs to find the "first" one
-          const sortedDocs = tabDocs.sort((a, b) => {
-            // First, sort by sidebar order if available
-            const aOrder = a.data.sidebar?.order;
-            const bOrder = b.data.sidebar?.order;
-            
-            if (aOrder !== undefined && bOrder !== undefined) {
-              return aOrder - bOrder;
+        for (const tab of tabs) {
+            const tabDocs = filteredDocs.filter(doc => doc.id.startsWith(`${tab.id}/`));
+            if (tabDocs.length > 0) {
+                const sortedDocs = tabDocs.sort((a, b) => {
+                    const aOrder = a.data.sidebar?.order;
+                    const bOrder = b.data.sidebar?.order;
+                    if (aOrder !== undefined && bOrder !== undefined) return aOrder - bOrder;
+                    if (aOrder !== undefined) return -1;
+                    if (bOrder !== undefined) return 1;
+                    const aDepth = a.id.split('/').length;
+                    const bDepth = b.id.split('/').length;
+                    if (aDepth !== bDepth) return aDepth - bDepth;
+                    return a.data.title.localeCompare(b.data.title, defaultLocale);
+                });
+                const firstDoc = sortedDocs[0];
+                const parts = firstDoc.id.split('/');
+                const remainingPath = parts.slice(1).join('/');
+                let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+                if (!slug) {
+                    const nextDoc = sortedDocs.find(doc => !doc.id.endsWith('index') && doc.id.startsWith(`${tab.id}/`));
+                    if (nextDoc) {
+                        const nextParts = nextDoc.id.split('/');
+                        const nextRemainingPath = nextParts.slice(1).join('/');
+                        slug = nextRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
+                    } else if (parts.length > 1) {
+                        slug = parts[1];
+                    }
+                }
+                paths.push({
+                    params: { course: courseId, tab: tab.id },
+                    props: {
+                        redirectTo: `/${courseId}/${tab.id}/${slug || 'index'}`,
+                        courseName: courseRoutes[courseId].name,
+                        tabTitle: tab.title
+                    },
+                });
             }
-            
-            // If only one has order, it should come first
-            if (aOrder !== undefined) return -1;
-            if (bOrder !== undefined) return 1;
-            
-            // If neither has order, sort by path depth (prefer shallower paths)
-            const aDepth = a.id.split('/').length;
-            const bDepth = b.id.split('/').length;
-            
-            if (aDepth !== bDepth) {
-              return aDepth - bDepth;
-            }
-            
-            // Finally, sort alphabetically by title
-            return a.data.title.localeCompare(b.data.title, defaultLocale);
-          });
-          
-          const firstDoc = sortedDocs[0];
-          const parts = firstDoc.id.split('/');
-          const remainingPath = parts.slice(1).join('/');
-          let slug = remainingPath.replace(/\/index$/, '').replace(/^index$/, '');
-
-          // If the slug is empty, it means the first document is an index page.
-          // To prevent a redirect loop, we find the first non-index page in the sorted list.
-          if (!slug) {
-            const nextDoc = sortedDocs.find(doc => !doc.id.endsWith('index'));
-            if (nextDoc) {
-                const nextParts = nextDoc.id.split('/');
-                const nextRemainingPath = nextParts.slice(1).join('/');
-                slug = nextRemainingPath.replace(/\/index$/, '').replace(/^index$/, '');
-            } else if (parts.length > 1) {
-                slug = parts[1]
-            }
-          }
-          
-          console.log(`Creating redirect for ${courseId}/${tab.id} -> ${slug || 'index'}`);
-          
-          paths.push({
-            params: { 
-              course: courseId,
-              tab: tab.id
-            },
-            props: { 
-              redirectTo: `/${slug || 'index'}`,
-              courseId,
-              courseName: courseRoutes[courseId as keyof typeof courseRoutes].name,
-              tabId: tab.id,
-              tabTitle: tab.title
-            },
-          });
         }
-      }
     } catch (e) {
-      console.log(`No content found for course: ${courseId}`);
+        console.log(`No content found for course: ${courseId}`);
     }
   }
-  
   return paths;
 }
 
 const { redirectTo, courseName, tabTitle } = Astro.props;
 ---
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
-    <title>Redirecting...</title>
-    <link rel="canonical" href={redirectTo} />
-</head>
-<body>
-    <h1>Redirecting to {courseName}: {tabTitle}</h1>
-    <p>If you are not redirected automatically, <a href={redirectTo}>click here</a>.</p>
-    <script define:vars={{ redirectTo }}>
-        window.location.href = redirectTo;
-    </script>
-</body>
-</html>
+{
+    // Render the redirect page only in local development
+    // In production, Netlify handles redirects.
+    !process.env.CONTEXT && (
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />
+            <title>Redirecting...</title>
+            <link rel="canonical" href={redirectTo} />
+        </head>
+        <body>
+            <h1>Redirecting to {courseName}: {tabTitle}</h1>
+            <p>If you are not redirected automatically, <a href={redirectTo}>click here</a>.</p>
+            <script define:vars={{ redirectTo }}>
+                window.location.href = redirectTo;
+            </script>
+        </body>
+        </html>
+    )
+}
