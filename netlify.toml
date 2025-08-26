@@ -47,6 +47,72 @@
   to = "/:splat.json"
   status = 200
 
+# Course root redirects - redirect to first available tab
+[[redirects]]
+  from = "/mas/"
+  to = "/mas/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/fun/"
+  to = "/fun/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/mfai/"
+  to = "/mfai/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/dm/"
+  to = "/dm/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/dsa/"
+  to = "/dsa/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/fpt/"
+  to = "/fpt/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/cp/"
+  to = "/cp/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/magic/"
+  to = "/magic/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/advalgo/"
+  to = "/advalgo/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/combinatorics/"
+  to = "/combinatorics/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/linalg/"
+  to = "/linalg/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/comsoc/"
+  to = "/comsoc/notes/"
+  status = 302
+
+[[redirects]]
+  from = "/misc/"
+  to = "/misc/notes/"
+  status = 302
+
 # Subdomain redirects for courses
 [[redirects]]
   from = "https://fun.neeldhara.courses/*"
