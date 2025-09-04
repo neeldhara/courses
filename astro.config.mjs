@@ -19,6 +19,11 @@ const copySvg = createInlineSvgUrl(
 // https://astro.build/config
 export default defineConfig({
   site: "https://neeldhara.courses",
+  redirects: {
+    '/advalgo/notes/01-greedy-algorithms/': '/advalgo/notes/01-greedy-algorithms/a-generic-problem',
+    '/advalgo/assessments/01-greedy-algorithms/': '/advalgo/assessments/01-greedy-algorithms/a-generic-problem',
+    '/mas/notes/resources': '/mas/notes/resources/references',
+  },
   // i18n configuration must match src/docs/config/translationData.json.ts
   i18n: {
     defaultLocale: "en",

@@ -9,16 +9,52 @@ const sidebarNavData: DocsSidebarNavData = {
       icon: "tabler/file-text",
       sections: [
         {
-          id: "introduction",
-          title: "Introduction",
+          id: "01-greedy-algorithms",
+          title: "Greedy Algorithms",
         },
         {
-          id: "modules",
-          title: "Modules",
+          id: "02-reductions-i-flows",
+          title: "Reductions I: Flows",
         },
         {
-          id: "resources",
-          title: "Resources",
+          id: "03-reductions-ii-hardness",
+          title: "Reductions II: Hardness",
+        },
+        {
+          id: "04-interlude",
+          title: "Interlude: Complexity",
+        },
+        {
+          id: "05-randomized-algorithms",
+          title: "Randomized Algorithms",
+        },
+        {
+          id: "06-approximation-algorithms",
+          title: "Approximation Algorithms",
+        },
+        {
+          id: "07-parameterized-algorithms",
+          title: "Parameterized Algorithms",
+        },
+        {
+          id: "08-exact-algorithms",
+          title: "Exact Algorithms",
+        },
+        {
+          id: "09-parameterized-approximation",
+          title: "Parameterized Approximation",
+        },
+        {
+          id: "10-randomized-techniques-for-parameterized-algorithms",
+          title: "Randomized FPT Techniques",
+        },
+        {
+          id: "11-randomized-approximation",
+          title: "Randomized Approximation",
+        },
+        {
+          id: "12-hardness",
+          title: "Hardness",
         },
       ],
     },
@@ -29,16 +65,52 @@ const sidebarNavData: DocsSidebarNavData = {
       icon: "tabler/edit-circle",
       sections: [
         {
-          id: "assignments",
-          title: "Assignments",
+          id: "01-greedy-algorithms",
+          title: "Greedy Algorithms",
         },
         {
-          id: "quizzes",
-          title: "Quizzes",
+          id: "02-reductions-i-flows",
+          title: "Reductions I: Flows",
         },
         {
-          id: "exams",
-          title: "Exams",
+          id: "03-reductions-ii-hardness",
+          title: "Reductions II: Hardness",
+        },
+        {
+          id: "04-interlude",
+          title: "Interlude: Complexity",
+        },
+        {
+          id: "05-randomized-algorithms",
+          title: "Randomized Algorithms",
+        },
+        {
+          id: "06-approximation-algorithms",
+          title: "Approximation Algorithms",
+        },
+        {
+          id: "07-parameterized-algorithms",
+          title: "Parameterized Algorithms",
+        },
+        {
+          id: "08-exact-algorithms",
+          title: "Exact Algorithms",
+        },
+        {
+          id: "09-parameterized-approximation",
+          title: "Parameterized Approximation",
+        },
+        {
+          id: "10-randomized-techniques-for-parameterized-algorithms",
+          title: "Randomized FPT Techniques",
+        },
+        {
+          id: "11-randomized-approximation",
+          title: "Randomized Approximation",
+        },
+        {
+          id: "12-hardness",
+          title: "Hardness",
         },
       ],
     },
