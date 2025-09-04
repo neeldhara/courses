@@ -26,7 +26,7 @@ export default defineConfig({
   },
   // i18n configuration must match src/docs/config/translationData.json.ts
   i18n: {
-    defaultLocale: "en",
+    defaultLocale: "en",  
     locales: ["en", "fr"],
     routing: {
       prefixDefaultLocale: false,
